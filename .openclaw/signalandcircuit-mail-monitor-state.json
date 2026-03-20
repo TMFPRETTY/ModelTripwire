@@ -1,0 +1,17 @@
+{
+  "createdAt": "2026-03-20T17:50:41.088098+00:00",
+  "initialized": true,
+  "items": {},
+  "seen": {
+    "advertising@signalandcircuit.com": [],
+    "editorial@signalandcircuit.com": [
+      "19d0c4addcc95c31"
+    ],
+    "newsletter@signalandcircuit.com": [],
+    "press@signalandcircuit.com": [
+      "19ccf3b884aba602"
+    ]
+  },
+  "threads": {},
+  "updatedAt": "2026-03-20T17:50:56.358535+00:00"
+}
