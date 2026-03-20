@@ -220,7 +220,11 @@ def get_message_text(msg: Dict[str, Any]) -> str:
 
 def get_send_message_id(payload: Dict[str, Any]) -> Optional[str]:
     p = payload.get('payload', {})
-    candidates = [p, p.get('message') if isinstance(p, dict) else None]
+    candidates = [
+        p,
+        p.get('message') if isinstance(p, dict) else None,
+        p.get('result') if isinstance(p, dict) else None,
+    ]
     for obj in candidates:
         if isinstance(obj, dict):
             for key in ('id', 'messageId'):
@@ -231,7 +235,11 @@ def get_send_message_id(payload: Dict[str, Any]) -> Optional[str]:
 
 def get_thread_target(payload: Dict[str, Any]) -> Optional[str]:
     p = payload.get('payload', {})
-    candidates = [p, p.get('thread') if isinstance(p, dict) else None]
+    candidates = [
+        p,
+        p.get('thread') if isinstance(p, dict) else None,
+        p.get('result') if isinstance(p, dict) else None,
+    ]
     for obj in candidates:
         if isinstance(obj, dict):
             for key in ('id', 'threadId', 'channelId'):
