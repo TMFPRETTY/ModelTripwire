@@ -33,6 +33,10 @@ This is the practical mapping of current/legacy Discord destinations to the inte
 - `1484655635336265758`
 - target for research workflows
 
+### engineering (planned permanent)
+- `1484988049229086850`
+- target for shared code/implementation work across products and platform
+
 ## Transitional / Legacy Destinations
 
 ### legacy support alerts

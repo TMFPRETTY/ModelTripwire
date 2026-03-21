@@ -29,3 +29,4 @@
 - Starter cron jobs were added for `ops-desk`, `caruso-product`, `security-infra`, and `research-lab` so the permanent room structure is active on the laptop now, not just planned.
 - `support-inbox` remains intentionally dependent on the real support-mail workflow rather than a placeholder room digest.
 - Signal and Circuit should keep one strong combined operating room for now (using the current active channel) instead of splitting newsroom/growth/monetization too early.
+- A shared `engineering` Discord room was created on 2026-03-21 with channel id `1484988049229086850` to handle code work across Caruso, Signal and Circuit, OpenClaw automations, and platform/integration changes, instead of splitting engineering into multiple low-volume rooms too early.

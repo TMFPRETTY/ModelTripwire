@@ -164,6 +164,26 @@ Discord is the main action surface. Each channel should have a clear ownership b
 - day-to-day ops chatter
 - routine support traffic
 
+### 8. engineering
+**Channel ID:** `1484988049229086850`
+
+**Purpose:**
+- shared implementation lane for code work across Caruso, Signal and Circuit, OpenClaw automations, and platform/integration changes
+- engineering requests, debugging, implementation planning, and code QA coordination
+
+**Should receive:**
+- coding requests
+- bugfix/debugging work
+- implementation plans
+- code review / QA notes
+- automation or integration change discussions
+- thread-based work for Caruso, Signal and Circuit, platform/OpenClaw, and infra/automation
+
+**Should not receive:**
+- general product strategy without implementation work
+- generic growth content
+- routine room-local chatter with no engineering action
+
 ## Embedded / Cross-Cutting Functions
 
 ### QA Review
