@@ -22,3 +22,4 @@
 - There may already be code in the system intended to suppress low-value newsroom triggers; treat that as something for engineering review and threshold tuning, not as an assumption that the problem is already solved.
 - Signal and Circuit also needs an AdSense-readiness pass: likely use an agent to audit the site for Google Publisher Policy compliance and site-quality issues such as originality, duplicate/replicated content, low-value pages, navigational/UX problems, privacy disclosures, and search-spam-style weaknesses before re-review.
 - Added Signal and Circuit-specific operating skills for both AdSense readiness and traffic growth/editorial packaging.
+- Created `SIGNAL_AND_CIRCUIT_ADSENSE_PLAN.md` as the concrete execution plan for Signal and Circuit AdSense readiness and parallel traffic-quality improvements.
