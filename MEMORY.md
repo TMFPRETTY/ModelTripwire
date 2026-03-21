@@ -26,3 +26,5 @@
 - While waiting on the Mac mini, the active laptop-era cron jobs were re-enabled to maintain momentum; the retired gaming-trends workflow stayed disabled.
 - Channel structure was prioritized before activating more agents. `CHANNEL_ARCHITECTURE_PLAN.md` and `CHANNEL_MIGRATION_MAP.md` now define the permanent room layout and how current jobs/channels should migrate.
 - Live laptop routing has started moving toward the permanent structure already: command-center digest now points at `command-center`, Caruso growth jobs point at `caruso-growth`, and Signal and Circuit remains transitional for now.
+- Starter cron jobs were added for `ops-desk`, `caruso-product`, `security-infra`, and `research-lab` so the permanent room structure is active on the laptop now, not just planned.
+- `support-inbox` remains intentionally dependent on the real support-mail workflow rather than a placeholder room digest.

@@ -97,6 +97,34 @@ This is the practical mapping of current/legacy Discord destinations to the inte
 - Do not move Signal and Circuit editorial routing until that site’s newsroom structure is decided.
 - Do not create overlapping rooms for the same function.
 
+## Newly Activated Starter Room Jobs
+
+### ops-desk
+- `ops-desk-midday-status-weekdays-1pm`
+- destination: `1484651772193673349`
+- purpose: operational coordination / health / blockers
+
+### caruso-product
+- `caruso-product-signal-digest-weekdays-1230pm`
+- destination: `1484651869593669762`
+- purpose: product signal synthesis and recommendations
+
+### security-infra
+- `security-infra-daily-healthcheck-weekdays-845am`
+- destination: `1484651900812001491`
+- purpose: runtime and infrastructure health visibility
+
+### research-lab
+- `research-lab-weekly-idea-scan-mondays-11am`
+- destination: `1484655635336265758`
+- purpose: weekly ranked opportunity scan
+
+## Intentionally Deferred
+
+### support-inbox
+- permanent room is defined
+- no new starter cron was created yet because the more important support path is still the actual mailbox integration / triage workflow rather than a fake placeholder digest
+
 ## Next Decision Still Open
 Signal and Circuit needs a final room decision:
 - one dedicated newsroom room?
