@@ -5,7 +5,7 @@ This file defines a simple labeling convention for the combined `signal-and-circ
 
 ## Room
 - `signal-and-circuit`
-- current active Discord channel: `1484600889506533576`
+- current active Discord channel: `1485042311959416832`
 
 ## Core Rule
 Start top-level posts with a short uppercase label in brackets.

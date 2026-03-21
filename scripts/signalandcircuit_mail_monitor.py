@@ -14,7 +14,7 @@ STATE_DIR = WORKSPACE / '.openclaw'
 STATE_FILE = STATE_DIR / 'signalandcircuit-mail-monitor-state.json'
 CONFIG = {
     'guild_id': '1484525388054007969',
-    'channel_id': '1484600889506533576',
+    'channel_id': '1485042311959416832',
     'accounts': [
         'editorial@signalandcircuit.com',
         'press@signalandcircuit.com',

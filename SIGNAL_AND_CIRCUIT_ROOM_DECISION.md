@@ -10,7 +10,7 @@ Use a **two-stage approach**:
 
 ### Stage 1 — Now / transitional
 Keep one primary operational room centered on the existing Signal and Circuit Discord channel:
-- `1484600889506533576`
+- `1485042311959416832`
 
 Use it as the combined:
 - editorial desk
