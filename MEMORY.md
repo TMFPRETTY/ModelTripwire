@@ -25,3 +25,4 @@
 - Created `SIGNAL_AND_CIRCUIT_ADSENSE_PLAN.md` as the concrete execution plan for Signal and Circuit AdSense readiness and parallel traffic-quality improvements.
 - While waiting on the Mac mini, the active laptop-era cron jobs were re-enabled to maintain momentum; the retired gaming-trends workflow stayed disabled.
 - Channel structure was prioritized before activating more agents. `CHANNEL_ARCHITECTURE_PLAN.md` and `CHANNEL_MIGRATION_MAP.md` now define the permanent room layout and how current jobs/channels should migrate.
+- Live laptop routing has started moving toward the permanent structure already: command-center digest now points at `command-center`, Caruso growth jobs point at `caruso-growth`, and Signal and Circuit remains transitional for now.
