@@ -18,3 +18,7 @@
 - QA should cover both content QA and code QA.
 - Docker is not a day-one requirement for the Mac mini; install only if a real workflow needs it.
 - VS Code is the recommended default IDE/editor to have available on the Mac mini for coding visibility and intervention.
+- Signal and Circuit should likely have an editorial lookout agent that monitors for breaking or interesting gaming/news content, alerts the team when something looks worth covering, and helps route story creation to the right site persona instead of relying only on fixed schedules.
+- There may already be code in the system intended to suppress low-value newsroom triggers; treat that as something for engineering review and threshold tuning, not as an assumption that the problem is already solved.
+- Signal and Circuit also needs an AdSense-readiness pass: likely use an agent to audit the site for Google Publisher Policy compliance and site-quality issues such as originality, duplicate/replicated content, low-value pages, navigational/UX problems, privacy disclosures, and search-spam-style weaknesses before re-review.
+- Added Signal and Circuit-specific operating skills for both AdSense readiness and traffic growth/editorial packaging.
