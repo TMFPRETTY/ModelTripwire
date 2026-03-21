@@ -45,6 +45,14 @@ Use threads or clearly labeled posts for these lanes:
 - **Infra / automation**
 - **QA review**
 
+## Repo Anchors
+Use these project roots when the request is about code in a specific system:
+- **Caruso repo:** `/Users/jeremypretty/Documents/PM and QA/PM-and-QA-Combo-Fun`
+- **Signal and Circuit repo:** `/Users/jeremypretty/Documents/AI:ML/signal-and-circuit`
+- **OpenClaw workspace / platform:** `/Users/jeremypretty/.openclaw/workspace`
+
+If a request in `engineering` names one of these systems, treat that repo/workspace as the default working context.
+
 ## How To Ask For Work
 A good engineering request should include:
 - **System:** Caruso / Signal and Circuit / OpenClaw / Infra
