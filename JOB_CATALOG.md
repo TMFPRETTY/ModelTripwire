@@ -13,12 +13,13 @@ This file is the pre-deployment catalog of automations/jobs for the Mac mini set
 
 ### 1. Gaming Trends / Video Game News Every 2h
 - **Job ID:** `406a1c83-015a-4a0f-bad7-48dbae10dd8a`
-- **Status:** paused pending Mac mini cutover
+- **Status:** retire
 - **Purpose:** post major video game news every 2 hours
 - **Destination:** Discord channel `1484556422384717985`
 - **Schedule:** every 2 hours
 - **Output:** major gaming news summary
-- **Validation needed:** source quality, posting quality, duplicate prevention, relevance threshold
+- **Disposition:** experimental workflow that should not be migrated to the Mac mini deployment
+- **Action at cutover:** leave disabled / remove rather than re-enable
 
 ### 2. Signal and Circuit Mail Monitor Every 2m
 - **Job ID:** `4cfe0675-b283-433d-bcaf-432a08706980`

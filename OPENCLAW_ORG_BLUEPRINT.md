@@ -32,10 +32,14 @@ Future visual surface: OpenClaw HQ dashboard.
 - `research-lab` — `1484655635336265758`
 
 ## Existing/Related Channels Already Used
-- gaming news channel — `1484556422384717985`
 - support alerts channel — `1484558242381168670`
 - Signal and Circuit mail monitor channel — `1484600889506533576`
 - Caruso marketing channel — `1484611501842104510`
+
+## Retired / Do Not Migrate
+- gaming news channel — `1484556422384717985`
+  - prior experiment only
+  - do not carry this workflow/channel into the Mac mini deployment
 
 ## Operating Rooms
 
