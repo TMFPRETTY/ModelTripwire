@@ -30,3 +30,4 @@
 - `support-inbox` remains intentionally dependent on the real support-mail workflow rather than a placeholder room digest.
 - Signal and Circuit should keep one strong combined operating room for now (using the current active channel) instead of splitting newsroom/growth/monetization too early.
 - A shared `engineering` Discord room was created on 2026-03-21 with channel id `1484988049229086850` to handle code work across Caruso, Signal and Circuit, OpenClaw automations, and platform/integration changes, instead of splitting engineering into multiple low-volume rooms too early.
+- Engineering now has `ENGINEERING_ROOM_GUIDE.md`, `ENGINEERING_WORKFLOW.md`, and starter recurring jobs for engineering status and engineering QA checks. Important limitation: this still does not magically create instant Discord conversational pickup for arbitrary posts; it creates the operating model and room cadence, not provider-side message listener behavior.
