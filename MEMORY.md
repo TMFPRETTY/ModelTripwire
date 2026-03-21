@@ -28,3 +28,4 @@
 - Live laptop routing has started moving toward the permanent structure already: command-center digest now points at `command-center`, Caruso growth jobs point at `caruso-growth`, and Signal and Circuit remains transitional for now.
 - Starter cron jobs were added for `ops-desk`, `caruso-product`, `security-infra`, and `research-lab` so the permanent room structure is active on the laptop now, not just planned.
 - `support-inbox` remains intentionally dependent on the real support-mail workflow rather than a placeholder room digest.
+- Signal and Circuit should keep one strong combined operating room for now (using the current active channel) instead of splitting newsroom/growth/monetization too early.
