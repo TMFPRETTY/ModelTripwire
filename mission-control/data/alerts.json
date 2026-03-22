@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T00:52:16Z",
+  "generatedAt": "2026-03-22T01:02:45Z",
   "alerts": [
     {
       "id": "alert-ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
@@ -11,6 +11,17 @@
       "status": "open",
       "sourceType": "job",
       "sourceRef": "ee105b50-2e8e-463b-b9a4-bcc165a21a3d"
+    },
+    {
+      "id": "alert-signal-and-circuit-pending-mail",
+      "title": "Signal and Circuit inbox needs triage",
+      "roomId": "signal-and-circuit",
+      "severity": "warning",
+      "summary": "1 pending inbox item(s) are still open in the mail monitor state.",
+      "createdAt": "2026-03-21T22:35:42.547429+00:00",
+      "status": "open",
+      "sourceType": "mail_state",
+      "sourceRef": "signalandcircuit-mail-monitor-state"
     }
   ]
 }

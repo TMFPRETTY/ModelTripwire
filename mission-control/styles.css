@@ -44,9 +44,11 @@ body {
 .stat .value { font-size: 1.6rem; font-weight: 700; margin-top: 4px; }
 .rooms-grid, .agents-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap: 12px; }
 .card {
-  background: var(--panel-2); border:1px solid var(--border); border-left: 4px solid var(--accent);
+  background: linear-gradient(180deg, rgba(25,35,71,.95), rgba(18,25,50,.95)); border:1px solid var(--border); border-left: 4px solid var(--accent);
   border-radius: 12px; padding: 12px;
 }
+.card.clickable { text-decoration: none; color: var(--text); transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+.card.clickable:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0,0,0,.22); border-color: #3d4f88; }
 .card.good { border-left-color: var(--good); }
 .card.warn { border-left-color: var(--warn); }
 .card.bad { border-left-color: var(--bad); }

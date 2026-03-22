@@ -29,8 +29,9 @@
     fetch('./data/rooms.json').then(r=>r.json()).then(data => {
       const grid = document.getElementById('roomsGrid');
       data.rooms.forEach(room => {
-        const card = document.createElement('div');
-        card.className = `card ${statusClass(room.status)}`;
+        const card = document.createElement('a');
+        card.href = `./room.html?id=${encodeURIComponent(room.id)}`;
+        card.className = `card clickable ${statusClass(room.status)}`;
         card.innerHTML = `
           <div class="title">${room.name}</div>
           <div class="meta"><span class="badge ${room.status}">${room.status}</span> • ${room.kind}</div>

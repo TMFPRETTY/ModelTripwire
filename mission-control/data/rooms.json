@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T00:52:16Z",
+  "generatedAt": "2026-03-22T01:02:45Z",
   "rooms": [
     {
       "id": "command-center",
@@ -7,7 +7,7 @@
       "channelId": "1484651751108775946",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-21T18:25:07.549000Z",
+      "lastUpdateAt": "2026-03-22T00:59:41.243000Z",
       "agents": [
         "command-center"
       ],
@@ -57,13 +57,13 @@
       "name": "caruso-growth",
       "channelId": "1484651836966436934",
       "status": "warning",
-      "headline": "1 job issue(s) need attention.",
-      "lastUpdateAt": "2026-03-21T22:09:48.318000Z",
+      "headline": "Growth scan hit a rate limit and may need retry/tuning.",
+      "lastUpdateAt": "2026-03-22T00:56:30.246000Z",
       "agents": [
         "caruso-growth"
       ],
       "badges": {
-        "approvals": 0,
+        "approvals": 1,
         "alerts": 1,
         "queue": 0
       },
@@ -124,15 +124,15 @@
       "id": "signal-and-circuit",
       "name": "signal-and-circuit",
       "channelId": "1485042311959416832",
-      "status": "healthy",
-      "headline": "1 pending inbox item(s) in Signal and Circuit.",
-      "lastUpdateAt": "2026-03-22T00:51:20.275000Z",
+      "status": "warning",
+      "headline": "1 pending inbox item(s) need triage.",
+      "lastUpdateAt": "2026-03-22T01:01:20.354000Z",
       "agents": [
         "signal-and-circuit"
       ],
       "badges": {
-        "approvals": 0,
-        "alerts": 0,
+        "approvals": 1,
+        "alerts": 1,
         "queue": 1
       },
       "kind": "editorial"

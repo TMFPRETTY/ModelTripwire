@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T00:52:16Z",
+  "generatedAt": "2026-03-22T01:02:45Z",
   "jobs": [
     {
       "id": "4cfe0675-b283-433d-bcaf-432a08706980",
@@ -7,8 +7,8 @@
       "roomId": "signal-and-circuit",
       "status": "active",
       "enabled": true,
-      "lastRunAt": "2026-03-22T00:51:20.275000Z",
-      "nextRunAt": "2026-03-22T00:53:20.275000Z",
+      "lastRunAt": "2026-03-22T01:01:20.354000Z",
+      "nextRunAt": "2026-03-22T01:03:20.354000Z",
       "lastResult": "ok",
       "recentFailureCount": 0,
       "summary": "Healthy",
@@ -20,33 +20,17 @@
     {
       "id": "47c14ec1-8102-4946-ad7a-952a8db6cbc8",
       "name": "mission-control-snapshot-refresh-every-5m",
-      "roomId": null,
+      "roomId": "command-center",
       "status": "active",
       "enabled": true,
-      "lastRunAt": null,
-      "nextRunAt": "2026-03-22T00:54:38.609000Z",
-      "lastResult": "unknown",
+      "lastRunAt": "2026-03-22T00:59:41.243000Z",
+      "nextRunAt": "2026-03-22T01:04:41.243000Z",
+      "lastResult": "ok",
       "recentFailureCount": 0,
       "summary": "Healthy",
       "destination": {
         "type": "none",
         "channelId": null
-      }
-    },
-    {
-      "id": "e5d420bd-4ac4-4716-a5ff-cf3c69bb381c",
-      "name": "caruso-competitor-watch-every-6h",
-      "roomId": "caruso-growth",
-      "status": "active",
-      "enabled": true,
-      "lastRunAt": "2026-03-21T18:56:30.233000Z",
-      "nextRunAt": "2026-03-22T00:56:30.233000Z",
-      "lastResult": "ok",
-      "recentFailureCount": 0,
-      "summary": "Healthy",
-      "destination": {
-        "type": "announce",
-        "channelId": "1484651836966436934"
       }
     },
     {
@@ -60,6 +44,22 @@
       "lastResult": "failed",
       "recentFailureCount": 1,
       "summary": "\u26a0\ufe0f API rate limit reached. Please try again later.",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484651836966436934"
+      }
+    },
+    {
+      "id": "e5d420bd-4ac4-4716-a5ff-cf3c69bb381c",
+      "name": "caruso-competitor-watch-every-6h",
+      "roomId": "caruso-growth",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": "2026-03-22T00:56:30.246000Z",
+      "nextRunAt": "2026-03-22T06:56:30.246000Z",
+      "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
       "destination": {
         "type": "announce",
         "channelId": "1484651836966436934"

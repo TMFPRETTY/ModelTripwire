@@ -34,9 +34,10 @@
       const table = document.getElementById('jobsTable');
       data.jobs.forEach(job => {
         const tr = document.createElement('tr');
+        const roomCell = job.roomId ? `<a href="./room.html?id=${encodeURIComponent(job.roomId)}">${job.roomId}</a>` : '—';
         tr.innerHTML = `
           <td>${job.name}</td>
-          <td>${job.roomId || '—'}</td>
+          <td>${roomCell}</td>
           <td><span class="badge ${job.lastResult}">${job.lastResult}</span></td>
           <td>${job.enabled ? 'yes' : 'no'}</td>
           <td>${fmt(job.lastRunAt)}</td>

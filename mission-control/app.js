@@ -64,7 +64,8 @@ async function main() {
 
   const roomsGrid = document.getElementById('roomsGrid');
   rooms.rooms.forEach(room => {
-    const card = el('div', `card ${statusClass(room.status)}`);
+    const card = el('a', `card clickable ${statusClass(room.status)}`);
+    card.href = `./room.html?id=${encodeURIComponent(room.id)}`;
     card.append(el('div', 'title', room.name));
     const meta = el('div', 'meta');
     const badge = el('span', `badge ${room.status}`, room.status);
@@ -73,6 +74,7 @@ async function main() {
     card.append(meta);
     card.append(el('div', 'headline', room.headline));
     card.append(el('div', 'meta', `Last update: ${fmt(room.lastUpdateAt)}`));
+    card.append(el('div', 'meta', `Approvals: ${room.badges?.approvals ?? 0} • Alerts: ${room.badges?.alerts ?? 0} • Queue: ${room.badges?.queue ?? 0}`));
     roomsGrid.append(card);
   });
 

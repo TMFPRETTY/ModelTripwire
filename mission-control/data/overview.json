@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-03-22T00:52:16Z",
+  "generatedAt": "2026-03-22T01:02:45Z",
   "overview": {
     "globalHealth": {
       "systemStatus": "warning",
       "activeRooms": 9,
       "activeAgents": 8,
-      "pendingApprovals": 0,
-      "openAlerts": 1,
+      "pendingApprovals": 2,
+      "openAlerts": 2,
       "failingJobs": 1
     },
     "needsAttention": [
@@ -16,15 +16,15 @@
         "priority": "high"
       },
       {
-        "title": "Signal and Circuit has 1 pending email item(s).",
+        "title": "Signal and Circuit inbox needs triage",
         "roomId": "signal-and-circuit",
-        "priority": "normal"
+        "priority": "high"
       }
     ],
     "recommendedFocus": [
-      "Check the highest-priority warning room first.",
+      "Retry or tune the Caruso marketing opportunity scan after the rate limit issue.",
       "Review pending Signal and Circuit inbox items and hand engineering tasks off explicitly.",
-      "Tune or retry any warning-status job before cutover."
+      "Use engineering + QA loop for any implementation work that moves out of planning rooms."
     ]
   }
 }

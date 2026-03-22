@@ -65,6 +65,7 @@ def room_for_job(name):
         'signalandcircuit-mail-monitor-every-2m': 'signal-and-circuit',
         'engineering-midday-intake-status-weekdays-2pm': 'engineering',
         'engineering-qa-review-check-weekdays-215pm': 'engineering',
+        'mission-control-snapshot-refresh-every-5m': 'command-center',
         'gaming-trends-video-game-news-every-2h': 'retired',
     }
     return mapping.get(name)
@@ -103,7 +104,6 @@ def build_jobs(cron_jobs):
 
 def build_agents(jobs):
     by_room = {}
-    by_agent = {}
     for job in jobs:
         if job['roomId']:
             by_room.setdefault(job['roomId'], []).append(job['id'])
@@ -123,48 +123,42 @@ def build_agents(jobs):
     return out
 
 
-def build_rooms(jobs, mail_state):
-    room_jobs = {}
-    for job in jobs:
-        room_jobs.setdefault(job['roomId'], []).append(job)
-    pending_mail = len([i for i in mail_state.get('items', {}).values() if i.get('status') == 'pending'])
-    rooms = []
-    for room in ROOMS:
-        rjobs = room_jobs.get(room['id'], [])
-        failed = sum(1 for j in rjobs if j['lastResult'] == 'failed')
-        running = any(j['summary'] == 'Running now' for j in rjobs)
-        status = 'quiet'
-        if failed:
-            status = 'warning'
-        elif rjobs:
-            status = 'active' if running else 'healthy'
-        headline = 'No live job activity yet.'
-        if room['id'] == 'signal-and-circuit' and pending_mail:
-            headline = f'{pending_mail} pending inbox item(s) in Signal and Circuit.'
-        elif failed:
-            headline = f'{failed} job issue(s) need attention.'
-        elif rjobs:
-            headline = 'Jobs healthy and delivering.'
-        last_updates = [j['lastRunAt'] for j in rjobs if j.get('lastRunAt')]
-        rooms.append({
-            'id': room['id'],
-            'name': room['name'],
-            'channelId': room['channelId'],
-            'status': status,
-            'headline': headline,
-            'lastUpdateAt': max(last_updates) if last_updates else None,
-            'agents': [a['id'] for a in AGENTS if a['roomId'] == room['id'] and a['phase'] != 'planned'],
-            'badges': {
-                'approvals': 0,
-                'alerts': failed,
-                'queue': pending_mail if room['id'] == 'signal-and-circuit' else 0,
-            },
-            'kind': room['kind'],
+def build_approvals(mail_state, jobs):
+    approvals = []
+    pending_mail = [i for i in mail_state.get('items', {}).values() if i.get('status') == 'pending']
+    for idx, item in enumerate(pending_mail[:10], start=1):
+        subject = item.get('subject', '(no subject)')
+        summary = item.get('summary') or item.get('from') or 'Pending email item requires review/triage.'
+        risk = 'medium'
+        lowered = f"{subject} {summary}".lower()
+        if any(k in lowered for k in ['urgent', 'asap', 'access', 'billing', 'sponsor', 'advertis', 'press']):
+            risk = 'high'
+        approvals.append({
+            'id': f"approval-mail-{item.get('gmailMessageId', idx)}",
+            'title': f"Review Signal and Circuit email: {subject}",
+            'roomId': 'signal-and-circuit',
+            'risk': risk,
+            'decisionType': 'review',
+            'summary': summary,
+            'requestedAt': item.get('createdAt') or now_iso(),
+            'status': 'pending'
         })
-    return rooms
+    for job in jobs:
+        if job['roomId'] == 'caruso-growth' and job['lastResult'] == 'failed':
+            approvals.append({
+                'id': f"approval-job-{job['id']}",
+                'title': 'Decide how to handle Caruso growth rate limit issue',
+                'roomId': 'caruso-growth',
+                'risk': 'medium',
+                'decisionType': 'review',
+                'summary': job['summary'] or 'Caruso growth scan is failing and may need retry/tuning.',
+                'requestedAt': job['lastRunAt'] or now_iso(),
+                'status': 'pending'
+            })
+    return approvals
 
 
-def build_alerts(jobs, rooms):
+def build_alerts(jobs, mail_state):
     alerts = []
     for job in jobs:
         if job['lastResult'] == 'failed' or job['recentFailureCount']:
@@ -179,7 +173,69 @@ def build_alerts(jobs, rooms):
                 'sourceType': 'job',
                 'sourceRef': job['id'],
             })
+    pending_mail = [i for i in mail_state.get('items', {}).values() if i.get('status') == 'pending']
+    if pending_mail:
+        alerts.append({
+            'id': 'alert-signal-and-circuit-pending-mail',
+            'title': 'Signal and Circuit inbox needs triage',
+            'roomId': 'signal-and-circuit',
+            'severity': 'warning' if len(pending_mail) < 5 else 'critical',
+            'summary': f'{len(pending_mail)} pending inbox item(s) are still open in the mail monitor state.',
+            'createdAt': pending_mail[0].get('createdAt') or now_iso(),
+            'status': 'open',
+            'sourceType': 'mail_state',
+            'sourceRef': 'signalandcircuit-mail-monitor-state'
+        })
     return alerts
+
+
+def build_rooms(jobs, mail_state, approvals, alerts):
+    room_jobs = {}
+    for job in jobs:
+        room_jobs.setdefault(job['roomId'], []).append(job)
+    pending_mail = len([i for i in mail_state.get('items', {}).values() if i.get('status') == 'pending'])
+    rooms = []
+    for room in ROOMS:
+        rjobs = room_jobs.get(room['id'], [])
+        failed = sum(1 for j in rjobs if j['lastResult'] == 'failed')
+        running = any(j['summary'] == 'Running now' for j in rjobs)
+        room_approvals = [a for a in approvals if a.get('roomId') == room['id']]
+        room_alerts = [a for a in alerts if a.get('roomId') == room['id']]
+        status = 'quiet'
+        if failed or room_alerts:
+            status = 'warning'
+        elif rjobs:
+            status = 'active' if running else 'healthy'
+        headline = 'No live job activity yet.'
+        if room['id'] == 'signal-and-circuit' and pending_mail:
+            headline = f'{pending_mail} pending inbox item(s) need triage.'
+        elif room['id'] == 'caruso-growth' and failed:
+            headline = 'Growth scan hit a rate limit and may need retry/tuning.'
+        elif room['id'] == 'engineering' and room_approvals:
+            headline = f'{len(room_approvals)} item(s) waiting on engineering/QA follow-through.'
+        elif room['id'] == 'support-inbox' and room_approvals:
+            headline = f'{len(room_approvals)} support item(s) likely need human approval.'
+        elif failed:
+            headline = f'{failed} job issue(s) need attention.'
+        elif rjobs:
+            headline = 'Jobs healthy and delivering.'
+        last_updates = [j['lastRunAt'] for j in rjobs if j.get('lastRunAt')]
+        rooms.append({
+            'id': room['id'],
+            'name': room['name'],
+            'channelId': room['channelId'],
+            'status': status,
+            'headline': headline,
+            'lastUpdateAt': max(last_updates) if last_updates else None,
+            'agents': [a['id'] for a in AGENTS if a['roomId'] == room['id'] and a['phase'] != 'planned'],
+            'badges': {
+                'approvals': len(room_approvals),
+                'alerts': len(room_alerts) or failed,
+                'queue': pending_mail if room['id'] == 'signal-and-circuit' else 0,
+            },
+            'kind': room['kind'],
+        })
+    return rooms
 
 
 def build_activity(jobs, alerts, approvals, mail_state):
@@ -204,7 +260,7 @@ def build_activity(jobs, alerts, approvals, mail_state):
             'kind': 'approval_request',
             'title': approval['title'],
             'summary': approval['summary'],
-            'priority': 'high' if approval['risk'] in ('high','urgent') else 'normal',
+            'priority': 'high' if approval['risk'] in ('high', 'urgent') else 'normal',
             'at': approval['requestedAt'],
             'sourceType': 'approval',
             'sourceRef': approval['id'],
@@ -247,30 +303,33 @@ def build_system(jobs, status_text):
     }
 
 
-def build_overview(rooms, agents, jobs, alerts, mail_state):
+def build_overview(rooms, agents, jobs, alerts, approvals, mail_state):
     needs = []
     if alerts:
-        for a in alerts[:3]:
+        for a in alerts[:4]:
             needs.append({'title': a['title'], 'roomId': a['roomId'], 'priority': 'high'})
     pending_mail = len([i for i in mail_state.get('items', {}).values() if i.get('status') == 'pending'])
-    if pending_mail:
+    if pending_mail and not any(n['roomId'] == 'signal-and-circuit' for n in needs):
         needs.append({'title': f'Signal and Circuit has {pending_mail} pending email item(s).', 'roomId': 'signal-and-circuit', 'priority': 'normal'})
-    recs = [
-        'Check the highest-priority warning room first.',
-        'Review pending Signal and Circuit inbox items and hand engineering tasks off explicitly.',
-        'Tune or retry any warning-status job before cutover.'
-    ]
+    recs = []
+    if any(j['roomId'] == 'caruso-growth' and j['lastResult'] == 'failed' for j in jobs):
+        recs.append('Retry or tune the Caruso marketing opportunity scan after the rate limit issue.')
+    if pending_mail:
+        recs.append('Review pending Signal and Circuit inbox items and hand engineering tasks off explicitly.')
+    if not recs:
+        recs.append('Check the highest-priority room first and verify outputs still feel useful.')
+    recs.append('Use engineering + QA loop for any implementation work that moves out of planning rooms.')
     return {
         'globalHealth': {
             'systemStatus': 'warning' if alerts else 'healthy',
             'activeRooms': len(rooms),
             'activeAgents': len([a for a in agents if a['phase'] in ('active', 'embedded')]),
-            'pendingApprovals': 0,
+            'pendingApprovals': len(approvals),
             'openAlerts': len(alerts),
             'failingJobs': sum(1 for j in jobs if j['lastResult'] == 'failed'),
         },
         'needsAttention': needs[:5],
-        'recommendedFocus': recs,
+        'recommendedFocus': recs[:3],
     }
 
 
@@ -280,17 +339,17 @@ def write_json(name, payload):
 
 
 def main():
-    cron_jobs = run_json(['openclaw','cron','list','--json'])
+    cron_jobs = run_json(['openclaw', 'cron', 'list', '--json'])
     jobs = build_jobs(cron_jobs)
     agents = build_agents(jobs)
     mail_state = load_mail_state()
-    rooms = build_rooms(jobs, mail_state)
-    alerts = build_alerts(jobs, rooms)
-    approvals = []
+    approvals = build_approvals(mail_state, jobs)
+    alerts = build_alerts(jobs, mail_state)
+    rooms = build_rooms(jobs, mail_state, approvals, alerts)
     activity = build_activity(jobs, alerts, approvals, mail_state)
-    status_text = run_text(['openclaw','status'])
+    status_text = run_text(['openclaw', 'status'])
     system = build_system(jobs, status_text)
-    overview = build_overview(rooms, agents, jobs, alerts, mail_state)
+    overview = build_overview(rooms, agents, jobs, alerts, approvals, mail_state)
     generated = now_iso()
     write_json('rooms.json', {'generatedAt': generated, 'rooms': rooms})
     write_json('agents.json', {'generatedAt': generated, 'agents': agents})
@@ -301,6 +360,7 @@ def main():
     write_json('activity.json', {'generatedAt': generated, 'activity': activity})
     write_json('overview.json', {'generatedAt': generated, 'overview': overview})
     print('Mission Control snapshots generated in', DATA_DIR)
+
 
 if __name__ == '__main__':
     main()

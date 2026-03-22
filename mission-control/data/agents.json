@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T00:52:16Z",
+  "generatedAt": "2026-03-22T01:02:45Z",
   "agents": [
     {
       "id": "command-center",
@@ -8,6 +8,7 @@
       "roomId": "command-center",
       "mission": "Provide top-level mission control, priorities, blockers, approvals, and daily focus.",
       "jobs": [
+        "47c14ec1-8102-4946-ad7a-952a8db6cbc8",
         "148c5073-5be0-40cc-8cbc-79f062a18191"
       ],
       "skills": [
@@ -38,8 +39,8 @@
       "roomId": "caruso-growth",
       "mission": "Find, package, and route growth opportunities for Caruso.",
       "jobs": [
-        "e5d420bd-4ac4-4716-a5ff-cf3c69bb381c",
         "ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
+        "e5d420bd-4ac4-4716-a5ff-cf3c69bb381c",
         "4f2aa9d6-9d73-4e08-a4fc-9d4699ca4bf7",
         "d0fc4e18-d944-4a49-abc6-a1e1d8062385",
         "b2f55e26-0c55-4c54-98c0-1309889162ef"

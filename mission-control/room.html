@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mission Control — Room</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1 id="roomTitle">Mission Control / Room</h1>
+      <p id="roomSub" class="sub">Room detail view</p>
+    </div>
+    <nav class="navlinks">
+      <a href="./">Overview</a>
+      <a href="./rooms.html">Rooms</a>
+      <a href="./jobs.html">Jobs</a>
+    </nav>
+  </header>
+  <main class="layout single">
+    <section class="panel full">
+      <h2>Room Summary</h2>
+      <div id="roomSummary" class="rooms-grid"></div>
+    </section>
+    <section class="panel wide">
+      <h2>Related Jobs</h2>
+      <table>
+        <thead><tr><th>Name</th><th>Status</th><th>Last Run</th><th>Next Run</th><th>Summary</th></tr></thead>
+        <tbody id="jobsTable"></tbody>
+      </table>
+    </section>
+    <section class="panel narrow">
+      <h2>Recent Activity</h2>
+      <div id="activityFeed" class="feed"></div>
+    </section>
+    <section class="panel narrow">
+      <h2>Approvals</h2>
+      <div id="approvalsFeed" class="feed"></div>
+    </section>
+    <section class="panel narrow">
+      <h2>Alerts</h2>
+      <div id="alertsFeed" class="feed"></div>
+    </section>
+  </main>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const roomId = params.get('id');
+    const fmt = ts => ts ? new Date(ts).toLocaleString() : '—';
+    const statusClass = s => ['healthy','active','ok'].includes(s)?'good':(['warning'].includes(s)?'warn':(['blocked','failed','error','critical'].includes(s)?'bad':'quiet'));
+    const el = (tag, cls, text) => { const n=document.createElement(tag); if(cls) n.className=cls; if(text!==undefined) n.textContent=text; return n; };
+    Promise.all([
+      fetch('./data/rooms.json').then(r=>r.json()),
+      fetch('./data/jobs.json').then(r=>r.json()),
+      fetch('./data/activity.json').then(r=>r.json()),
+      fetch('./data/approvals.json').then(r=>r.json()),
+      fetch('./data/alerts.json').then(r=>r.json())
+    ]).then(([roomsData, jobsData, activityData, approvalsData, alertsData]) => {
+      const room = roomsData.rooms.find(r => r.id === roomId);
+      if (!room) throw new Error(`Unknown room: ${roomId}`);
+      document.getElementById('roomTitle').textContent = `Mission Control / ${room.name}`;
+      document.getElementById('roomSub').textContent = `${room.kind} room detail`;
+      const card = document.createElement('div');
+      card.className = `card ${statusClass(room.status)}`;
+      card.innerHTML = `<div class="title">${room.name}</div><div class="meta"><span class="badge ${room.status}">${room.status}</span> • ${room.kind}</div><div class="headline">${room.headline}</div><div class="meta">Last update: ${fmt(room.lastUpdateAt)}</div><div class="meta">Agents: ${(room.agents||[]).join(', ') || '—'}</div>`;
+      document.getElementById('roomSummary').appendChild(card);
+      jobsData.jobs.filter(j => j.roomId === roomId).forEach(job => {
+        const tr=document.createElement('tr');
+        tr.innerHTML = `<td>${job.name}</td><td><span class="badge ${job.lastResult}">${job.lastResult}</span></td><td>${fmt(job.lastRunAt)}</td><td>${fmt(job.nextRunAt)}</td><td>${job.summary || '—'}</td>`;
+        document.getElementById('jobsTable').appendChild(tr);
+      });
+      const af=document.getElementById('activityFeed');
+      (activityData.activity.filter(a => a.roomId === roomId).slice(0,10)).forEach(item => {
+        const row=el('div','feed-item'); row.append(el('div','title',item.title)); row.append(el('div','meta',item.summary)); row.append(el('div','meta',fmt(item.at))); af.append(row);
+      });
+      if(!af.children.length){const row=el('div','feed-item'); row.append(el('div','title','No recent activity.')); af.append(row);}      
+      const pf=document.getElementById('approvalsFeed');
+      (approvalsData.approvals.filter(a => a.roomId === roomId).slice(0,10)).forEach(item => {
+        const row=el('div','feed-item'); row.append(el('div','title',item.title)); row.append(el('div','meta',item.summary)); row.append(el('div','meta',fmt(item.requestedAt))); pf.append(row);
+      });
+      if(!pf.children.length){const row=el('div','feed-item'); row.append(el('div','title','No approvals waiting.')); pf.append(row);}      
+      const lf=document.getElementById('alertsFeed');
+      (alertsData.alerts.filter(a => a.roomId === roomId).slice(0,10)).forEach(item => {
+        const row=el('div','feed-item'); row.append(el('div','title',item.title)); row.append(el('div','meta',item.summary)); row.append(el('div','meta',fmt(item.createdAt))); lf.append(row);
+      });
+      if(!lf.children.length){const row=el('div','feed-item'); row.append(el('div','title','No open alerts.')); lf.append(row);}      
+    }).catch(err => {
+      document.body.innerHTML = `<pre style="color:white;padding:20px">Room detail failed to load:\n${err.stack || err}</pre>`;
+    });
+  </script>
+</body>
+</html>
