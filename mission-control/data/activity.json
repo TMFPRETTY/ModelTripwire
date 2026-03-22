@@ -1,17 +1,6 @@
 {
-  "generatedAt": "2026-03-22T02:12:57Z",
+  "generatedAt": "2026-03-22T02:20:48Z",
   "activity": [
-    {
-      "id": "activity-47c14ec1-8102-4946-ad7a-952a8db6cbc8",
-      "roomId": "command-center",
-      "kind": "result",
-      "title": "mission-control-snapshot-refresh-every-5m",
-      "summary": "Healthy",
-      "priority": "normal",
-      "at": "2026-03-22T02:12:02.623000Z",
-      "sourceType": "job",
-      "sourceRef": "47c14ec1-8102-4946-ad7a-952a8db6cbc8"
-    },
     {
       "id": "activity-4cfe0675-b283-433d-bcaf-432a08706980",
       "roomId": "signal-and-circuit",
@@ -19,9 +8,20 @@
       "title": "signalandcircuit-mail-monitor-every-2m",
       "summary": "Healthy",
       "priority": "normal",
-      "at": "2026-03-22T02:11:19.258000Z",
+      "at": "2026-03-22T02:19:19.427000Z",
       "sourceType": "job",
       "sourceRef": "4cfe0675-b283-433d-bcaf-432a08706980"
+    },
+    {
+      "id": "activity-47c14ec1-8102-4946-ad7a-952a8db6cbc8",
+      "roomId": "command-center",
+      "kind": "result",
+      "title": "mission-control-snapshot-refresh-every-5m",
+      "summary": "Healthy",
+      "priority": "normal",
+      "at": "2026-03-22T02:17:02.637000Z",
+      "sourceType": "job",
+      "sourceRef": "47c14ec1-8102-4946-ad7a-952a8db6cbc8"
     },
     {
       "id": "activity-ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
