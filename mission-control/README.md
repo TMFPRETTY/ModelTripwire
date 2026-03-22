@@ -14,12 +14,20 @@ bash scripts/serve_mission_control.sh
 
 Then open:
 - <http://127.0.0.1:8765/mission-control/>
+- <http://127.0.0.1:8765/mission-control/office.html>
 - <http://127.0.0.1:8765/mission-control/rooms.html>
 - <http://127.0.0.1:8765/mission-control/jobs.html>
+- <http://127.0.0.1:8765/mission-control/agents.html>
+- <http://127.0.0.1:8765/mission-control/approvals.html>
+- <http://127.0.0.1:8765/mission-control/system.html>
 
 ## Current structure
 - `index.html` → overview
+- `office.html` → office mode
 - `rooms.html` → room list
 - `room.html?id=<room-slug>` → room detail
 - `jobs.html` → jobs list
+- `agents.html` → agent registry view
+- `approvals.html` → approvals view
+- `system.html` → runtime/system view
 - `data/*.json` → generated snapshots

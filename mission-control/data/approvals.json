@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T01:06:52Z",
+  "generatedAt": "2026-03-22T01:22:06Z",
   "approvals": [
     {
       "id": "approval-mail-19d0d07e37e37c0c",
@@ -9,16 +9,6 @@
       "decisionType": "review",
       "summary": "Google Workspace <https://c.gle/AEJ26quE4nGVDW6ZQxkzp6EJUalfOwZUZUjzX-AHXn4w53tJ6L2H5NvXCt5LkOUzGa8QdXCFiht6TKQATXeDkVzPH6xI0QqjFiSEEUJ7U8-w8baoUsz-G9bU7DVZskgjvP4u-hlH6pGtvPQQEUPshHX5hyALJgkqC4-i6Zf9WJBE_FBywuxLySLX81QgPf0> Messaging and\u2026",
       "requestedAt": "2026-03-21T22:35:42.547429+00:00",
-      "status": "pending"
-    },
-    {
-      "id": "approval-job-ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
-      "title": "Decide how to handle Caruso growth rate limit issue",
-      "roomId": "caruso-growth",
-      "risk": "medium",
-      "decisionType": "review",
-      "summary": "\u26a0\ufe0f API rate limit reached. Please try again later.",
-      "requestedAt": "2026-03-21T22:09:48.318000Z",
       "status": "pending"
     }
   ]

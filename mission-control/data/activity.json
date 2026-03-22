@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T01:06:52Z",
+  "generatedAt": "2026-03-22T01:22:06Z",
   "activity": [
     {
       "id": "activity-4cfe0675-b283-433d-bcaf-432a08706980",
@@ -8,7 +8,7 @@
       "title": "signalandcircuit-mail-monitor-every-2m",
       "summary": "Healthy",
       "priority": "normal",
-      "at": "2026-03-22T01:05:20.384000Z",
+      "at": "2026-03-22T01:21:31.739000Z",
       "sourceType": "job",
       "sourceRef": "4cfe0675-b283-433d-bcaf-432a08706980"
     },
@@ -19,7 +19,7 @@
       "title": "mission-control-snapshot-refresh-every-5m",
       "summary": "Healthy",
       "priority": "normal",
-      "at": "2026-03-22T01:04:41.256000Z",
+      "at": "2026-03-22T01:19:54.707000Z",
       "sourceType": "job",
       "sourceRef": "47c14ec1-8102-4946-ad7a-952a8db6cbc8"
     },
@@ -30,9 +30,20 @@
       "title": "caruso-competitor-watch-every-6h",
       "summary": "Healthy",
       "priority": "normal",
-      "at": "2026-03-22T00:56:30.246000Z",
+      "at": "2026-03-22T01:14:30.538000Z",
       "sourceType": "job",
       "sourceRef": "e5d420bd-4ac4-4716-a5ff-cf3c69bb381c"
+    },
+    {
+      "id": "activity-ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
+      "roomId": "caruso-growth",
+      "kind": "result",
+      "title": "caruso-marketing-opportunity-scan-every-4h",
+      "summary": "Healthy",
+      "priority": "normal",
+      "at": "2026-03-22T01:13:45.140000Z",
+      "sourceType": "job",
+      "sourceRef": "ee105b50-2e8e-463b-b9a4-bcc165a21a3d"
     },
     {
       "id": "activity-approval-mail-19d0d07e37e37c0c",
@@ -55,28 +66,6 @@
       "at": "2026-03-21T22:35:42.547429+00:00",
       "sourceType": "mail_state",
       "sourceRef": "19d0d07e37e37c0c"
-    },
-    {
-      "id": "activity-ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
-      "roomId": "caruso-growth",
-      "kind": "result",
-      "title": "caruso-marketing-opportunity-scan-every-4h",
-      "summary": "\u26a0\ufe0f API rate limit reached. Please try again later.",
-      "priority": "high",
-      "at": "2026-03-21T22:09:48.318000Z",
-      "sourceType": "job",
-      "sourceRef": "ee105b50-2e8e-463b-b9a4-bcc165a21a3d"
-    },
-    {
-      "id": "activity-approval-job-ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
-      "roomId": "caruso-growth",
-      "kind": "approval_request",
-      "title": "Decide how to handle Caruso growth rate limit issue",
-      "summary": "\u26a0\ufe0f API rate limit reached. Please try again later.",
-      "priority": "normal",
-      "at": "2026-03-21T22:09:48.318000Z",
-      "sourceType": "approval",
-      "sourceRef": "approval-job-ee105b50-2e8e-463b-b9a4-bcc165a21a3d"
     },
     {
       "id": "activity-1d4c9249-123c-4375-a663-bc99e6f2f622",

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mission Control — Office Mode</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Mission Control / Office Mode</h1>
+      <p class="sub">Humanized spatial view of the live OpenClaw system</p>
+    </div>
+    <nav class="navlinks">
+      <a href="./">Overview</a>
+      <a href="./rooms.html">Rooms</a>
+      <a href="./agents.html">Agents</a>
+      <a href="./approvals.html">Approvals</a>
+      <a href="./system.html">System</a>
+    </nav>
+  </header>
+
+  <main class="layout single">
+    <section class="panel full">
+      <h2>Office Health</h2>
+      <div id="officeStats" class="stats"></div>
+    </section>
+
+    <section class="panel full">
+      <h2>Digital Headquarters</h2>
+      <div class="office-grid" id="officeGrid"></div>
+    </section>
+
+    <section class="panel wide">
+      <h2>Current Handoffs</h2>
+      <div id="handoffsFeed" class="feed"></div>
+    </section>
+
+    <section class="panel narrow">
+      <h2>Recommended Focus</h2>
+      <ul id="recommendedFocus" class="list"></ul>
+    </section>
+  </main>
+
+  <script>
+    const fmt = ts => ts ? new Date(ts).toLocaleString() : '—';
+    const statusClass = s => ['healthy','active','ok'].includes(s)?'good':(['warning'].includes(s)?'warn':(['blocked','failed','error','critical'].includes(s)?'bad':'quiet'));
+    const el = (tag, cls, text) => { const n=document.createElement(tag); if(cls) n.className=cls; if(text!==undefined) n.textContent=text; return n; };
+    const STAFF_TITLES = {
+      'command-center': 'Chief of Staff',
+      'ops-desk': 'Operations Coordinator',
+      'caruso-growth': 'Growth Strategist',
+      'caruso-product': 'Product Analyst',
+      'security-infra': 'Security & Infra Officer',
+      'research-lab': 'Research Scout',
+      'engineering': 'Engineering Team',
+      'qa-review': 'QA Reviewer',
+      'signal-and-circuit': 'Newsroom Editor',
+      'support-inbox': 'Support Triage Lead'
+    };
+    const ROOM_TITLES = {
+      'command-center': 'Command Center',
+      'ops-desk': 'Ops Desk',
+      'support-inbox': 'Support Inbox',
+      'caruso-growth': 'Growth Room',
+      'caruso-product': 'Product Lab',
+      'security-infra': 'Security Office',
+      'research-lab': 'Research Lab',
+      'signal-and-circuit': 'Signal & Circuit Newsroom',
+      'engineering': 'Engineering Bay'
+    };
+
+    Promise.all([
+      fetch('./data/overview.json').then(r=>r.json()),
+      fetch('./data/rooms.json').then(r=>r.json()),
+      fetch('./data/agents.json').then(r=>r.json()),
+      fetch('./data/approvals.json').then(r=>r.json()),
+      fetch('./data/activity.json').then(r=>r.json())
+    ]).then(([overview, roomsData, agentsData, approvalsData, activityData]) => {
+      const stats = [
+        ['System', overview.overview.globalHealth.systemStatus],
+        ['Staff on duty', overview.overview.globalHealth.activeAgents],
+        ['Approvals', overview.overview.globalHealth.pendingApprovals],
+        ['Alerts', overview.overview.globalHealth.openAlerts]
+      ];
+      const statsWrap = document.getElementById('officeStats');
+      stats.forEach(([label, value]) => {
+        const card = el('div', 'stat');
+        card.append(el('div', 'label', label));
+        card.append(el('div', 'value', String(value)));
+        statsWrap.append(card);
+      });
+
+      const officeGrid = document.getElementById('officeGrid');
+      const rooms = roomsData.rooms.slice();
+      const extraRooms = [
+        { id:'standup-room', name:'Standup Room', status:'quiet', headline:'Cross-room daily sync and blocker rollup.', agents:['command-center','ops-desk'], badges:{approvals:0,alerts:0,queue:0}, kind:'conference' },
+        { id:'qa-review-room', name:'QA Review Room', status:'active', headline:'Engineering ↔ QA review loop for pass / rework / block.', agents:['qa-review','engineering'], badges:{approvals:0,alerts:0,queue:0}, kind:'review' },
+        { id:'approval-board', name:'Approval Board', status: approvalsData.approvals.length ? 'warning' : 'quiet', headline: approvalsData.approvals.length ? `${approvalsData.approvals.length} approval item(s) waiting.` : 'No pending approvals.', agents:['command-center'], badges:{approvals:approvalsData.approvals.length,alerts:0,queue:0}, kind:'approval' }
+      ];
+      [...rooms, ...extraRooms].forEach(room => {
+        const card = el('div', `card office-card ${statusClass(room.status)}`);
+        const title = ROOM_TITLES[room.id] || room.name;
+        card.append(el('div', 'title', title));
+        const meta = el('div', 'meta');
+        meta.append(el('span', `badge ${room.status}`, room.status));
+        meta.append(document.createTextNode(`  •  ${room.kind}`));
+        card.append(meta);
+        card.append(el('div', 'headline', room.headline));
+        const staff = el('div', 'staff-list');
+        (room.agents || []).forEach(id => {
+          const pill = el('div', 'staff-pill');
+          pill.append(el('div', 'staff-name', id));
+          pill.append(el('div', 'staff-role', STAFF_TITLES[id] || 'Staff'));
+          staff.append(pill);
+        });
+        if ((room.agents || []).length) card.append(staff);
+        const badgeMeta = el('div', 'meta', `Approvals: ${room.badges?.approvals ?? 0} • Alerts: ${room.badges?.alerts ?? 0} • Queue: ${room.badges?.queue ?? 0}`);
+        card.append(badgeMeta);
+        officeGrid.append(card);
+      });
+
+      const handoffs = document.getElementById('handoffsFeed');
+      const handoffItems = [];
+      if (approvalsData.approvals.some(a => a.roomId === 'signal-and-circuit')) {
+        handoffItems.push({title:'Signal & Circuit → Engineering', summary:'Pending inbox/remediation items likely need engineering handoff after review.'});
+      }
+      if (activityData.activity.some(a => a.roomId === 'engineering')) {
+        handoffItems.push({title:'Engineering ↔ QA Review Room', summary:'Use the QA review loop for implementation work before marking done.'});
+      }
+      if (activityData.activity.some(a => a.roomId === 'caruso-product')) {
+        handoffItems.push({title:'Product Lab → Engineering', summary:'Product recommendations can be moved into engineering when implementation is approved.'});
+      }
+      (handoffItems.length ? handoffItems : [{title:'No major handoffs right now.', summary:'Cross-room work will appear here as the system gets busier.'}]).forEach(item => {
+        const row = el('div', 'feed-item');
+        row.append(el('div', 'title', item.title));
+        row.append(el('div', 'meta', item.summary));
+        handoffs.append(row);
+      });
+
+      const focus = document.getElementById('recommendedFocus');
+      overview.overview.recommendedFocus.forEach(item => focus.append(el('li', '', item)));
+    }).catch(err => {
+      document.body.innerHTML = `<pre style="color:white;padding:20px">Office Mode failed to load:\n${err.stack || err}</pre>`;
+    });
+  </script>
+</body>
+</html>

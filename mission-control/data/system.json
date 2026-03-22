@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-03-22T01:06:52Z",
+  "generatedAt": "2026-03-22T01:22:06Z",
   "system": {
-    "overallStatus": "warning",
+    "overallStatus": "healthy",
     "hostLabel": "Jeremy\u2019s MacBook Pro",
     "gatewayStatus": "running",
     "runtime": "openclaw",
     "activeJobCount": 14,
-    "failingJobCount": 1,
-    "warningCount": 1,
+    "failingJobCount": 0,
+    "warningCount": 0,
     "notes": []
   }
 }
