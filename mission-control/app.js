@@ -7,7 +7,7 @@ async function loadJson(name) {
 function statusClass(status) {
   if (['healthy', 'active', 'ok'].includes(status)) return 'good';
   if (['warning'].includes(status)) return 'warn';
-  if (['blocked', 'failed', 'error'].includes(status)) return 'bad';
+  if (['blocked', 'failed', 'error', 'critical'].includes(status)) return 'bad';
   return 'quiet';
 }
 
@@ -49,13 +49,12 @@ async function main() {
   statItems.forEach(([label, value]) => {
     const card = el('div', 'stat');
     card.append(el('div', 'label', label));
-    const val = el('div', 'value', String(value));
-    card.append(val);
+    card.append(el('div', 'value', String(value)));
     statsWrap.append(card);
   });
 
   const needs = document.getElementById('needsAttention');
-  (overview.overview.needsAttention.length ? overview.overview.needsAttention : [{title:'No urgent issues currently surfaced.'}]).forEach(item => {
+  (overview.overview.needsAttention.length ? overview.overview.needsAttention : [{ title: 'No urgent issues currently surfaced.' }]).forEach(item => {
     needs.append(el('li', '', item.title));
   });
 
@@ -68,8 +67,7 @@ async function main() {
     card.href = `./room.html?id=${encodeURIComponent(room.id)}`;
     card.append(el('div', 'title', room.name));
     const meta = el('div', 'meta');
-    const badge = el('span', `badge ${room.status}`, room.status);
-    meta.append(badge);
+    meta.append(el('span', `badge ${room.status}`, room.status));
     meta.append(document.createTextNode(`  •  ${room.kind}`));
     card.append(meta);
     card.append(el('div', 'headline', room.headline));
@@ -79,7 +77,8 @@ async function main() {
   });
 
   const activityFeed = document.getElementById('activityFeed');
-  activity.activity.slice(0, 10).forEach(item => {
+  const recentItems = activity.activity.length ? activity.activity.slice(0, 10) : [{ title: 'No recent activity.', summary: 'Nothing meaningful has been derived yet.', at: null, roomId: 'system' }];
+  recentItems.forEach(item => {
     const row = el('div', 'feed-item');
     row.append(el('div', 'title', `${item.roomId || 'system'} — ${item.title}`));
     row.append(el('div', 'meta', item.summary));
@@ -88,15 +87,14 @@ async function main() {
   });
 
   const jobsTable = document.getElementById('jobsTable');
-  jobs.jobs.slice().sort((a,b) => (a.lastResult === 'failed' ? -1 : 1)).forEach(job => {
+  jobs.jobs.slice().sort((a, b) => (a.lastResult === 'failed' ? -1 : 1)).forEach(job => {
     const tr = document.createElement('tr');
-    const status = `<span class="badge ${job.lastResult}">${job.lastResult}</span>`;
-    tr.innerHTML = `<td>${job.name}</td><td>${job.roomId || '—'}</td><td>${status}</td><td>${fmt(job.lastRunAt)}</td><td>${fmt(job.nextRunAt)}</td>`;
+    tr.innerHTML = `<td>${job.name}</td><td>${job.roomId || '—'}</td><td><span class="badge ${job.lastResult}">${job.lastResult}</span></td><td>${fmt(job.lastRunAt)}</td><td>${fmt(job.nextRunAt)}</td>`;
     jobsTable.append(tr);
   });
 
   const alertsList = document.getElementById('alertsList');
-  const alertItems = alerts.alerts.length ? alerts.alerts : [{title:'No open alerts.', summary:'System currently has no explicit alert items.', createdAt:null}];
+  const alertItems = alerts.alerts.length ? alerts.alerts : [{ title: 'No open alerts.', summary: 'System currently has no explicit alert items.', createdAt: null }];
   alertItems.forEach(item => {
     const row = el('div', 'feed-item');
     row.append(el('div', 'title', item.title));
@@ -105,24 +103,22 @@ async function main() {
     alertsList.append(row);
   });
 
+  const approvalsList = document.getElementById('approvalsList');
+  const approvalItems = approvals.approvals.length ? approvals.approvals : [{ title: 'No approvals waiting.', summary: 'Nothing is explicitly waiting on you right now.', requestedAt: null }];
+  approvalItems.forEach(item => {
+    const row = el('div', 'feed-item');
+    row.append(el('div', 'title', item.title));
+    row.append(el('div', 'meta', item.summary));
+    row.append(el('div', 'meta', fmt(item.requestedAt)));
+    approvalsList.append(row);
+  });
+
   const agentsGrid = document.getElementById('agentsGrid');
   agents.agents.forEach(agent => {
     const card = el('div', `card ${statusClass(agent.phase)}`);
     card.append(el('div', 'title', agent.name));
     const meta = el('div', 'meta');
     meta.append(el('span', `badge ${agent.phase}`, agent.phase));
-    meta.append(document.createTextNode(`  •  room: ${agent.roomId || '—'}`));
-    card.append(meta);
-    card.append(el('div', 'headline', agent.mission));
-    card.append(el('div', 'meta', `Skills: ${agent.skills.join(', ')}`));
-    agentsGrid.append(card);
-  });
-}
-
-main().catch(err => {
-  document.body.innerHTML = `<pre style="color:white;padding:20px">Mission Control failed to load:\n${err.stack || err}</pre>`;
-});
-el('span', `badge ${agent.phase}`, agent.phase));
     meta.append(document.createTextNode(`  •  room: ${agent.roomId || '—'}`));
     card.append(meta);
     card.append(el('div', 'headline', agent.mission));

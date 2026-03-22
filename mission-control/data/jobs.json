@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T01:02:45Z",
+  "generatedAt": "2026-03-22T01:06:52Z",
   "jobs": [
     {
       "id": "4cfe0675-b283-433d-bcaf-432a08706980",
@@ -7,8 +7,8 @@
       "roomId": "signal-and-circuit",
       "status": "active",
       "enabled": true,
-      "lastRunAt": "2026-03-22T01:01:20.354000Z",
-      "nextRunAt": "2026-03-22T01:03:20.354000Z",
+      "lastRunAt": "2026-03-22T01:05:20.384000Z",
+      "nextRunAt": "2026-03-22T01:07:20.384000Z",
       "lastResult": "ok",
       "recentFailureCount": 0,
       "summary": "Healthy",
@@ -23,8 +23,8 @@
       "roomId": "command-center",
       "status": "active",
       "enabled": true,
-      "lastRunAt": "2026-03-22T00:59:41.243000Z",
-      "nextRunAt": "2026-03-22T01:04:41.243000Z",
+      "lastRunAt": "2026-03-22T01:04:41.256000Z",
+      "nextRunAt": "2026-03-22T01:09:41.256000Z",
       "lastResult": "ok",
       "recentFailureCount": 0,
       "summary": "Healthy",

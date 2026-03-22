@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T01:02:45Z",
+  "generatedAt": "2026-03-22T01:06:52Z",
   "rooms": [
     {
       "id": "command-center",
@@ -7,7 +7,7 @@
       "channelId": "1484651751108775946",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-22T00:59:41.243000Z",
+      "lastUpdateAt": "2026-03-22T01:04:41.256000Z",
       "agents": [
         "command-center"
       ],
@@ -126,7 +126,7 @@
       "channelId": "1485042311959416832",
       "status": "warning",
       "headline": "1 pending inbox item(s) need triage.",
-      "lastUpdateAt": "2026-03-22T01:01:20.354000Z",
+      "lastUpdateAt": "2026-03-22T01:05:20.384000Z",
       "agents": [
         "signal-and-circuit"
       ],

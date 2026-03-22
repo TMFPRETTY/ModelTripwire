@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mission Control — Agents</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Mission Control / Agents</h1>
+      <p class="sub">Agent registry and operating status</p>
+    </div>
+    <nav class="navlinks">
+      <a href="./">Overview</a>
+      <a href="./rooms.html">Rooms</a>
+      <a href="./jobs.html">Jobs</a>
+      <a href="./system.html">System</a>
+    </nav>
+  </header>
+  <main class="layout single">
+    <section class="panel full">
+      <h2>Agents</h2>
+      <div id="agentsGrid" class="agents-grid"></div>
+    </section>
+  </main>
+  <script>
+    fetch('./data/agents.json').then(r=>r.json()).then(data => {
+      const grid = document.getElementById('agentsGrid');
+      const statusClass = s => ['active','healthy'].includes(s)?'good':(['transitional','embedded','planned'].includes(s)?'quiet':'warn');
+      data.agents.forEach(agent => {
+        const card = document.createElement('div');
+        card.className = `card ${statusClass(agent.phase)}`;
+        card.innerHTML = `<div class="title">${agent.name}</div><div class="meta"><span class="badge ${agent.phase}">${agent.phase}</span> • room: ${agent.roomId || '—'}</div><div class="headline">${agent.mission}</div><div class="meta">Skills: ${(agent.skills||[]).join(', ') || '—'}</div><div class="meta">Approval boundary: ${agent.approvalBoundary || '—'}</div>`;
+        grid.appendChild(card);
+      });
+    });
+  </script>
+</body>
+</html>
