@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T01:22:06Z",
+  "generatedAt": "2026-03-22T02:12:57Z",
   "rooms": [
     {
       "id": "command-center",
@@ -7,7 +7,7 @@
       "channelId": "1484651751108775946",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-22T01:19:54.707000Z",
+      "lastUpdateAt": "2026-03-22T02:12:02.623000Z",
       "agents": [
         "command-center"
       ],
@@ -58,7 +58,7 @@
       "channelId": "1484651836966436934",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-22T01:14:30.538000Z",
+      "lastUpdateAt": "2026-03-22T02:09:48.340000Z",
       "agents": [
         "caruso-growth"
       ],
@@ -126,7 +126,7 @@
       "channelId": "1485042311959416832",
       "status": "warning",
       "headline": "1 pending inbox item(s) need triage.",
-      "lastUpdateAt": "2026-03-22T01:21:31.739000Z",
+      "lastUpdateAt": "2026-03-22T02:11:19.258000Z",
       "agents": [
         "signal-and-circuit"
       ],

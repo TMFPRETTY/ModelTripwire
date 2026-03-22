@@ -10,11 +10,12 @@
   <header class="topbar">
     <div>
       <h1>Mission Control / Office Mode</h1>
-      <p class="sub">Spatial HQ view of rooms, staff, and handoffs</p>
+      <p class="sub">Living HQ view of rooms, staff, handoffs, and the work happening inside the system</p>
     </div>
     <nav class="navlinks">
       <a href="./">Overview</a>
       <a href="./rooms.html">Rooms</a>
+      <a href="./jobs.html">Jobs</a>
       <a href="./agents.html">Agents</a>
       <a href="./approvals.html">Approvals</a>
       <a href="./system.html">System</a>
@@ -25,81 +26,181 @@
     <section class="panel full">
       <h2>HQ Status</h2>
       <div id="officeStats" class="stats"></div>
+      <div class="hud-strip">
+        <div class="hud-note">Office Mode is the visual layer. Click any room to open the operational view behind it.</div>
+        <div class="office-legend">
+          <span class="badge healthy">healthy</span>
+          <span class="badge warning">needs attention</span>
+          <span class="badge blocked">blocked / failing</span>
+          <span class="badge quiet">quiet / planned</span>
+        </div>
+      </div>
     </section>
 
     <section class="panel full office-shell">
       <div class="office-floorplan" id="officeFloorplan">
-        <div class="zone command" id="zone-command-center">
-          <div class="zone-title">Command Center</div>
-          <div class="zone-sub">Top priorities, blockers, approvals</div>
-          <div class="zone-body"></div>
-        </div>
+        <div class="office-label top">OpenClaw HQ</div>
+        <div class="office-label bottom">Click rooms to drill into operations</div>
 
-        <div class="zone standup" id="zone-standup-room">
-          <div class="zone-title">Standup Room</div>
-          <div class="zone-sub">Cross-room daily sync</div>
-          <div class="zone-body"></div>
-        </div>
+        <div class="corridor main-hall"></div>
+        <div class="corridor center-spine"></div>
+        <div class="corridor east-walk"></div>
 
-        <div class="zone approval" id="zone-approval-board">
-          <div class="zone-title">Approval Board</div>
-          <div class="zone-sub">Things waiting on Jeremy</div>
-          <div class="zone-body"></div>
-        </div>
+        <div class="meeting-table"></div>
+        <div class="chair c1"></div>
+        <div class="chair c2"></div>
+        <div class="chair c3"></div>
+        <div class="chair c4"></div>
 
-        <div class="zone ops" id="zone-ops-desk">
-          <div class="zone-title">Ops Desk</div>
-          <div class="zone-sub">Failures, drift, coordination</div>
-          <div class="zone-body"></div>
-        </div>
+        <div class="pixel-couch" style="left: 106px; top: 500px;"></div>
+        <div class="pixel-plant" style="left: 96px; top: 566px;"></div>
+        <div class="pixel-plant" style="right: 104px; top: 500px;"></div>
+        <div class="pixel-server" style="right: 98px; bottom: 140px;"></div>
 
-        <div class="zone engineering" id="zone-engineering">
-          <div class="zone-title">Engineering Bay</div>
-          <div class="zone-sub">Implementation and debugging</div>
-          <div class="zone-body"></div>
-        </div>
+        <a class="station quiet" id="station-command-center" data-room-id="command-center" href="./room.html?id=command-center" style="left: 40px; top: 40px; width: 420px; height: 235px;">
+          <div class="station-inner">
+            <div class="monitor-wall">
+              <div class="monitor"></div>
+              <div class="monitor"></div>
+              <div class="monitor"></div>
+            </div>
+            <h3>Command Center</h3>
+            <div class="subtitle">Priority wall · executive overview · blockers</div>
+            <div class="headline room-headline"></div>
+            <div class="meta-row room-badges"></div>
+            <div class="staff-strip room-staff"></div>
+          </div>
+        </a>
 
-        <div class="zone qa" id="zone-qa-review-room">
-          <div class="zone-title">QA Review Room</div>
-          <div class="zone-sub">Pass / rework / block loop</div>
-          <div class="zone-body"></div>
-        </div>
+        <div class="pixel-board" style="left: 510px; top: 58px;"></div>
+        <a class="station quiet" id="station-standup-room" href="./" style="left: 500px; top: 40px; width: 290px; height: 235px;">
+          <div class="station-inner">
+            <h3>Standup Room</h3>
+            <div class="subtitle">Cross-room sync · priorities · handoffs</div>
+            <div class="headline">Where blockers surface, decisions align, and the whole floor gets pointed at the same target.</div>
+            <div class="meta-row">
+              <span class="badge quiet">sync space</span>
+              <span class="badge quiet">cross-room</span>
+            </div>
+            <div class="staff-strip" id="standupStaff"></div>
+          </div>
+        </a>
 
-        <div class="zone growth" id="zone-caruso-growth">
-          <div class="zone-title">Growth Room</div>
-          <div class="zone-sub">Campaigns, replies, opportunities</div>
-          <div class="zone-body"></div>
-        </div>
+        <a class="station quiet" id="station-approval-board" href="./approvals.html" style="right: 40px; top: 40px; width: 320px; height: 235px;">
+          <div class="station-inner">
+            <div class="pixel-board" style="right: 16px; top: 18px;"></div>
+            <h3>Approval Board</h3>
+            <div class="subtitle">Things waiting on Jeremy</div>
+            <div class="headline" id="approvalHeadline"></div>
+            <div class="meta-row" id="approvalBadges"></div>
+            <div class="mini-feed" id="approvalFeed"></div>
+          </div>
+        </a>
 
-        <div class="zone product" id="zone-caruso-product">
-          <div class="zone-title">Product Lab</div>
-          <div class="zone-sub">Signals and recommendations</div>
-          <div class="zone-body"></div>
-        </div>
+        <a class="station quiet" id="station-ops-desk" data-room-id="ops-desk" href="./room.html?id=ops-desk" style="left: 40px; top: 520px; width: 270px; height: 250px;">
+          <div class="station-inner">
+            <div class="desk-cluster"><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div></div>
+            <h3>Ops Desk</h3>
+            <div class="subtitle">Queue health · failures · coordination</div>
+            <div class="headline room-headline"></div>
+            <div class="meta-row room-badges"></div>
+            <div class="staff-strip room-staff"></div>
+          </div>
+        </a>
 
-        <div class="zone security" id="zone-security-infra">
-          <div class="zone-title">Security Office</div>
-          <div class="zone-sub">Infra and runtime health</div>
-          <div class="zone-body"></div>
-        </div>
+        <a class="station quiet" id="station-engineering" data-room-id="engineering" href="./room.html?id=engineering" style="left: 330px; top: 520px; width: 295px; height: 300px;">
+          <div class="station-inner">
+            <div class="desk-cluster"><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div></div>
+            <h3>Engineering Bay</h3>
+            <div class="subtitle">Implementation · debugging · code changes</div>
+            <div class="headline room-headline"></div>
+            <div class="meta-row room-badges"></div>
+            <div class="staff-strip room-staff"></div>
+          </div>
+        </a>
 
-        <div class="zone research" id="zone-research-lab">
-          <div class="zone-title">Research Lab</div>
-          <div class="zone-sub">Idea scans and exploration</div>
-          <div class="zone-body"></div>
-        </div>
+        <a class="station quiet" id="station-qa-review" data-room-id="qa-review" href="./agents.html" style="left: 645px; top: 520px; width: 250px; height: 250px;">
+          <div class="station-inner">
+            <h3>QA Review Room</h3>
+            <div class="subtitle">Pass / rework / block loop</div>
+            <div class="headline">Checks important output before it gets treated as done.</div>
+            <div class="meta-row">
+              <span class="badge quiet">embedded QA</span>
+              <span class="badge quiet">review gate</span>
+            </div>
+            <div class="staff-strip" id="qaStaff"></div>
+          </div>
+        </a>
 
-        <div class="zone newsroom" id="zone-signal-and-circuit">
-          <div class="zone-title">Signal & Circuit Newsroom</div>
-          <div class="zone-sub">Editorial + inbox + AdSense + growth</div>
-          <div class="zone-body"></div>
-        </div>
+        <a class="station quiet" id="station-support-inbox" data-room-id="support-inbox" href="./room.html?id=support-inbox" style="right: 40px; top: 520px; width: 320px; height: 270px;">
+          <div class="station-inner">
+            <div class="pixel-trays" style="right: 20px; top: 20px;"></div>
+            <h3>Support Inbox</h3>
+            <div class="subtitle">Triage desk · response prep · next actions</div>
+            <div class="headline room-headline"></div>
+            <div class="meta-row room-badges"></div>
+            <div class="staff-strip room-staff"></div>
+          </div>
+        </a>
 
-        <div class="zone support" id="zone-support-inbox">
-          <div class="zone-title">Support Inbox</div>
-          <div class="zone-sub">Triage and response prep</div>
-          <div class="zone-body"></div>
-        </div>
+        <a class="station quiet" id="station-caruso-growth" data-room-id="caruso-growth" href="./room.html?id=caruso-growth" style="left: 40px; bottom: 110px; width: 270px; height: 240px;">
+          <div class="station-inner">
+            <div class="desk-cluster"><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div></div>
+            <h3>Growth Room</h3>
+            <div class="subtitle">Campaigns · replies · opportunities</div>
+            <div class="headline room-headline"></div>
+            <div class="meta-row room-badges"></div>
+            <div class="staff-strip room-staff"></div>
+          </div>
+        </a>
+
+        <a class="station quiet" id="station-caruso-product" data-room-id="caruso-product" href="./room.html?id=caruso-product" style="left: 330px; bottom: 110px; width: 270px; height: 240px;">
+          <div class="station-inner">
+            <div class="pixel-board" style="left: 18px; top: 18px;"></div>
+            <h3>Product Lab</h3>
+            <div class="subtitle">Signals · patterns · recommendations</div>
+            <div class="headline room-headline"></div>
+            <div class="meta-row room-badges"></div>
+            <div class="staff-strip room-staff"></div>
+          </div>
+        </a>
+
+        <a class="station quiet" id="station-security-infra" data-room-id="security-infra" href="./room.html?id=security-infra" style="left: 620px; bottom: 110px; width: 270px; height: 240px;">
+          <div class="station-inner">
+            <div class="pixel-rack" style="right: 18px; top: 18px;"></div>
+            <h3>Security Office</h3>
+            <div class="subtitle">Runtime health · exposure · drift</div>
+            <div class="headline room-headline"></div>
+            <div class="meta-row room-badges"></div>
+            <div class="staff-strip room-staff"></div>
+          </div>
+        </a>
+
+        <a class="station quiet" id="station-research-lab" data-room-id="research-lab" href="./room.html?id=research-lab" style="right: 40px; bottom: 110px; width: 320px; height: 240px;">
+          <div class="station-inner">
+            <div class="pixel-couch" style="right: 18px; bottom: 18px;"></div>
+            <h3>Research Lab</h3>
+            <div class="subtitle">Idea scans · memos · rankings</div>
+            <div class="headline room-headline"></div>
+            <div class="meta-row room-badges"></div>
+            <div class="staff-strip room-staff"></div>
+          </div>
+        </a>
+
+        <a class="station quiet" id="station-signal-and-circuit" data-room-id="signal-and-circuit" href="./room.html?id=signal-and-circuit" style="right: 40px; top: 295px; width: 420px; height: 190px;">
+          <div class="station-inner">
+            <div class="monitor-wall">
+              <div class="monitor warn"></div>
+              <div class="monitor"></div>
+              <div class="monitor"></div>
+            </div>
+            <h3>Signal &amp; Circuit Newsroom</h3>
+            <div class="subtitle">Editorial · inbox · AdSense · growth</div>
+            <div class="headline room-headline"></div>
+            <div class="meta-row room-badges"></div>
+            <div class="staff-strip room-staff"></div>
+          </div>
+        </a>
       </div>
     </section>
 
@@ -115,8 +216,8 @@
   </main>
 
   <script>
-    const el = (tag, cls, text) => { const n=document.createElement(tag); if(cls) n.className=cls; if(text!==undefined) n.textContent=text; return n; };
-    const statusClass = s => ['healthy','active','ok'].includes(s)?'good':(['warning'].includes(s)?'warn':(['blocked','failed','error','critical'].includes(s)?'bad':'quiet'));
+    const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
+    const statusClass = s => ['healthy','active','ok'].includes(s) ? 'good' : (['warning'].includes(s) ? 'warn' : (['blocked','failed','error','critical'].includes(s) ? 'bad' : 'quiet'));
     const STAFF_TITLES = {
       'command-center': 'Chief of Staff',
       'ops-desk': 'Operations Coordinator',
@@ -129,112 +230,113 @@
       'signal-and-circuit': 'Newsroom Editor',
       'support-inbox': 'Support Triage Lead'
     };
-    const ZONE_MAP = {
-      'command-center': 'zone-command-center',
-      'ops-desk': 'zone-ops-desk',
-      'support-inbox': 'zone-support-inbox',
-      'caruso-growth': 'zone-caruso-growth',
-      'caruso-product': 'zone-caruso-product',
-      'security-infra': 'zone-security-infra',
-      'research-lab': 'zone-research-lab',
-      'signal-and-circuit': 'zone-signal-and-circuit',
-      'engineering': 'zone-engineering'
-    };
 
     Promise.all([
-      fetch('./data/overview.json').then(r=>r.json()),
-      fetch('./data/rooms.json').then(r=>r.json()),
-      fetch('./data/agents.json').then(r=>r.json()),
-      fetch('./data/approvals.json').then(r=>r.json()),
-      fetch('./data/activity.json').then(r=>r.json())
+      fetch('./data/overview.json').then(r => r.json()),
+      fetch('./data/rooms.json').then(r => r.json()),
+      fetch('./data/agents.json').then(r => r.json()),
+      fetch('./data/approvals.json').then(r => r.json()),
+      fetch('./data/activity.json').then(r => r.json())
     ]).then(([overview, roomsData, agentsData, approvalsData, activityData]) => {
-      const stats = [
+      const statsWrap = document.getElementById('officeStats');
+      [
         ['System', overview.overview.globalHealth.systemStatus],
+        ['Active rooms', overview.overview.globalHealth.activeRooms],
         ['Staff on duty', overview.overview.globalHealth.activeAgents],
         ['Approvals', overview.overview.globalHealth.pendingApprovals],
-        ['Alerts', overview.overview.globalHealth.openAlerts]
-      ];
-      const statsWrap = document.getElementById('officeStats');
-      stats.forEach(([label, value]) => {
+        ['Alerts', overview.overview.globalHealth.openAlerts],
+        ['Failing jobs', overview.overview.globalHealth.failingJobs]
+      ].forEach(([label, value]) => {
         const card = el('div', 'stat');
         card.append(el('div', 'label', label));
         card.append(el('div', 'value', String(value)));
         statsWrap.append(card);
       });
 
+      const roomsById = Object.fromEntries(roomsData.rooms.map(room => [room.id, room]));
       const agentsByRoom = {};
       agentsData.agents.forEach(agent => {
         if (!agent.roomId) return;
         (agentsByRoom[agent.roomId] ||= []).push(agent);
       });
 
-      roomsData.rooms.forEach(room => {
-        const zoneId = ZONE_MAP[room.id];
-        if (!zoneId) return;
-        const zone = document.getElementById(zoneId);
-        const body = zone.querySelector('.zone-body');
-        zone.classList.add(statusClass(room.status));
-
-        const headline = el('div', 'zone-headline', room.headline);
-        body.append(headline);
-
-        const badges = el('div', 'zone-badges');
-        badges.append(el('span', `badge ${room.status}`, room.status));
-        badges.append(el('span', 'badge quiet', `approvals ${room.badges?.approvals ?? 0}`));
-        badges.append(el('span', 'badge quiet', `alerts ${room.badges?.alerts ?? 0}`));
-        if ((room.badges?.queue ?? 0) > 0) badges.append(el('span', 'badge warning', `queue ${room.badges.queue}`));
-        body.append(badges);
-
-        const staffWrap = el('div', 'desk-row');
-        (agentsByRoom[room.id] || []).forEach(agent => {
-          const desk = el('div', 'desk');
-          desk.append(el('div', 'desk-name', agent.name));
-          desk.append(el('div', 'desk-role', STAFF_TITLES[agent.id] || 'Staff'));
-          desk.append(el('div', `badge ${agent.phase}`, agent.phase));
-          staffWrap.append(desk);
+      document.querySelectorAll('[data-room-id]').forEach(station => {
+        const roomId = station.dataset.roomId;
+        const room = roomsById[roomId];
+        if (!room) return;
+        station.classList.add(statusClass(room.status));
+        station.querySelectorAll('.room-headline').forEach(node => node.textContent = room.headline || 'No current headline.');
+        station.querySelectorAll('.room-badges').forEach(node => {
+          node.append(el('span', `badge ${room.status}`, room.status));
+          node.append(el('span', 'badge quiet', `approvals ${room.badges?.approvals ?? 0}`));
+          node.append(el('span', 'badge quiet', `alerts ${room.badges?.alerts ?? 0}`));
+          if ((room.badges?.queue ?? 0) > 0) node.append(el('span', 'badge warning', `queue ${room.badges.queue}`));
         });
-        if ((agentsByRoom[room.id] || []).length) body.append(staffWrap);
+        station.querySelectorAll('.room-staff').forEach(node => {
+          const roomAgents = agentsByRoom[roomId] || [];
+          if (!roomAgents.length) {
+            const ghost = el('div', 'avatar');
+            ghost.innerHTML = `<div class="person"></div><div class="name">No one seated</div><div class="role">waiting for staffing</div>`;
+            node.append(ghost);
+            return;
+          }
+          roomAgents.forEach(agent => {
+            const avatar = el('div', 'avatar');
+            avatar.innerHTML = `<div class="person"></div><div class="name">${agent.name}</div><div class="role">${STAFF_TITLES[agent.id] || 'Staff'}</div>`;
+            node.append(avatar);
+          });
+        });
       });
 
-      const standupBody = document.querySelector('#zone-standup-room .zone-body');
-      standupBody.append(el('div', 'zone-headline', 'Cross-room sync for blockers, priorities, and daily focus.'));
-      standupBody.append(el('div', 'zone-note', 'Backed by command-center and ops-desk summaries.'));
-
-      const qaBody = document.querySelector('#zone-qa-review-room .zone-body');
-      qaBody.append(el('div', 'zone-headline', 'Engineering ↔ QA loop for pass, rework, testing, and block decisions.'));
-      const qaDesks = el('div', 'desk-row');
-      ['engineering','qa-review'].forEach(id => {
-        const desk = el('div', 'desk');
-        desk.append(el('div', 'desk-name', id));
-        desk.append(el('div', 'desk-role', STAFF_TITLES[id] || 'Staff'));
-        qaDesks.append(desk);
+      const standupStaff = document.getElementById('standupStaff');
+      ['command-center', 'ops-desk', 'engineering', 'caruso-product'].forEach(id => {
+        const roomAgents = agentsByRoom[id] || [];
+        roomAgents.slice(0,1).forEach(agent => {
+          const avatar = el('div', 'avatar');
+          avatar.innerHTML = `<div class="person"></div><div class="name">${agent.name}</div><div class="role">${STAFF_TITLES[agent.id] || 'Staff'}</div>`;
+          standupStaff.append(avatar);
+        });
       });
-      qaBody.append(qaDesks);
 
-      const approvalBody = document.querySelector('#zone-approval-board .zone-body');
+      const qaStaff = document.getElementById('qaStaff');
+      ['engineering', 'qa-review'].forEach(id => {
+        const source = id === 'qa-review' ? [{ name: 'QA Review', id: 'qa-review' }] : (agentsByRoom[id] || []).slice(0,1);
+        source.forEach(agent => {
+          const avatar = el('div', 'avatar');
+          avatar.innerHTML = `<div class="person"></div><div class="name">${agent.name}</div><div class="role">${STAFF_TITLES[agent.id] || 'Staff'}</div>`;
+          qaStaff.append(avatar);
+        });
+      });
+
+      const approvalHeadline = document.getElementById('approvalHeadline');
+      const approvalFeed = document.getElementById('approvalFeed');
+      const approvalBadges = document.getElementById('approvalBadges');
       const approvalCount = approvalsData.approvals.length;
-      approvalBody.append(el('div', 'zone-headline', approvalCount ? `${approvalCount} item(s) currently waiting on Jeremy.` : 'No pending approvals right now.'));
-      const approvalList = el('div', 'mini-feed');
-      (approvalsData.approvals.slice(0,4)).forEach(item => {
+      approvalHeadline.textContent = approvalCount ? `${approvalCount} item(s) are currently on the board waiting for a decision.` : 'The board is clear right now.';
+      approvalBadges.append(el('span', approvalCount ? 'badge warning' : 'badge quiet', `${approvalCount} pending`));
+      approvalBadges.append(el('span', 'badge quiet', 'human gate'));
+      (approvalCount ? approvalsData.approvals.slice(0,4) : [{ title: 'No pending approvals.', roomId: 'system', risk: 'quiet' }]).forEach(item => {
         const row = el('div', 'mini-item');
         row.append(el('div', 'mini-title', item.title));
-        row.append(el('div', 'mini-meta', `${item.roomId} • ${item.risk}`));
-        approvalList.append(row);
+        row.append(el('div', 'mini-meta', `${item.roomId} • ${item.risk || 'quiet'}`));
+        approvalFeed.append(row);
       });
-      if (approvalCount) approvalBody.append(approvalList);
 
       const handoffs = document.getElementById('handoffsFeed');
       const handoffItems = [];
       if (approvalsData.approvals.some(a => a.roomId === 'signal-and-circuit')) {
-        handoffItems.push({title:'Signal & Circuit → Engineering', summary:'Inbox and remediation items are ready to move into implementation once triaged.'});
+        handoffItems.push({ title: 'Signal & Circuit → Engineering', summary: 'Inbox and remediation work are ready to move from editorial planning into implementation once triaged.' });
       }
-      if (activityData.activity.some(a => a.roomId === 'engineering')) {
-        handoffItems.push({title:'Engineering ↔ QA Review Room', summary:'Implementation work should route through QA before being treated as done.'});
+      if ((agentsByRoom['engineering'] || []).length) {
+        handoffItems.push({ title: 'Engineering ↔ QA Review', summary: 'Important implementation work should pass through QA before it is treated as complete.' });
       }
-      if (activityData.activity.some(a => a.roomId === 'caruso-product')) {
-        handoffItems.push({title:'Product Lab → Engineering', summary:'Approved product recommendations can move into implementation planning.'});
+      if ((agentsByRoom['caruso-product'] || []).length) {
+        handoffItems.push({ title: 'Product Lab → Engineering', summary: 'Approved product recommendations can move into backlog shaping and implementation planning.' });
       }
-      (handoffItems.length ? handoffItems : [{title:'No major handoffs right now.', summary:'Cross-room work will appear here as the system gets busier.'}]).forEach(item => {
+      if ((agentsByRoom['ops-desk'] || []).length && (agentsByRoom['command-center'] || []).length) {
+        handoffItems.push({ title: 'Ops Desk → Command Center', summary: 'Operational drift, blockers, and queue pressure should bubble upward for prioritization.' });
+      }
+      (handoffItems.length ? handoffItems : [{ title: 'No major handoffs right now.', summary: 'As more work is active, cross-room motion will appear here.' }]).forEach(item => {
         const row = el('div', 'feed-item');
         row.append(el('div', 'title', item.title));
         row.append(el('div', 'meta', item.summary));
