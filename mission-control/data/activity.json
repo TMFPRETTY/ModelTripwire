@@ -1,0 +1,115 @@
+{
+  "generatedAt": "2026-03-22T00:47:14Z",
+  "activity": [
+    {
+      "id": "activity-4cfe0675-b283-433d-bcaf-432a08706980",
+      "roomId": "signal-and-circuit",
+      "kind": "result",
+      "title": "signalandcircuit-mail-monitor-every-2m",
+      "summary": "Healthy",
+      "priority": "normal",
+      "at": "2026-03-22T00:45:20.232000Z",
+      "sourceType": "job",
+      "sourceRef": "4cfe0675-b283-433d-bcaf-432a08706980"
+    },
+    {
+      "id": "activity-ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
+      "roomId": "caruso-growth",
+      "kind": "result",
+      "title": "caruso-marketing-opportunity-scan-every-4h",
+      "summary": "\u26a0\ufe0f API rate limit reached. Please try again later.",
+      "priority": "high",
+      "at": "2026-03-21T22:09:48.318000Z",
+      "sourceType": "job",
+      "sourceRef": "ee105b50-2e8e-463b-b9a4-bcc165a21a3d"
+    },
+    {
+      "id": "activity-e5d420bd-4ac4-4716-a5ff-cf3c69bb381c",
+      "roomId": "caruso-growth",
+      "kind": "result",
+      "title": "caruso-competitor-watch-every-6h",
+      "summary": "Healthy",
+      "priority": "normal",
+      "at": "2026-03-21T18:56:30.233000Z",
+      "sourceType": "job",
+      "sourceRef": "e5d420bd-4ac4-4716-a5ff-cf3c69bb381c"
+    },
+    {
+      "id": "activity-1d4c9249-123c-4375-a663-bc99e6f2f622",
+      "roomId": "research-lab",
+      "kind": "result",
+      "title": "research-lab-weekly-idea-scan-mondays-11am",
+      "summary": "Healthy",
+      "priority": "normal",
+      "at": "2026-03-21T18:45:24.614000Z",
+      "sourceType": "job",
+      "sourceRef": "1d4c9249-123c-4375-a663-bc99e6f2f622"
+    },
+    {
+      "id": "activity-1a89afcb-9e8b-41bf-ac40-bfc74a199fbb",
+      "roomId": "security-infra",
+      "kind": "result",
+      "title": "security-infra-daily-healthcheck-weekdays-845am",
+      "summary": "Healthy",
+      "priority": "normal",
+      "at": "2026-03-21T18:44:41.423000Z",
+      "sourceType": "job",
+      "sourceRef": "1a89afcb-9e8b-41bf-ac40-bfc74a199fbb"
+    },
+    {
+      "id": "activity-e006d18f-d7b1-4d5e-a525-0ceaa5a74080",
+      "roomId": "caruso-product",
+      "kind": "result",
+      "title": "caruso-product-signal-digest-weekdays-1230pm",
+      "summary": "Healthy",
+      "priority": "normal",
+      "at": "2026-03-21T18:43:33.038000Z",
+      "sourceType": "job",
+      "sourceRef": "e006d18f-d7b1-4d5e-a525-0ceaa5a74080"
+    },
+    {
+      "id": "activity-9a5b6e8c-f0f9-4346-a997-e1bca8818b93",
+      "roomId": "ops-desk",
+      "kind": "result",
+      "title": "ops-desk-midday-status-weekdays-1pm",
+      "summary": "Healthy",
+      "priority": "normal",
+      "at": "2026-03-21T18:42:55.342000Z",
+      "sourceType": "job",
+      "sourceRef": "9a5b6e8c-f0f9-4346-a997-e1bca8818b93"
+    },
+    {
+      "id": "activity-b2f55e26-0c55-4c54-98c0-1309889162ef",
+      "roomId": "caruso-growth",
+      "kind": "result",
+      "title": "caruso-reddit-draft-queue-weekdays-10am",
+      "summary": "Healthy",
+      "priority": "normal",
+      "at": "2026-03-21T18:29:48.033000Z",
+      "sourceType": "job",
+      "sourceRef": "b2f55e26-0c55-4c54-98c0-1309889162ef"
+    },
+    {
+      "id": "activity-d0fc4e18-d944-4a49-abc6-a1e1d8062385",
+      "roomId": "caruso-growth",
+      "kind": "result",
+      "title": "caruso-daily-reply-pack-weekdays-930am",
+      "summary": "Healthy",
+      "priority": "normal",
+      "at": "2026-03-21T18:29:04.001000Z",
+      "sourceType": "job",
+      "sourceRef": "d0fc4e18-d944-4a49-abc6-a1e1d8062385"
+    },
+    {
+      "id": "activity-148c5073-5be0-40cc-8cbc-79f062a18191",
+      "roomId": "command-center",
+      "kind": "result",
+      "title": "morning-command-center-digest-weekdays-830am",
+      "summary": "Healthy",
+      "priority": "normal",
+      "at": "2026-03-21T18:25:07.549000Z",
+      "sourceType": "job",
+      "sourceRef": "148c5073-5be0-40cc-8cbc-79f062a18191"
+    }
+  ]
+}

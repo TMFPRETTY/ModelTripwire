@@ -1,0 +1,159 @@
+{
+  "generatedAt": "2026-03-22T00:47:14Z",
+  "rooms": [
+    {
+      "id": "command-center",
+      "name": "command-center",
+      "channelId": "1484651751108775946",
+      "status": "healthy",
+      "headline": "Jobs healthy and delivering.",
+      "lastUpdateAt": "2026-03-21T18:25:07.549000Z",
+      "agents": [
+        "command-center"
+      ],
+      "badges": {
+        "approvals": 0,
+        "alerts": 0,
+        "queue": 0
+      },
+      "kind": "command"
+    },
+    {
+      "id": "ops-desk",
+      "name": "ops-desk",
+      "channelId": "1484651772193673349",
+      "status": "healthy",
+      "headline": "Jobs healthy and delivering.",
+      "lastUpdateAt": "2026-03-21T18:42:55.342000Z",
+      "agents": [
+        "ops-desk"
+      ],
+      "badges": {
+        "approvals": 0,
+        "alerts": 0,
+        "queue": 0
+      },
+      "kind": "ops"
+    },
+    {
+      "id": "support-inbox",
+      "name": "support-inbox",
+      "channelId": "1484651808772198462",
+      "status": "quiet",
+      "headline": "No live job activity yet.",
+      "lastUpdateAt": null,
+      "agents": [
+        "support-inbox"
+      ],
+      "badges": {
+        "approvals": 0,
+        "alerts": 0,
+        "queue": 0
+      },
+      "kind": "support"
+    },
+    {
+      "id": "caruso-growth",
+      "name": "caruso-growth",
+      "channelId": "1484651836966436934",
+      "status": "warning",
+      "headline": "1 job issue(s) need attention.",
+      "lastUpdateAt": "2026-03-21T22:09:48.318000Z",
+      "agents": [
+        "caruso-growth"
+      ],
+      "badges": {
+        "approvals": 0,
+        "alerts": 1,
+        "queue": 0
+      },
+      "kind": "growth"
+    },
+    {
+      "id": "caruso-product",
+      "name": "caruso-product",
+      "channelId": "1484651869593669762",
+      "status": "healthy",
+      "headline": "Jobs healthy and delivering.",
+      "lastUpdateAt": "2026-03-21T18:43:33.038000Z",
+      "agents": [
+        "caruso-product"
+      ],
+      "badges": {
+        "approvals": 0,
+        "alerts": 0,
+        "queue": 0
+      },
+      "kind": "product"
+    },
+    {
+      "id": "security-infra",
+      "name": "security-infra",
+      "channelId": "1484651900812001491",
+      "status": "healthy",
+      "headline": "Jobs healthy and delivering.",
+      "lastUpdateAt": "2026-03-21T18:44:41.423000Z",
+      "agents": [
+        "security-infra"
+      ],
+      "badges": {
+        "approvals": 0,
+        "alerts": 0,
+        "queue": 0
+      },
+      "kind": "security"
+    },
+    {
+      "id": "research-lab",
+      "name": "research-lab",
+      "channelId": "1484655635336265758",
+      "status": "healthy",
+      "headline": "Jobs healthy and delivering.",
+      "lastUpdateAt": "2026-03-21T18:45:24.614000Z",
+      "agents": [
+        "research-lab"
+      ],
+      "badges": {
+        "approvals": 0,
+        "alerts": 0,
+        "queue": 0
+      },
+      "kind": "research"
+    },
+    {
+      "id": "signal-and-circuit",
+      "name": "signal-and-circuit",
+      "channelId": "1485042311959416832",
+      "status": "healthy",
+      "headline": "6 pending inbox item(s) in Signal and Circuit.",
+      "lastUpdateAt": "2026-03-22T00:45:20.232000Z",
+      "agents": [
+        "signal-and-circuit"
+      ],
+      "badges": {
+        "approvals": 0,
+        "alerts": 0,
+        "queue": 6
+      },
+      "kind": "editorial"
+    },
+    {
+      "id": "engineering",
+      "name": "engineering",
+      "channelId": "1484988049229086850",
+      "status": "healthy",
+      "headline": "Jobs healthy and delivering.",
+      "lastUpdateAt": null,
+      "agents": [
+        "engineering",
+        "qa-review"
+      ],
+      "badges": {
+        "approvals": 0,
+        "alerts": 0,
+        "queue": 0
+      },
+      "kind": "engineering"
+    }
+  ]
+}

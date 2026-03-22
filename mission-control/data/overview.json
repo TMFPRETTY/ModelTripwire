@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-03-22T00:47:14Z",
+  "overview": {
+    "globalHealth": {
+      "systemStatus": "warning",
+      "activeRooms": 9,
+      "activeAgents": 8,
+      "pendingApprovals": 0,
+      "openAlerts": 1,
+      "failingJobs": 1
+    },
+    "needsAttention": [
+      {
+        "title": "Job issue: caruso-marketing-opportunity-scan-every-4h",
+        "roomId": "caruso-growth",
+        "priority": "high"
+      },
+      {
+        "title": "Signal and Circuit has 6 pending email item(s).",
+        "roomId": "signal-and-circuit",
+        "priority": "normal"
+      }
+    ],
+    "recommendedFocus": [
+      "Check the highest-priority warning room first.",
+      "Review pending Signal and Circuit inbox items and hand engineering tasks off explicitly.",
+      "Tune or retry any warning-status job before cutover."
+    ]
+  }
+}

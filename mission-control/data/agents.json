@@ -1,0 +1,157 @@
+{
+  "generatedAt": "2026-03-22T00:47:14Z",
+  "agents": [
+    {
+      "id": "command-center",
+      "name": "command-center",
+      "status": "active",
+      "roomId": "command-center",
+      "mission": "Provide top-level mission control, priorities, blockers, approvals, and daily focus.",
+      "jobs": [
+        "148c5073-5be0-40cc-8cbc-79f062a18191"
+      ],
+      "skills": [
+        "command-center-digest"
+      ],
+      "approvalBoundary": "Summarizes and escalates; no external side effects.",
+      "phase": "active"
+    },
+    {
+      "id": "ops-desk",
+      "name": "ops-desk",
+      "status": "active",
+      "roomId": "ops-desk",
+      "mission": "Coordinate operations, failures, drift, queues, and next actions.",
+      "jobs": [
+        "9a5b6e8c-f0f9-4346-a997-e1bca8818b93"
+      ],
+      "skills": [
+        "ops-desk"
+      ],
+      "approvalBoundary": "Coordinates and reports; risky operational changes still require approval.",
+      "phase": "active"
+    },
+    {
+      "id": "caruso-growth",
+      "name": "caruso-growth",
+      "status": "active",
+      "roomId": "caruso-growth",
+      "mission": "Find, package, and route growth opportunities for Caruso.",
+      "jobs": [
+        "e5d420bd-4ac4-4716-a5ff-cf3c69bb381c",
+        "ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
+        "4f2aa9d6-9d73-4e08-a4fc-9d4699ca4bf7",
+        "d0fc4e18-d944-4a49-abc6-a1e1d8062385",
+        "b2f55e26-0c55-4c54-98c0-1309889162ef"
+      ],
+      "skills": [
+        "caruso-growth"
+      ],
+      "approvalBoundary": "Public posting requires approval.",
+      "phase": "active"
+    },
+    {
+      "id": "caruso-product",
+      "name": "caruso-product",
+      "status": "active",
+      "roomId": "caruso-product",
+      "mission": "Convert support/growth/research/market signals into product recommendations.",
+      "jobs": [
+        "e006d18f-d7b1-4d5e-a525-0ceaa5a74080"
+      ],
+      "skills": [
+        "caruso-product"
+      ],
+      "approvalBoundary": "Recommendations are internal by default.",
+      "phase": "active"
+    },
+    {
+      "id": "security-infra",
+      "name": "security-infra",
+      "status": "active",
+      "roomId": "security-infra",
+      "mission": "Monitor host/runtime health, security posture, and infrastructure drift.",
+      "jobs": [
+        "1a89afcb-9e8b-41bf-ac40-bfc74a199fbb"
+      ],
+      "skills": [
+        "security-infra"
+      ],
+      "approvalBoundary": "Can inspect and recommend freely; impactful changes require approval.",
+      "phase": "active"
+    },
+    {
+      "id": "research-lab",
+      "name": "research-lab",
+      "status": "active",
+      "roomId": "research-lab",
+      "mission": "Discover and rank business/SaaS/product opportunities.",
+      "jobs": [
+        "1d4c9249-123c-4375-a663-bc99e6f2f622"
+      ],
+      "skills": [
+        "research-lab"
+      ],
+      "approvalBoundary": "Research and ranking only.",
+      "phase": "active"
+    },
+    {
+      "id": "engineering",
+      "name": "engineering",
+      "status": "active",
+      "roomId": "engineering",
+      "mission": "Shared implementation lane for code, debugging, automation changes, integrations, and code QA coordination.",
+      "jobs": [
+        "35c8e108-d807-4e6c-8fba-15380698969b",
+        "c99c554b-db9d-439e-9885-c6d8c881601f"
+      ],
+      "skills": [
+        "qa-review"
+      ],
+      "approvalBoundary": "High-risk changes require approval.",
+      "phase": "active"
+    },
+    {
+      "id": "qa-review",
+      "name": "qa-review",
+      "status": "embedded",
+      "roomId": "engineering",
+      "mission": "Review outputs, code, automations, prompts, and configs for quality, correctness, and risk.",
+      "jobs": [],
+      "skills": [
+        "qa-review"
+      ],
+      "approvalBoundary": "Can block/rework/recommend but not override human approvals.",
+      "phase": "embedded"
+    },
+    {
+      "id": "support-inbox",
+      "name": "support-inbox",
+      "status": "transitional",
+      "roomId": "support-inbox",
+      "mission": "Triage support mail, summarize issues, and prepare safe responses.",
+      "jobs": [],
+      "skills": [
+        "support-triage"
+      ],
+      "approvalBoundary": "Sensitive replies require approval.",
+      "phase": "transitional"
+    },
+    {
+      "id": "signal-and-circuit",
+      "name": "signal-and-circuit",
+      "status": "transitional",
+      "roomId": "signal-and-circuit",
+      "mission": "Combined room for editorial lookout, inbox activity, article routing, AdSense/site-quality work, and traffic growth.",
+      "jobs": [
+        "4cfe0675-b283-433d-bcaf-432a08706980"
+      ],
+      "skills": [
+        "signal-and-circuit-adsense",
+        "signal-and-circuit-growth"
+      ],
+      "approvalBoundary": "Publishing and risky outward actions should remain controlled.",
+      "phase": "transitional"
+    }
+  ]
+}
