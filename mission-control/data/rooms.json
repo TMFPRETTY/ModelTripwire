@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T00:47:14Z",
+  "generatedAt": "2026-03-22T00:52:16Z",
   "rooms": [
     {
       "id": "command-center",
@@ -125,15 +125,15 @@
       "name": "signal-and-circuit",
       "channelId": "1485042311959416832",
       "status": "healthy",
-      "headline": "6 pending inbox item(s) in Signal and Circuit.",
-      "lastUpdateAt": "2026-03-22T00:45:20.232000Z",
+      "headline": "1 pending inbox item(s) in Signal and Circuit.",
+      "lastUpdateAt": "2026-03-22T00:51:20.275000Z",
       "agents": [
         "signal-and-circuit"
       ],
       "badges": {
         "approvals": 0,
         "alerts": 0,
-        "queue": 6
+        "queue": 1
       },
       "kind": "editorial"
     },

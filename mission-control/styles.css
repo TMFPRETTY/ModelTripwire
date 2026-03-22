@@ -20,6 +20,9 @@ body {
   display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;
   padding: 24px 28px 10px;
 }
+.navlinks { display:flex; gap:12px; align-items:center; }
+.navlinks a { color: var(--muted); text-decoration:none; font-weight:600; }
+.navlinks a:hover { color: var(--text); }
 .topbar h1 { margin:0; font-size: 2rem; }
 .sub, .generated { color: var(--muted); margin-top: 6px; }
 .layout {

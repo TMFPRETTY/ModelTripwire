@@ -182,7 +182,7 @@ def build_alerts(jobs, rooms):
     return alerts
 
 
-def build_activity(jobs, alerts):
+def build_activity(jobs, alerts, approvals, mail_state):
     items = []
     for job in jobs:
         if job['lastRunAt']:
@@ -197,8 +197,33 @@ def build_activity(jobs, alerts):
                 'sourceType': 'job',
                 'sourceRef': job['id'],
             })
+    for approval in approvals:
+        items.append({
+            'id': f"activity-{approval['id']}",
+            'roomId': approval['roomId'],
+            'kind': 'approval_request',
+            'title': approval['title'],
+            'summary': approval['summary'],
+            'priority': 'high' if approval['risk'] in ('high','urgent') else 'normal',
+            'at': approval['requestedAt'],
+            'sourceType': 'approval',
+            'sourceRef': approval['id'],
+        })
+    pending_mail = [i for i in mail_state.get('items', {}).values() if i.get('status') == 'pending']
+    for item in pending_mail[:5]:
+        items.append({
+            'id': f"activity-mail-{item.get('gmailMessageId','unknown')}",
+            'roomId': 'signal-and-circuit',
+            'kind': 'email',
+            'title': f"[EMAIL] {item.get('subject','(no subject)')}",
+            'summary': item.get('summary') or item.get('from') or 'Pending inbox item',
+            'priority': 'normal',
+            'at': item.get('createdAt') or now_iso(),
+            'sourceType': 'mail_state',
+            'sourceRef': item.get('gmailMessageId'),
+        })
     items.sort(key=lambda x: x['at'] or '', reverse=True)
-    return items[:20]
+    return items[:25]
 
 
 def build_system(jobs, status_text):
@@ -262,7 +287,7 @@ def main():
     rooms = build_rooms(jobs, mail_state)
     alerts = build_alerts(jobs, rooms)
     approvals = []
-    activity = build_activity(jobs, alerts)
+    activity = build_activity(jobs, alerts, approvals, mail_state)
     status_text = run_text(['openclaw','status'])
     system = build_system(jobs, status_text)
     overview = build_overview(rooms, agents, jobs, alerts, mail_state)

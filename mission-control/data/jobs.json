@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T00:47:14Z",
+  "generatedAt": "2026-03-22T00:52:16Z",
   "jobs": [
     {
       "id": "4cfe0675-b283-433d-bcaf-432a08706980",
@@ -7,9 +7,25 @@
       "roomId": "signal-and-circuit",
       "status": "active",
       "enabled": true,
-      "lastRunAt": "2026-03-22T00:45:20.232000Z",
-      "nextRunAt": "2026-03-22T00:47:20.232000Z",
+      "lastRunAt": "2026-03-22T00:51:20.275000Z",
+      "nextRunAt": "2026-03-22T00:53:20.275000Z",
       "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "none",
+        "channelId": null
+      }
+    },
+    {
+      "id": "47c14ec1-8102-4946-ad7a-952a8db6cbc8",
+      "name": "mission-control-snapshot-refresh-every-5m",
+      "roomId": null,
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": null,
+      "nextRunAt": "2026-03-22T00:54:38.609000Z",
+      "lastResult": "unknown",
       "recentFailureCount": 0,
       "summary": "Healthy",
       "destination": {

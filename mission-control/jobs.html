@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mission Control — Jobs</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Mission Control / Jobs</h1>
+      <p class="sub">Cron and workflow health view</p>
+    </div>
+    <nav class="navlinks">
+      <a href="./">Overview</a>
+      <a href="./rooms.html">Rooms</a>
+    </nav>
+  </header>
+  <main class="layout single">
+    <section class="panel full">
+      <h2>Jobs</h2>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Room</th><th>Status</th><th>Enabled</th><th>Last Run</th><th>Next Run</th><th>Summary</th></tr>
+        </thead>
+        <tbody id="jobsTable"></tbody>
+      </table>
+    </section>
+  </main>
+  <script>
+    const fmt = ts => ts ? new Date(ts).toLocaleString() : '—';
+    fetch('./data/jobs.json').then(r=>r.json()).then(data => {
+      const table = document.getElementById('jobsTable');
+      data.jobs.forEach(job => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${job.name}</td>
+          <td>${job.roomId || '—'}</td>
+          <td><span class="badge ${job.lastResult}">${job.lastResult}</span></td>
+          <td>${job.enabled ? 'yes' : 'no'}</td>
+          <td>${fmt(job.lastRunAt)}</td>
+          <td>${fmt(job.nextRunAt)}</td>
+          <td>${job.summary || '—'}</td>
+        `;
+        table.appendChild(tr);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -38,5 +38,6 @@
 - `MISSION_CONTROL_DATA_SOURCES.md` now defines the real source mapping for Mission Control V1 widgets/pages.
 - `MISSION_CONTROL_SNAPSHOT_SPEC.md` now defines the JSON contract for Mission Control V1 snapshot files.
 - Built a first visible Mission Control prototype in the workspace: static dashboard UI in `mission-control/`, snapshot generator script in `scripts/generate_mission_control_snapshots.py`, generated snapshot data in `mission-control/data/`, and a simple local web-server path for viewing it.
+- Upgraded the prototype with scheduled snapshot refresh, smarter derived room headlines/activity/alerts, dedicated Rooms and Jobs pages, and a first-pass approvals/alerts derivation layer.
 - Engineering now has `ENGINEERING_ROOM_GUIDE.md`, `ENGINEERING_WORKFLOW.md`, and starter recurring jobs for engineering status and engineering QA checks. Important limitation: this still does not magically create instant Discord conversational pickup for arbitrary posts; it creates the operating model and room cadence, not provider-side message listener behavior.
 - Created `AGENT_REGISTRY.md` to formally define the active, embedded, transitional, planned, and retired agents/rooms for the current laptop system and upcoming Mac mini deployment.

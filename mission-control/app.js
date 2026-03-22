@@ -24,13 +24,14 @@ function el(tag, cls, text) {
 }
 
 async function main() {
-  const [overview, rooms, agents, jobs, alerts, activity] = await Promise.all([
+  const [overview, rooms, agents, jobs, alerts, activity, approvals] = await Promise.all([
     loadJson('overview.json'),
     loadJson('rooms.json'),
     loadJson('agents.json'),
     loadJson('jobs.json'),
     loadJson('alerts.json'),
     loadJson('activity.json'),
+    loadJson('approvals.json'),
   ]);
 
   document.getElementById('generatedAt').textContent = `Updated ${fmt(overview.generatedAt)}`;
@@ -108,6 +109,18 @@ async function main() {
     card.append(el('div', 'title', agent.name));
     const meta = el('div', 'meta');
     meta.append(el('span', `badge ${agent.phase}`, agent.phase));
+    meta.append(document.createTextNode(`  •  room: ${agent.roomId || '—'}`));
+    card.append(meta);
+    card.append(el('div', 'headline', agent.mission));
+    card.append(el('div', 'meta', `Skills: ${agent.skills.join(', ')}`));
+    agentsGrid.append(card);
+  });
+}
+
+main().catch(err => {
+  document.body.innerHTML = `<pre style="color:white;padding:20px">Mission Control failed to load:\n${err.stack || err}</pre>`;
+});
+el('span', `badge ${agent.phase}`, agent.phase));
     meta.append(document.createTextNode(`  •  room: ${agent.roomId || '—'}`));
     card.append(meta);
     card.append(el('div', 'headline', agent.mission));

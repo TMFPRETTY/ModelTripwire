@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-03-22T00:47:14Z",
+  "generatedAt": "2026-03-22T00:52:16Z",
   "system": {
     "overallStatus": "warning",
     "hostLabel": "Jeremy\u2019s MacBook Pro",
     "gatewayStatus": "running",
     "runtime": "openclaw",
-    "activeJobCount": 13,
+    "activeJobCount": 14,
     "failingJobCount": 1,
     "warningCount": 1,
     "notes": []
