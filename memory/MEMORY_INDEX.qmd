@@ -52,3 +52,26 @@ Update this file when:
 - the engineering/QA workflow changes
 - a new durable operating rule is adopted
 - an implementation pattern becomes the normal expected workflow
+
+## Memory writing convention
+
+### Put in daily notes (`memory/YYYY-MM-DD.md`)
+Use daily notes for:
+- chronological events
+- one-off debugging findings
+- what changed today
+- temporary observations
+- partial progress notes
+- short-lived blockers
+
+### Put in QMD memory (`memory/MEMORY_INDEX.qmd`)
+Use QMD memory for:
+- durable workflow rules
+- room/agent ownership that should persist
+- recurring operating expectations
+- stable handoff rules
+- long-lived decisions worth recalling later
+
+### Rule of thumb
+If it matters mainly because it happened today, put it in the daily note.
+If it should still matter weeks from now, summarize it here.
