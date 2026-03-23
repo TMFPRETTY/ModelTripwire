@@ -45,6 +45,21 @@ Use threads or clearly labeled posts for these lanes:
 - **Infra / automation**
 - **QA review**
 
+## Active Room Ownership
+Current intended room -> agent ownership:
+- `engineering` -> `engineering`
+- `signal-and-circuit` -> `signal-and-circuit`
+- `command-center` -> `command-center`
+- `ops-desk` -> `ops-desk`
+- `support-inbox` -> `support-inbox`
+- `caruso-growth` -> `caruso-growth`
+- `caruso-product` -> `caruso-product`
+- `security-infra` -> `security-infra`
+- `research-lab` -> `research-lab`
+
+Engineering is the implementation room, not the long-term owner of every request.
+Other rooms can originate work, but engineering owns build/debug/integration execution once the work becomes implementation.
+
 ## Repo Anchors
 Use these project roots when the request is about code in a specific system:
 - **Caruso repo:** `/Users/jeremypretty/Documents/PM and QA/PM-and-QA-Combo-Fun`
@@ -89,6 +104,12 @@ Use QA for:
 - risky prompt/workflow changes
 - high-value content/output review when engineering is involved
 
+Rule of thumb:
+- Engineering implements.
+- QA reviews.
+- Work is not complete just because engineering says the coding is done.
+- A coding/config/automation task is complete only after QA passes it, explicit approval is given, or the work is intentionally stopped.
+
 ### QA verdicts
 - `PASS`
 - `PASS_WITH_EDITS`
@@ -112,12 +133,22 @@ Use these labels in engineering threads/posts when useful:
 - `signal-and-circuit` decides site/editorial/system needs; `engineering` implements them.
 - `ops-desk` can escalate blocked implementation work here.
 - `security-infra` can route engineering-impact fixes here when code/config work is required.
+- `caruso-growth` can hand off landing pages, tooling, instrumentation, or automation tasks that require implementation.
+- `support-inbox` can hand off bugs, fixes, and workflow/tooling issues that require engineering work.
 
-## Important Limitation Right Now
-The room exists as the canonical engineering lane, but Discord instant-response behavior is not automatically created just by making the channel. If conversational pickup in-channel is needed, that requires explicit messaging/listener behavior beyond simple cron jobs.
+When another room asks engineering to look at context from its own lane, engineering should use that room as the information source, then do the implementation work in engineering.
+
+## Conversational Room Mode
+The engineering room should behave like a live working room, not just a scheduled reporting lane.
+That means:
+- messages posted in the room should be picked up and answered
+- engineering can be asked to look at other rooms for context or intake
+- implementation can begin from requests originating in other rooms when engineering is explicitly directed to do so
+- coding work should still be surfaced back through the engineering lane with QA review before completion
 
 ## Practical Current Mode
-Until a dedicated Discord responder behavior exists, use `engineering` as:
+Use `engineering` as:
 - the source-of-truth lane for engineering requests
 - the place where implementation work should be tracked
 - the place where coding and QA notes should land
+- the room that coordinates with other rooms when implementation work depends on their context
