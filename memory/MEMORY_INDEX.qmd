@@ -1,0 +1,54 @@
+---
+title: "OpenClaw Memory Index"
+format: gfm
+---
+
+# OpenClaw Memory Index
+
+This file is a durable, human-readable memory index in QMD format.
+It exists to make future recall easier by giving important operating context a stable home outside of raw daily notes.
+
+## How to use this file
+- Put durable patterns here, not every transient event.
+- Keep daily chronology in `memory/YYYY-MM-DD.md`.
+- Use this file for:
+  - stable operating rules
+  - long-lived workflow expectations
+  - room/agent ownership
+  - recurring decisions worth remembering
+
+## Durable workflow memory
+
+### Engineering and QA
+- Engineering is the live implementation room.
+- Engineering can look at other rooms for context when asked to do work originating there.
+- Engineering work is not considered complete just because coding finished.
+- Default completion loop:
+
+  Engineering -> QA -> Engineering (if needed) -> QA -> Done/Approval
+
+- QA is the review gate for code, config, automation, integration, and other engineering-impact work.
+
+### Room ownership
+- `engineering` -> `engineering`
+- `signal-and-circuit` -> `signal-and-circuit`
+- `command-center` -> `command-center`
+- `ops-desk` -> `ops-desk`
+- `support-inbox` -> `support-inbox`
+- `caruso-growth` -> `caruso-growth`
+- `caruso-product` -> `caruso-product`
+- `security-infra` -> `security-infra`
+- `research-lab` -> `research-lab`
+- `qa-review` -> `qa-review` role/function
+
+### Canonical reference docs
+- `ROOMS_AND_WORKFLOW_SPEC.md`
+- `ENGINEERING_ROOM_GUIDE.md`
+- `ENGINEERING_QA_LOOP.md`
+
+## Updating guidance
+Update this file when:
+- room ownership changes
+- the engineering/QA workflow changes
+- a new durable operating rule is adopted
+- an implementation pattern becomes the normal expected workflow
