@@ -80,6 +80,8 @@ It exists to make future recall easier by giving important operating context a s
 - QA Automation Engineer protects automation coverage, repeatability, regression speed, build verification, and stable test infrastructure.
 - Initial adversarial QA role: `Exploit Tester`
 - Exploit Tester protects system integrity, fairness, progression pacing, and economy stability against hostile or degenerate player behavior.
+- Initial product strategy role: `Product Manager`
+- Product Manager protects audience fit, roadmap value, product clarity, and market-facing prioritization without collapsing into trend-chasing.
 
 ## Updating guidance
 Update this file when:

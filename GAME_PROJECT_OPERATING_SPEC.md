@@ -197,6 +197,15 @@ If a request is clearly about the game, default working context should be:
   - should protect system integrity, fairness, and progression pacing against adversarial behavior
   - acts as the exploit-risk and abuse-path guardrail for the project
 
+### Product Manager
+- Department: Product Strategy
+- Role: aligns features with audience needs, market fit, product goals, and commercial viability
+- Canonical spec: `game-agents/PRODUCT_MANAGER.md`
+- Notes:
+  - should challenge low-value complexity, weak user cases, and roadmap work with unclear audience benefit
+  - should protect value clarity, audience fit, and product positioning
+  - acts as the roadmap-value and audience-alignment guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
