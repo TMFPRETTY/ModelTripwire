@@ -213,6 +213,7 @@ Planned-but-not-fully-separate functions remain for:
 This is the canonical non-gaming operating model for the current live environment and the Mac mini-era system shape.
 
 Related operating docs:
+- `OPERATING_SYSTEM_INDEX.md`
 - `AGENT_SAFEGUARDS.md`
 - `NEW_AGENT_AND_JOB_CHECKLIST.md`
 - `JOB_OPERATING_GUIDE.md`
