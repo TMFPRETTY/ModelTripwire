@@ -80,6 +80,15 @@ If a request is clearly about the game, default working context should be:
   - should challenge feature creep and weak-fit mechanics directly
   - acts as a guardian of the core fantasy and overall game feel
 
+### Executive Producer
+- Department: Production
+- Role: protects scope discipline, milestone realism, sequencing, and ship viability
+- Canonical spec: `game-agents/EXECUTIVE_PRODUCER.md`
+- Notes:
+  - pressures work against schedule and scope reality
+  - should challenge undefined work, perfectionism, and non-essential additions
+  - should help force clarity on what must happen now versus later
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
