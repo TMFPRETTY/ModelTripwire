@@ -266,7 +266,7 @@ Escalate to `command-center` if a job failure:
 - **Room:** `signal-and-circuit`
 - **Destination:** Discord `1484556120025727127`
 - **Schedule:** weekdays 10:00 AM
-- **Purpose:** prepare Reddit-oriented draft candidates for Signal & Circuit
+- **Purpose:** prepare Reddit-oriented draft candidates for Signal and Circuit
 - **Good output looks like:**
   - editorially credible drafts
   - relevant subreddit/topic fit
@@ -276,7 +276,47 @@ Escalate to `command-center` if a job failure:
   - weak data grounding
   - room confusion with gaming/news scope
 - **Escalate when:**
-  - the room’s identity becomes muddled
+  - the room's identity becomes muddled
   - the drafts stop feeling editorially credible
 - **Approval boundary:** drafts only; not auto-posted
 - **Current audit note:** this job had an inconsistent sessionKey and was normalized to `agent:codex:main` during the 2026-03-24 audit/fix pass
+
+## 14. daily-cross-room-standup
+- **Room:** `command-center`
+- **Destination:** planned for `command-center`
+- **Schedule:** planned weekday morning cadence
+- **Purpose:** synthesize cross room updates into one daily operating picture
+- **Good output looks like:**
+  - meaningful changes only
+  - visible blockers and handoffs
+  - a strong picture of what matters today
+  - low noise and no fake alignment theater
+- **Common failure modes:**
+  - generic filler
+  - repeating room local noise
+  - missing important changes from the prior day
+  - becoming too verbose to scan
+- **Escalate when:**
+  - important changes are still being missed by affected rooms
+  - the standup becomes a ritual instead of a real synthesis layer
+- **Approval boundary:** internal communication only
+- **Current audit note:** planned communication infrastructure job, not yet confirmed live
+
+## 15. engineering-context-sync
+- **Room:** `engineering`
+- **Destination:** planned for `engineering`
+- **Schedule:** planned weekday cadence after morning state is known
+- **Purpose:** ensure engineering sees recent changes that affect implementation reality
+- **Good output looks like:**
+  - major engineering relevant changes since yesterday
+  - clean separation between context, blockers, and requested work
+  - source docs that engineering can trust
+- **Common failure modes:**
+  - flooding engineering with non implementation chatter
+  - missing cutovers, resets, or routing changes
+  - stale or vague context
+- **Escalate when:**
+  - engineering still misses major recent work
+  - the sync becomes either too noisy or too shallow to be useful
+- **Approval boundary:** internal communication only
+- **Current audit note:** planned communication infrastructure job, not yet confirmed live

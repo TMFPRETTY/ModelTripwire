@@ -85,6 +85,21 @@ Use it for:
 - operational safeguards
 - human trust safeguards
 
+### Communication and change propagation
+Start with:
+- `OPERATIONS_CHANGELOG.md`
+- `CURRENT_PLATFORM_STATE.md`
+- `CROSS_ROOM_HANDOFF_STANDARD.md`
+- `STANDUP_AND_SYNC_MODEL.md`
+- `COMMUNICATION_RELIABILITY_PLAN.md`
+
+Use them for:
+- major change logging
+- current shared truth
+- cross room handoff rules
+- standup and engineering sync structure
+- communication failure prevention
+
 ### Creation gate for new rooms, agents, and jobs
 Start with:
 - `NEW_AGENT_AND_JOB_CHECKLIST.md`

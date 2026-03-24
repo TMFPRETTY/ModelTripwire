@@ -150,6 +150,8 @@ When the operating model changes in a meaningful way, update:
 - daily memory notes for what changed
 - long-term memory summaries when the pattern is durable
 - `AGENT_SAFEGUARDS.md` when the baseline safety or approval model changes
+- `OPERATIONS_CHANGELOG.md` when multiple rooms may need to know
+- `CURRENT_PLATFORM_STATE.md` when shared reality changes
 
 ## Current Intent
 This workspace should operate as:
@@ -159,3 +161,4 @@ This workspace should operate as:
 - a system where other rooms can hand work into engineering, and engineering can inspect those rooms for context before acting
 - a support room that classifies urgency/risk before drafting or routing
 - a Signal & Circuit room that behaves as a combined editorial/inbox/site-quality/growth operating lane with explicit handoffs instead of muddled all-in-one handling
+ engineering sync when relevant

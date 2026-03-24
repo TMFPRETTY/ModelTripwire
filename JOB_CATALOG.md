@@ -137,10 +137,38 @@ For the live operational companion, see:
   - approval needed?
 
 ## Candidate Second-Wave Jobs
-- product insight digest → `caruso-product`
-- security posture digest → `security-infra`
-- research idea scan → `research-lab`
-- editorial story pick digest → newsroom/signal-and-circuit flow
+- product insight digest to `caruso-product`
+- security posture digest to `security-infra`
+- research idea scan to `research-lab`
+- editorial story pick digest to newsroom or Signal and Circuit flow
+- daily cross room standup to `command-center`
+- engineering context sync to `engineering`
+
+## Communication Infrastructure Jobs
+
+### E. Daily Cross Room Standup
+- **Status:** planned first-wave communication infrastructure
+- **Destination:** `command-center`
+- **Purpose:** synthesize what changed since yesterday, blockers, handoffs, and what matters today
+- **Suggested output template:**
+  - what changed since yesterday
+  - current blockers
+  - waiting on whom
+  - needs attention today
+  - cross room handoffs
+- **Validation needed:** synthesis quality, low noise, delivery reliability, actual usefulness
+
+### F. Engineering Context Sync
+- **Status:** planned first-wave communication infrastructure
+- **Destination:** `engineering`
+- **Purpose:** ensure engineering sees recent changes that affect implementation reality
+- **Suggested output template:**
+  - major changes engineering must know
+  - active blockers
+  - implementation requests
+  - QA and review needs
+  - source docs to trust
+- **Validation needed:** relevance, continuity quality, duplication control, usefulness to engineering
 
 ## Validation Standard For Each Job
 Before enabling any job, confirm:
