@@ -170,6 +170,15 @@ If a request is clearly about the game, default working context should be:
   - should speak from the player experience lens, not pretend to be the designer unless asked
   - acts as the likely-player-reaction and friction-detection guardrail for the project
 
+### Head of QA
+- Department: Quality Assurance
+- Role: defines quality standards, test strategy, coverage priorities, and release confidence
+- Canonical spec: `game-agents/HEAD_OF_QA.md`
+- Notes:
+  - should challenge untested assumptions, incomplete regression coverage, and weak release criteria
+  - should require evidence before confidence claims
+  - acts as the quality-risk and release-confidence guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
