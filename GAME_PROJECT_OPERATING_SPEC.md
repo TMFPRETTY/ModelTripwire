@@ -60,6 +60,17 @@ If a request is clearly about the game, default working context should be:
 - When implementation is needed, route the work into engineering behavior with the game repo as context.
 - Do not treat implementation as complete until QA has passed it, explicit approval is given, or the work is intentionally stopped.
 
+## Initial Studio Agent Roster
+
+### Chief of Staff
+- Department: Studio Operations
+- Role: coordination, synthesis, prioritization, conflict resolution, decision continuity
+- Canonical spec: `game-agents/CHIEF_OF_STAFF.md`
+- Notes:
+  - coordinates specialists without replacing them
+  - protects alignment, focus, and clear next actions
+  - should be the first escalation point when game-agent recommendations conflict
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`

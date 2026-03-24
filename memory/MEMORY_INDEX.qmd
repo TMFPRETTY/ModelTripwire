@@ -46,6 +46,12 @@ It exists to make future recall easier by giving important operating context a s
 - `ROOMS_AND_WORKFLOW_SPEC.md`
 - `ENGINEERING_ROOM_GUIDE.md`
 - `ENGINEERING_QA_LOOP.md`
+- `GAME_PROJECT_OPERATING_SPEC.md`
+
+### Game studio memory
+- Initial game project room: `game-dev`
+- Initial game coordination role: `Chief of Staff`
+- Chief of Staff is the studio-operations coordination layer, responsible for synthesis, alignment, prioritization, and conflict escalation without replacing specialist roles.
 
 ## Updating guidance
 Update this file when:
