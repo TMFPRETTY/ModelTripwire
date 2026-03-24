@@ -28,7 +28,7 @@ It should answer, quickly and explicitly:
 - **Current jobs:**
   - `morning-command-center-digest-weekdays-830am`
 - **Primary skill(s):** `command-center-digest`
-- **Key docs:** `AGENT_RUNBOOKS.md`, `ROOMS_AND_WORKFLOW_SPEC.md`
+- **Key docs:** `AGENT_RUNBOOKS.md`, `ROOMS_AND_WORKFLOW_SPEC.md`, `COMMAND_CENTER_ROOM_GUIDE.md`
 - **Approval boundary:** summarizes and escalates; does not create external side effects
 - **Escalates to:** all room owners as needed; especially `ops-desk`, `engineering`, `security-infra`
 - **Notes:** should stay high-signal, cross-room, and decision-oriented
@@ -104,7 +104,7 @@ It should answer, quickly and explicitly:
 - **Current jobs:**
   - `research-lab-weekly-idea-scan-mondays-11am`
 - **Primary skill(s):** `research-lab`
-- **Key docs:** `AGENT_RUNBOOKS.md`, `ROOMS_AND_WORKFLOW_SPEC.md`
+- **Key docs:** `AGENT_RUNBOOKS.md`, `ROOMS_AND_WORKFLOW_SPEC.md`, `RESEARCH_LAB_ROOM_GUIDE.md`
 - **Approval boundary:** research and ranking only; no external actions
 - **Escalates to:** `caruso-growth`, `caruso-product`, `command-center`
 - **Notes:** should stay selective rather than becoming an idea dump
@@ -211,3 +211,4 @@ Planned-but-not-fully-separate functions remain for:
 - knowledge-base
 
 This is the canonical non-gaming operating model for the current live environment and the Mac mini-era system shape.
+hape.
