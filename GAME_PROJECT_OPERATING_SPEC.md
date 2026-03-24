@@ -206,6 +206,15 @@ If a request is clearly about the game, default working context should be:
   - should protect value clarity, audience fit, and product positioning
   - acts as the roadmap-value and audience-alignment guardrail for the project
 
+### Marketing and Community Director
+- Department: Growth and Community
+- Role: shapes outward messaging, community engagement, audience communication, and trust-building presentation
+- Canonical spec: `game-agents/MARKETING_AND_COMMUNITY_DIRECTOR.md`
+- Notes:
+  - should challenge overpromising, vague messaging, and announcements disconnected from actual product reality
+  - should protect player trust, message clarity, and brand voice consistency
+  - acts as the audience-trust and external-positioning guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`

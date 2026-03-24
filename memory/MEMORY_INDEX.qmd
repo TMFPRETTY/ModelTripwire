@@ -82,6 +82,8 @@ It exists to make future recall easier by giving important operating context a s
 - Exploit Tester protects system integrity, fairness, progression pacing, and economy stability against hostile or degenerate player behavior.
 - Initial product strategy role: `Product Manager`
 - Product Manager protects audience fit, roadmap value, product clarity, and market-facing prioritization without collapsing into trend-chasing.
+- Initial growth/community role: `Marketing and Community Director`
+- Marketing and Community Director protects player trust, external messaging clarity, brand voice, and honest audience-facing positioning.
 
 ## Updating guidance
 Update this file when:
