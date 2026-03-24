@@ -3,6 +3,10 @@
 ## Purpose
 This file is the pre-deployment catalog of automations/jobs for the Mac mini setup. It is the planning layer for what should run, where it should post, and how it should behave before jobs are re-enabled.
 
+For the live operational companion, see:
+- `JOB_OPERATING_GUIDE.md`
+- `LIVE_CONFIG_AUDIT_2026-03-24.md`
+
 ## Status Key
 - `planned`
 - `paused`
