@@ -1,0 +1,72 @@
+# GAME_PROJECT_OPERATING_SPEC.md
+
+## Purpose
+This file defines the initial operating model for the 2D isometric RPG project.
+
+## Project
+- Project type: 2D isometric RPG
+- Primary codebase: `/Users/tmfprettybot/Documents/Game/Untitled-2d-Isometric-RPG`
+- Initial Discord room: `1485801109087060018`
+
+## Initial Room Model
+
+### game-dev
+- Purpose: main game project room
+- Discord channel id: `1485801109087060018`
+- Role: intake, planning, systems direction, implementation requests, coordination
+- Owning agent: `game-dev`
+
+## Relationship To Engineering And QA
+The game room is the domain room.
+Engineering is the implementation lane when work becomes code/debugging/integration/tooling work.
+QA is the validation gate for engineering-impact work.
+
+Default loop:
+- game-dev defines the need
+- engineering implements when implementation work is required
+- QA reviews the result
+- engineering reworks if needed
+- approved result returns to the game room
+
+## What Belongs In game-dev
+- feature ideas
+- mechanic/system prompts
+- gameplay loops
+- narrative/world requests
+- content pipeline requests
+- bug reports
+- implementation requests
+- prioritization and scope decisions
+- requests to inspect the game repo and propose changes
+
+## What Does Not Need To Start Here
+These can exist later as separate rooms if the project grows:
+- game-design
+- game-writing
+- game-art
+- game-audio
+- game-engineering
+- game-qa
+- game-production
+
+For now, keep the project simple and centralize work in `game-dev` unless specialization becomes useful.
+
+## Repo Context Rule
+If a request is clearly about the game, default working context should be:
+- `/Users/tmfprettybot/Documents/Game/Untitled-2d-Isometric-RPG`
+
+## Practical Operating Rule
+- Use `game-dev` as the source-of-truth room for the game.
+- When implementation is needed, route the work into engineering behavior with the game repo as context.
+- Do not treat implementation as complete until QA has passed it, explicit approval is given, or the work is intentionally stopped.
+
+## Future Expansion Path
+As the game project grows, likely additional rooms are:
+- `game-design`
+- `game-writing`
+- `game-art`
+- `game-engineering`
+- `game-qa`
+- `game-production`
+
+Do not create these just because they sound nice. Create them when they solve a real coordination problem.

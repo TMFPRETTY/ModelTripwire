@@ -41,6 +41,11 @@ This is the canonical operating spec for room ownership, agent roles, and the en
 - Channel role: implementation lane for code, debugging, config, automation, integrations, and QA coordination
 - Owning agent: `engineering`
 
+### game-dev
+- Channel role: main game project room for the 2D isometric RPG
+- Owning agent: `game-dev`
+- Default repo context: `/Users/tmfprettybot/Documents/Game/Untitled-2d-Isometric-RPG`
+
 ### qa-review
 - Workflow role: review authority for engineering-impact work
 - Owning agent: `qa-review`
@@ -61,6 +66,14 @@ Use when a request requires:
 - automation work
 - tooling/debugging
 - integration work
+
+### Game-dev -> Engineering
+Use when a request requires:
+- game code changes
+- Unity/project fixes
+- gameplay/system implementation
+- tooling/debugging
+- integration or pipeline work
 
 ### Caruso Product / Growth -> Engineering
 Use when a request requires:

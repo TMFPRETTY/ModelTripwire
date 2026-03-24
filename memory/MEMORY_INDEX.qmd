@@ -39,6 +39,7 @@ It exists to make future recall easier by giving important operating context a s
 - `caruso-product` -> `caruso-product`
 - `security-infra` -> `security-infra`
 - `research-lab` -> `research-lab`
+- `game-dev` -> `game-dev`
 - `qa-review` -> `qa-review` role/function
 
 ### Canonical reference docs
