@@ -62,9 +62,9 @@ Other rooms can originate work, but engineering owns build/debug/integration exe
 
 ## Repo Anchors
 Use these project roots when the request is about code in a specific system:
-- **Caruso repo:** `/Users/jeremypretty/Documents/PM and QA/PM-and-QA-Combo-Fun`
-- **Signal and Circuit repo:** `/Users/jeremypretty/Documents/AI:ML/signal-and-circuit`
-- **OpenClaw workspace / platform:** `/Users/jeremypretty/.openclaw/workspace`
+- **Caruso repo:** `/Users/tmfprettybot/Documents/PM and QA/PM-and-QA-Combo-Fun`
+- **Signal and Circuit repo:** `/Users/tmfprettybot/Documents/AI:ML/signal-and-circuit`
+- **OpenClaw workspace / platform:** `/Users/tmfprettybot/.openclaw/workspace-main`
 
 If a request in `engineering` names one of these systems, treat that repo/workspace as the default working context.
 

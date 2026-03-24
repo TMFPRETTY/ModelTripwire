@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-WORKSPACE = Path('/Users/jeremypretty/.openclaw/workspace')
+WORKSPACE = Path('/Users/tmfprettybot/.openclaw/workspace-main')
 STATE_DIR = WORKSPACE / '.openclaw'
 STATE_FILE = STATE_DIR / 'signalandcircuit-mail-monitor-state.json'
 CONFIG = {

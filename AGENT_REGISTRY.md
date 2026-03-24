@@ -87,9 +87,9 @@ This file is the canonical registry of the OpenClaw agents/rooms currently defin
 - **Primary skill(s):** `qa-review` (for review), engineering room/workflow docs, shared repo anchors
 - **Approval boundary:** code/config work may proceed within safe bounds; destructive or high-risk changes require approval
 - **Notes:** repo anchors:
-  - Caruso → `/Users/jeremypretty/Documents/PM and QA/PM-and-QA-Combo-Fun`
-  - Signal and Circuit → `/Users/jeremypretty/Documents/AI:ML/signal-and-circuit`
-  - OpenClaw/platform → `/Users/jeremypretty/.openclaw/workspace`
+  - Caruso → `/Users/tmfprettybot/Documents/PM and QA/PM-and-QA-Combo-Fun`
+  - Signal and Circuit → `/Users/tmfprettybot/Documents/AI:ML/signal-and-circuit`
+  - OpenClaw/platform → `/Users/tmfprettybot/.openclaw/workspace-main`
 
 ## Embedded / Cross-Cutting Agents
 

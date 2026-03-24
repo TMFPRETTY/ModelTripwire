@@ -39,8 +39,8 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 
 ## Repos
 
-- **Caruso:** `/Users/jeremypretty/Documents/PM and QA/PM-and-QA-Combo-Fun`
-- **Signal and Circuit:** `/Users/jeremypretty/Documents/AI:ML/signal-and-circuit`
-- **OpenClaw workspace:** `/Users/jeremypretty/.openclaw/workspace`
+- **Caruso:** `/Users/tmfprettybot/Documents/PM and QA/PM-and-QA-Combo-Fun`
+- **Signal and Circuit:** `/Users/tmfprettybot/Documents/AI:ML/signal-and-circuit`
+- **OpenClaw workspace:** `/Users/tmfprettybot/.openclaw/workspace-main`
 
 Add whatever helps you do your job. This is your cheat sheet.
