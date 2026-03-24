@@ -78,6 +78,8 @@ It exists to make future recall easier by giving important operating context a s
 - Head of QA protects test strategy, coverage quality, regression awareness, release confidence, and evidence-based quality risk reporting.
 - Initial quality engineering role: `QA Automation Engineer`
 - QA Automation Engineer protects automation coverage, repeatability, regression speed, build verification, and stable test infrastructure.
+- Initial adversarial QA role: `Exploit Tester`
+- Exploit Tester protects system integrity, fairness, progression pacing, and economy stability against hostile or degenerate player behavior.
 
 ## Updating guidance
 Update this file when:

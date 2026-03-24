@@ -188,6 +188,15 @@ If a request is clearly about the game, default working context should be:
   - should protect fast feedback, repeatability, and stable test infrastructure
   - acts as the automation-coverage and regression-speed guardrail for the project
 
+### Exploit Tester
+- Department: Adversarial QA
+- Role: intentionally breaks systems to find exploits, abuse loops, progression skips, economy breaks, and unfair strategies
+- Canonical spec: `game-agents/EXPLOIT_TESTER.md`
+- Notes:
+  - should challenge assumptions about intended play and weak rule enforcement
+  - should protect system integrity, fairness, and progression pacing against adversarial behavior
+  - acts as the exploit-risk and abuse-path guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
