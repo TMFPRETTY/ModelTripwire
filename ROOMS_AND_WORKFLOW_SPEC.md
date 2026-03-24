@@ -14,7 +14,7 @@ This is the canonical operating spec for room ownership, agent roles, and the en
 - Owning agent: `ops-desk`
 
 ### support-inbox
-- Channel role: support triage, reply drafting, escalation
+- Channel role: support triage, urgency classification, reply drafting, escalation, and issue routing
 - Owning agent: `support-inbox`
 
 ### caruso-growth
@@ -34,7 +34,7 @@ This is the canonical operating spec for room ownership, agent roles, and the en
 - Owning agent: `research-lab`
 
 ### signal-and-circuit
-- Channel role: newsroom/editorial/system needs for Signal and Circuit
+- Channel role: newsroom/editorial, inbox, site-quality, growth, and system needs for Signal and Circuit
 - Owning agent: `signal-and-circuit`
 
 ### engineering
@@ -156,3 +156,5 @@ This workspace should operate as:
 - a live engineering room that can intake and act conversationally
 - a QA-gated implementation flow
 - a system where other rooms can hand work into engineering, and engineering can inspect those rooms for context before acting
+- a support room that classifies urgency/risk before drafting or routing
+- a Signal & Circuit room that behaves as a combined editorial/inbox/site-quality/growth operating lane with explicit handoffs instead of muddled all-in-one handling
