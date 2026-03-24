@@ -88,6 +88,8 @@ It exists to make future recall easier by giving important operating context a s
 - Data Analyst protects evidence quality, useful metric interpretation, honest uncertainty, and actionability over vanity metrics.
 - Initial build/release role: `Build and Release Manager`
 - Build and Release Manager protects build stability, release predictability, version integrity, packaging quality, and deployment repeatability.
+- Initial retention/events role: `LiveOps Designer`
+- LiveOps Designer protects sustainable return cadence, long-term engagement quality, burnout prevention, and trust-preserving recurring systems.
 
 ## Updating guidance
 Update this file when:

@@ -233,6 +233,15 @@ If a request is clearly about the game, default working context should be:
   - should protect version integrity, deployment clarity, and repeatable release hygiene
   - acts as the build-stability and release-readiness guardrail for the project
 
+### LiveOps Designer
+- Department: Retention and Events
+- Role: designs long-term engagement loops, event cadence, return structures, and sustainable repeat participation systems
+- Canonical spec: `game-agents/LIVEOPS_DESIGNER.md`
+- Notes:
+  - should challenge content drought, overwhelming cadence, and empty retention hooks
+  - should protect player trust and long-term engagement quality over manipulative habit mechanics
+  - acts as the retention-cadence and long-horizon engagement guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
