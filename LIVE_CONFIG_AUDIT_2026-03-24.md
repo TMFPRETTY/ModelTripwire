@@ -84,18 +84,17 @@ Recommendation:
 - if it repeats, treat as an ops-desk + command-center delivery issue
 
 ### 2. Signal & Circuit cron job session key oddity
-- `signalandcircuit-reddit-draft-queue-weekdays-10am` uses:
+- `signalandcircuit-reddit-draft-queue-weekdays-10am` had been using:
   - `sessionKey: agent:main:main`
-- Most of the other isolated cron jobs use:
+- It has now been normalized to:
   - `sessionKey: agent:codex:main`
 
 Interpretation:
-- this may be harmless, but it is inconsistent enough to deserve verification
-- especially given Signal & Circuit’s recent instability history
+- this mismatch was real, not just cosmetic
+- it is now fixed, which reduces one source of unnecessary inconsistency around the most fragile room
 
 Recommendation:
-- verify whether `agent:main:main` is intentional for this one job
-- if not intentional, normalize it
+- keep the normalized session key unless a future intentional routing decision requires otherwise
 
 ### 3. Signal & Circuit session still shows context pressure risk
 - The reset helped, but the live Signal & Circuit room record already shows:
@@ -139,3 +138,4 @@ The main remaining operational watchpoints are:
 3. the odd Signal & Circuit cron session-key inconsistency
 
 None of these invalidate the operating model, but they are the places most likely to cause practical drift.
+ate the operating model, but the remaining two watchpoints are the places most likely to cause practical drift.

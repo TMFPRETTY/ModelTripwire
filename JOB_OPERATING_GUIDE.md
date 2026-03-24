@@ -279,4 +279,4 @@ Escalate to `command-center` if a job failure:
   - the room’s identity becomes muddled
   - the drafts stop feeling editorially credible
 - **Approval boundary:** drafts only; not auto-posted
-- **Current audit note:** this job is enabled and healthy, but its sessionKey is `agent:main:main` rather than the more common `agent:codex:main`; worth verifying whether that is intentional
+- **Current audit note:** this job had an inconsistent sessionKey and was normalized to `agent:codex:main` during the 2026-03-24 audit/fix pass
