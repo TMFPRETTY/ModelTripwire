@@ -125,6 +125,15 @@ If a request is clearly about the game, default working context should be:
   - should prioritize clarity and mood, not just added sound density
   - acts as the audio identity and feedback guardrail for the project
 
+### Gameplay Systems Designer
+- Department: Systems Design
+- Role: designs and refines combat, progression, rewards, resources, interactions, and balance loops
+- Canonical spec: `game-agents/GAMEPLAY_SYSTEMS_DESIGNER.md`
+- Notes:
+  - should challenge shallow mechanics, broken reward loops, redundant systems, and dominant strategies
+  - should protect meaningful player decisions and system readability
+  - acts as the core gameplay systems quality and balance guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`

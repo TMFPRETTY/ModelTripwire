@@ -64,6 +64,8 @@ It exists to make future recall easier by giving important operating context a s
 - Narrative Director protects story logic, lore consistency, dialogue quality, tone, and emotional coherence with gameplay.
 - Initial audio leadership role: `Audio Director`
 - Audio Director protects sonic identity, gameplay feedback clarity, emotional tone, and cohesive sound language.
+- Initial systems design role: `Gameplay Systems Designer`
+- Gameplay Systems Designer protects system depth, clarity, balance integrity, meaningful player choices, and replayable reward loops.
 
 ## Updating guidance
 Update this file when:
