@@ -1,166 +1,6 @@
 {
-  "generatedAt": "2026-03-24T01:27:36Z",
+  "generatedAt": "2026-03-24T21:31:57Z",
   "jobs": [
-    {
-      "id": "148c5073-5be0-40cc-8cbc-79f062a18191",
-      "name": "morning-command-center-digest-weekdays-830am",
-      "roomId": "command-center",
-      "status": "active",
-      "enabled": true,
-      "lastRunAt": "2026-03-23T13:42:06.047000Z",
-      "nextRunAt": "2026-03-24T13:30:00Z",
-      "lastResult": "ok",
-      "recentFailureCount": 0,
-      "summary": "Healthy",
-      "destination": {
-        "type": "announce",
-        "channelId": "1484651751108775946"
-      }
-    },
-    {
-      "id": "1a89afcb-9e8b-41bf-ac40-bfc74a199fbb",
-      "name": "security-infra-daily-healthcheck-weekdays-845am",
-      "roomId": "security-infra",
-      "status": "active",
-      "enabled": true,
-      "lastRunAt": "2026-03-23T13:50:19.514000Z",
-      "nextRunAt": "2026-03-24T13:45:00Z",
-      "lastResult": "ok",
-      "recentFailureCount": 0,
-      "summary": "Healthy",
-      "destination": {
-        "type": "announce",
-        "channelId": "1484651900812001491"
-      }
-    },
-    {
-      "id": "d0fc4e18-d944-4a49-abc6-a1e1d8062385",
-      "name": "caruso-daily-reply-pack-weekdays-930am",
-      "roomId": "caruso-growth",
-      "status": "active",
-      "enabled": true,
-      "lastRunAt": "2026-03-23T21:29:03.816000Z",
-      "nextRunAt": "2026-03-24T14:30:00Z",
-      "lastResult": "ok",
-      "recentFailureCount": 0,
-      "summary": "Healthy",
-      "destination": {
-        "type": "announce",
-        "channelId": "1484651836966436934"
-      }
-    },
-    {
-      "id": "b2f55e26-0c55-4c54-98c0-1309889162ef",
-      "name": "caruso-reddit-draft-queue-weekdays-10am",
-      "roomId": "caruso-growth",
-      "status": "active",
-      "enabled": true,
-      "lastRunAt": "2026-03-23T15:00:00.033000Z",
-      "nextRunAt": "2026-03-24T15:00:00Z",
-      "lastResult": "ok",
-      "recentFailureCount": 0,
-      "summary": "Healthy",
-      "destination": {
-        "type": "announce",
-        "channelId": "1484651836966436934"
-      }
-    },
-    {
-      "id": "c9f9ac24-79e6-4729-aec3-38547f0ee149",
-      "name": "signalandcircuit-reddit-draft-queue-weekdays-10am",
-      "roomId": null,
-      "status": "active",
-      "enabled": true,
-      "lastRunAt": "2026-03-23T21:29:40.912000Z",
-      "nextRunAt": "2026-03-24T15:00:00Z",
-      "lastResult": "ok",
-      "recentFailureCount": 0,
-      "summary": "Healthy",
-      "destination": {
-        "type": "announce",
-        "channelId": "1484556120025727127"
-      }
-    },
-    {
-      "id": "ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
-      "name": "caruso-marketing-opportunity-scan-daily-1115am",
-      "roomId": "caruso-growth",
-      "status": "active",
-      "enabled": true,
-      "lastRunAt": "2026-03-23T16:15:00.052000Z",
-      "nextRunAt": "2026-03-24T16:15:00Z",
-      "lastResult": "ok",
-      "recentFailureCount": 0,
-      "summary": "Healthy",
-      "destination": {
-        "type": "announce",
-        "channelId": "1484651836966436934"
-      }
-    },
-    {
-      "id": "e006d18f-d7b1-4d5e-a525-0ceaa5a74080",
-      "name": "caruso-product-signal-digest-weekdays-1230pm",
-      "roomId": "caruso-product",
-      "status": "active",
-      "enabled": true,
-      "lastRunAt": "2026-03-23T17:30:00.019000Z",
-      "nextRunAt": "2026-03-24T17:30:00Z",
-      "lastResult": "ok",
-      "recentFailureCount": 0,
-      "summary": "Healthy",
-      "destination": {
-        "type": "announce",
-        "channelId": "1484651869593669762"
-      }
-    },
-    {
-      "id": "9a5b6e8c-f0f9-4346-a997-e1bca8818b93",
-      "name": "ops-desk-midday-status-weekdays-1pm",
-      "roomId": "ops-desk",
-      "status": "active",
-      "enabled": true,
-      "lastRunAt": "2026-03-23T18:00:00.040000Z",
-      "nextRunAt": "2026-03-24T18:00:00Z",
-      "lastResult": "ok",
-      "recentFailureCount": 0,
-      "summary": "Healthy",
-      "destination": {
-        "type": "announce",
-        "channelId": "1484651772193673349"
-      }
-    },
-    {
-      "id": "35c8e108-d807-4e6c-8fba-15380698969b",
-      "name": "engineering-midday-intake-status-weekdays-2pm",
-      "roomId": "engineering",
-      "status": "active",
-      "enabled": true,
-      "lastRunAt": "2026-03-23T19:00:00.023000Z",
-      "nextRunAt": "2026-03-24T19:00:00Z",
-      "lastResult": "ok",
-      "recentFailureCount": 0,
-      "summary": "Healthy",
-      "destination": {
-        "type": "announce",
-        "channelId": "1484988049229086850"
-      }
-    },
-    {
-      "id": "c99c554b-db9d-439e-9885-c6d8c881601f",
-      "name": "engineering-qa-review-check-weekdays-215pm",
-      "roomId": "engineering",
-      "status": "active",
-      "enabled": true,
-      "lastRunAt": "2026-03-23T19:15:00.018000Z",
-      "nextRunAt": "2026-03-24T19:15:00Z",
-      "lastResult": "ok",
-      "recentFailureCount": 0,
-      "summary": "Healthy",
-      "destination": {
-        "type": "announce",
-        "channelId": "1484988049229086850"
-      }
-    },
     {
       "id": "e5d420bd-4ac4-4716-a5ff-cf3c69bb381c",
       "name": "caruso-competitor-watch-daily-530pm",
@@ -175,6 +15,198 @@
       "destination": {
         "type": "announce",
         "channelId": "1484651836966436934"
+      }
+    },
+    {
+      "id": "148c5073-5be0-40cc-8cbc-79f062a18191",
+      "name": "morning-command-center-digest-weekdays-830am",
+      "roomId": "command-center",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": "2026-03-24T14:28:04.036000Z",
+      "nextRunAt": "2026-03-25T13:30:00Z",
+      "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484651751108775946"
+      }
+    },
+    {
+      "id": "1a89afcb-9e8b-41bf-ac40-bfc74a199fbb",
+      "name": "security-infra-daily-healthcheck-weekdays-845am",
+      "roomId": "security-infra",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": "2026-03-24T13:45:00.017000Z",
+      "nextRunAt": "2026-03-25T13:45:00Z",
+      "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484651900812001491"
+      }
+    },
+    {
+      "id": "25bf72e9-4539-41b3-94cf-30845b78ebd3",
+      "name": "daily-cross-room-standup-weekdays-915am",
+      "roomId": "command-center",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": null,
+      "nextRunAt": "2026-03-25T14:15:00Z",
+      "lastResult": "unknown",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484651751108775946"
+      }
+    },
+    {
+      "id": "d0fc4e18-d944-4a49-abc6-a1e1d8062385",
+      "name": "caruso-daily-reply-pack-weekdays-930am",
+      "roomId": "caruso-growth",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": "2026-03-24T14:30:00.007000Z",
+      "nextRunAt": "2026-03-25T14:30:00Z",
+      "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484651836966436934"
+      }
+    },
+    {
+      "id": "b2f55e26-0c55-4c54-98c0-1309889162ef",
+      "name": "caruso-reddit-draft-queue-weekdays-10am",
+      "roomId": "caruso-growth",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": "2026-03-24T15:00:00.015000Z",
+      "nextRunAt": "2026-03-25T15:00:00Z",
+      "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484651836966436934"
+      }
+    },
+    {
+      "id": "c9f9ac24-79e6-4729-aec3-38547f0ee149",
+      "name": "signalandcircuit-reddit-draft-queue-weekdays-10am",
+      "roomId": null,
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": "2026-03-24T15:01:41.419000Z",
+      "nextRunAt": "2026-03-25T15:00:00Z",
+      "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484556120025727127"
+      }
+    },
+    {
+      "id": "ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
+      "name": "caruso-marketing-opportunity-scan-daily-1115am",
+      "roomId": "caruso-growth",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": "2026-03-24T16:15:00.015000Z",
+      "nextRunAt": "2026-03-25T16:15:00Z",
+      "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484651836966436934"
+      }
+    },
+    {
+      "id": "e006d18f-d7b1-4d5e-a525-0ceaa5a74080",
+      "name": "caruso-product-signal-digest-weekdays-1230pm",
+      "roomId": "caruso-product",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": "2026-03-24T17:30:00.018000Z",
+      "nextRunAt": "2026-03-25T17:30:00Z",
+      "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484651869593669762"
+      }
+    },
+    {
+      "id": "9a5b6e8c-f0f9-4346-a997-e1bca8818b93",
+      "name": "ops-desk-midday-status-weekdays-1pm",
+      "roomId": "ops-desk",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": "2026-03-24T18:00:00.018000Z",
+      "nextRunAt": "2026-03-25T18:00:00Z",
+      "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484651772193673349"
+      }
+    },
+    {
+      "id": "a60cecdb-c91f-40eb-bfe9-ad447f0d0ef1",
+      "name": "engineering-context-sync-weekdays-145pm",
+      "roomId": "engineering",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": null,
+      "nextRunAt": "2026-03-25T18:45:00Z",
+      "lastResult": "unknown",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484988049229086850"
+      }
+    },
+    {
+      "id": "35c8e108-d807-4e6c-8fba-15380698969b",
+      "name": "engineering-midday-intake-status-weekdays-2pm",
+      "roomId": "engineering",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": "2026-03-24T19:00:00.016000Z",
+      "nextRunAt": "2026-03-25T19:00:00Z",
+      "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484988049229086850"
+      }
+    },
+    {
+      "id": "c99c554b-db9d-439e-9885-c6d8c881601f",
+      "name": "engineering-qa-review-check-weekdays-215pm",
+      "roomId": "engineering",
+      "status": "active",
+      "enabled": true,
+      "lastRunAt": "2026-03-24T19:15:00.014000Z",
+      "nextRunAt": "2026-03-25T19:15:00Z",
+      "lastResult": "ok",
+      "recentFailureCount": 0,
+      "summary": "Healthy",
+      "destination": {
+        "type": "announce",
+        "channelId": "1484988049229086850"
       }
     },
     {

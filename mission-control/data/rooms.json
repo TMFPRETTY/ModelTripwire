@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-24T01:27:36Z",
+  "generatedAt": "2026-03-24T21:31:57Z",
   "rooms": [
     {
       "id": "command-center",
@@ -7,7 +7,7 @@
       "channelId": "1484651751108775946",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-23T13:42:06.047000Z",
+      "lastUpdateAt": "2026-03-24T14:28:04.036000Z",
       "agents": [
         "command-center"
       ],
@@ -24,7 +24,7 @@
       "channelId": "1484651772193673349",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-23T18:00:00.040000Z",
+      "lastUpdateAt": "2026-03-24T18:00:00.018000Z",
       "agents": [
         "ops-desk"
       ],
@@ -58,7 +58,7 @@
       "channelId": "1484651836966436934",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-23T22:30:00.019000Z",
+      "lastUpdateAt": "2026-03-24T16:15:00.015000Z",
       "agents": [
         "caruso-growth"
       ],
@@ -75,7 +75,7 @@
       "channelId": "1484651869593669762",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-23T17:30:00.019000Z",
+      "lastUpdateAt": "2026-03-24T17:30:00.018000Z",
       "agents": [
         "caruso-product"
       ],
@@ -87,12 +87,29 @@
       "kind": "product"
     },
     {
+      "id": "caruso-product-lab",
+      "name": "caruso-product-lab",
+      "channelId": "1486097589760950282",
+      "status": "quiet",
+      "headline": "Exploratory product room for codebase-grounded ideation and concept refinement.",
+      "lastUpdateAt": null,
+      "agents": [
+        "caruso-product-lab"
+      ],
+      "badges": {
+        "approvals": 0,
+        "alerts": 0,
+        "queue": 0
+      },
+      "kind": "product-lab"
+    },
+    {
       "id": "security-infra",
       "name": "security-infra",
       "channelId": "1484651900812001491",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-23T13:50:19.514000Z",
+      "lastUpdateAt": "2026-03-24T13:45:00.017000Z",
       "agents": [
         "security-infra"
       ],
@@ -143,7 +160,7 @@
       "channelId": "1484988049229086850",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-23T19:15:00.018000Z",
+      "lastUpdateAt": "2026-03-24T19:15:00.014000Z",
       "agents": [
         "engineering",
         "qa-review"

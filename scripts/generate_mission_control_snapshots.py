@@ -22,6 +22,7 @@ ROOMS = [
     {'id': 'support-inbox', 'name': 'support-inbox', 'channelId': '1484651808772198462', 'kind': 'support'},
     {'id': 'caruso-growth', 'name': 'caruso-growth', 'channelId': '1484651836966436934', 'kind': 'growth'},
     {'id': 'caruso-product', 'name': 'caruso-product', 'channelId': '1484651869593669762', 'kind': 'product'},
+    {'id': 'caruso-product-lab', 'name': 'caruso-product-lab', 'channelId': '1486097589760950282', 'kind': 'product-lab'},
     {'id': 'security-infra', 'name': 'security-infra', 'channelId': '1484651900812001491', 'kind': 'security'},
     {'id': 'research-lab', 'name': 'research-lab', 'channelId': '1484655635336265758', 'kind': 'research'},
     {'id': 'signal-and-circuit', 'name': 'signal-and-circuit', 'channelId': '1485042311959416832', 'kind': 'editorial'},
@@ -33,6 +34,7 @@ AGENTS = [
     {'id': 'ops-desk', 'roomId': 'ops-desk', 'mission': 'Coordinate operations, failures, drift, queues, and next actions.', 'skills': ['ops-desk'], 'phase': 'active', 'approvalBoundary': 'Coordinates and reports; risky operational changes still require approval.'},
     {'id': 'caruso-growth', 'roomId': 'caruso-growth', 'mission': 'Find, package, and route growth opportunities for Caruso.', 'skills': ['caruso-growth'], 'phase': 'active', 'approvalBoundary': 'Public posting requires approval.'},
     {'id': 'caruso-product', 'roomId': 'caruso-product', 'mission': 'Convert support/growth/research/market signals into product recommendations.', 'skills': ['caruso-product'], 'phase': 'active', 'approvalBoundary': 'Recommendations are internal by default.'},
+    {'id': 'caruso-product-lab', 'roomId': 'caruso-product-lab', 'mission': 'Explore rough product ideas, refine concepts, and ground product thinking in the real Caruso codebase and README files.', 'skills': ['caruso-product-lab'], 'phase': 'active', 'approvalBoundary': 'Exploration and internal drafts are fine; commitments and implementation still require handoff or approval.'},
     {'id': 'security-infra', 'roomId': 'security-infra', 'mission': 'Monitor host/runtime health, security posture, and infrastructure drift.', 'skills': ['security-infra'], 'phase': 'active', 'approvalBoundary': 'Can inspect and recommend freely; impactful changes require approval.'},
     {'id': 'research-lab', 'roomId': 'research-lab', 'mission': 'Discover and rank business/SaaS/product opportunities.', 'skills': ['research-lab'], 'phase': 'active', 'approvalBoundary': 'Research and ranking only.'},
     {'id': 'engineering', 'roomId': 'engineering', 'mission': 'Shared implementation lane for code, debugging, automation changes, integrations, and code QA coordination.', 'skills': ['qa-review'], 'phase': 'active', 'approvalBoundary': 'High-risk changes require approval.'},
@@ -76,6 +78,8 @@ def room_for_job(name):
         'caruso-competitor-watch-every-6h': 'caruso-growth',
         'caruso-competitor-watch-daily-530pm': 'caruso-growth',
         'caruso-product-signal-digest-weekdays-1230pm': 'caruso-product',
+        'daily-cross-room-standup-weekdays-915am': 'command-center',
+        'engineering-context-sync-weekdays-145pm': 'engineering',
         'security-infra-daily-healthcheck-weekdays-845am': 'security-infra',
         'research-lab-weekly-idea-scan-mondays-11am': 'research-lab',
         'signalandcircuit-mail-monitor-every-2m': 'signal-and-circuit',
@@ -229,6 +233,8 @@ def build_rooms(jobs, mail_state, approvals, alerts):
             headline = 'Growth scan hit a rate limit and may need retry/tuning.'
         elif room['id'] == 'engineering' and room_approvals:
             headline = f'{len(room_approvals)} item(s) waiting on engineering/QA follow-through.'
+        elif room['id'] == 'caruso-product-lab':
+            headline = 'Exploratory product room for codebase-grounded ideation and concept refinement.'
         elif room['id'] == 'support-inbox' and room_approvals:
             headline = f'{len(room_approvals)} support item(s) likely need human approval.'
         elif failed:

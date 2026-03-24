@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-24T01:27:36Z",
+  "generatedAt": "2026-03-24T21:31:57Z",
   "agents": [
     {
       "id": "command-center",
@@ -8,7 +8,8 @@
       "roomId": "command-center",
       "mission": "Provide top-level mission control, priorities, blockers, approvals, and daily focus.",
       "jobs": [
-        "148c5073-5be0-40cc-8cbc-79f062a18191"
+        "148c5073-5be0-40cc-8cbc-79f062a18191",
+        "25bf72e9-4539-41b3-94cf-30845b78ebd3"
       ],
       "skills": [
         "command-center-digest"
@@ -38,10 +39,10 @@
       "roomId": "caruso-growth",
       "mission": "Find, package, and route growth opportunities for Caruso.",
       "jobs": [
+        "e5d420bd-4ac4-4716-a5ff-cf3c69bb381c",
         "d0fc4e18-d944-4a49-abc6-a1e1d8062385",
         "b2f55e26-0c55-4c54-98c0-1309889162ef",
         "ee105b50-2e8e-463b-b9a4-bcc165a21a3d",
-        "e5d420bd-4ac4-4716-a5ff-cf3c69bb381c",
         "4f2aa9d6-9d73-4e08-a4fc-9d4699ca4bf7"
       ],
       "skills": [
@@ -63,6 +64,19 @@
         "caruso-product"
       ],
       "approvalBoundary": "Recommendations are internal by default.",
+      "phase": "active"
+    },
+    {
+      "id": "caruso-product-lab",
+      "name": "caruso-product-lab",
+      "status": "active",
+      "roomId": "caruso-product-lab",
+      "mission": "Explore rough product ideas, refine concepts, and ground product thinking in the real Caruso codebase and README files.",
+      "jobs": [],
+      "skills": [
+        "caruso-product-lab"
+      ],
+      "approvalBoundary": "Exploration and internal drafts are fine; commitments and implementation still require handoff or approval.",
       "phase": "active"
     },
     {
@@ -102,6 +116,7 @@
       "roomId": "engineering",
       "mission": "Shared implementation lane for code, debugging, automation changes, integrations, and code QA coordination.",
       "jobs": [
+        "a60cecdb-c91f-40eb-bfe9-ad447f0d0ef1",
         "35c8e108-d807-4e6c-8fba-15380698969b",
         "c99c554b-db9d-439e-9885-c6d8c881601f"
       ],

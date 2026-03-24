@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-03-24T01:27:36Z",
+  "generatedAt": "2026-03-24T21:31:57Z",
   "overview": {
     "globalHealth": {
       "systemStatus": "healthy",
-      "activeRooms": 9,
-      "activeAgents": 8,
+      "activeRooms": 10,
+      "activeAgents": 9,
       "pendingApprovals": 0,
       "openAlerts": 0,
       "failingJobs": 0
