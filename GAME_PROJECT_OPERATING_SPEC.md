@@ -143,6 +143,15 @@ If a request is clearly about the game, default working context should be:
   - should protect readable challenge, fairness, and encounter variety
   - acts as the AI clarity and encounter behavior guardrail for the project
 
+### Economy Designer
+- Department: Progression and Economy
+- Role: designs and maintains rewards, sinks, scarcity, progression pacing, and resource health
+- Canonical spec: `game-agents/ECONOMY_DESIGNER.md`
+- Notes:
+  - should challenge broken value loops, unlimited generation, meaningless currencies, and grind spikes
+  - should protect progression fairness and reward meaning
+  - acts as the economy stability and progression pacing guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`

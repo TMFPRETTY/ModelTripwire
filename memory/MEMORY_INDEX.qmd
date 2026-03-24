@@ -68,6 +68,8 @@ It exists to make future recall easier by giving important operating context a s
 - Gameplay Systems Designer protects system depth, clarity, balance integrity, meaningful player choices, and replayable reward loops.
 - Initial gameplay AI role: `AI Systems Designer`
 - AI Systems Designer protects readable challenge, fairness, behavior variety, and scalable AI encounter quality.
+- Initial progression/economy role: `Economy Designer`
+- Economy Designer protects resource health, reward pacing, progression fairness, sink/faucet stability, and meaningful long-term value loops.
 
 ## Updating guidance
 Update this file when:
