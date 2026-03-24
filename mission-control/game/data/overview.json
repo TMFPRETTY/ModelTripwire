@@ -1,0 +1,32 @@
+{
+  "generatedAt": "2026-03-24T01:27:36Z",
+  "overview": {
+    "globalHealth": {
+      "systemStatus": "healthy",
+      "activeRooms": 4,
+      "activeAgents": 9,
+      "pendingApprovals": 0,
+      "openAlerts": 0,
+      "failingJobs": 0,
+      "connectedChannels": 4,
+      "mode": "live-room routing"
+    },
+    "needsAttention": [
+      {
+        "title": "Start sending real prompts into the game rooms to generate live room traffic and workflow history.",
+        "roomId": "game-dev",
+        "priority": "normal"
+      },
+      {
+        "title": "Use game-engineering -> game-qa as the default implementation/review loop.",
+        "roomId": "game-qa",
+        "priority": "normal"
+      }
+    ],
+    "recommendedFocus": [
+      "Use game-dev for top-level game asks, routing, and studio decisions.",
+      "Use game-design for systems, UX, AI, economy, and player-facing design refinement.",
+      "Use game-engineering and game-qa as the build-and-review loop before work is treated as complete."
+    ]
+  }
+}

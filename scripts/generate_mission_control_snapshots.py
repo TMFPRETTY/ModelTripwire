@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
 import json
+import os
+import platform
+import shutil
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
-WORKSPACE = Path('/Users/jeremypretty/.openclaw/workspace')
+HOME = Path.home()
+WORKSPACE = HOME / '.openclaw' / 'workspace'
 DATA_DIR = WORKSPACE / 'mission-control' / 'data'
+GAME_DATA_DIR = WORKSPACE / 'mission-control' / 'game' / 'data'
 STATE_FILE = WORKSPACE / '.openclaw' / 'signalandcircuit-mail-monitor-state.json'
+OPENCLAW_BIN = shutil.which('openclaw') or '/Users/tmfprettybot/.nvm/versions/node/v22.22.1/bin/openclaw'
+HOST_LABEL = os.environ.get('MISSION_CONTROL_HOST_LABEL') or platform.node() or 'Local host'
+GAME_REPO = Path('/Users/tmfprettybot/Documents/Game/Untitled-2d-Isometric-RPG')
 
 ROOMS = [
     {'id': 'command-center', 'name': 'command-center', 'channelId': '1484651751108775946', 'kind': 'command'},
@@ -38,15 +46,21 @@ def now_iso():
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z')
 
 
+def _cmd(cmd):
+    if cmd and cmd[0] == 'openclaw':
+        return [OPENCLAW_BIN] + cmd[1:]
+    return cmd
+
+
 def run_json(cmd):
-    res = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    res = subprocess.run(_cmd(cmd), capture_output=True, text=True, check=False)
     if res.returncode != 0:
         raise RuntimeError(res.stderr or res.stdout)
     return json.loads(res.stdout)
 
 
 def run_text(cmd):
-    res = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    res = subprocess.run(_cmd(cmd), capture_output=True, text=True, check=False)
     return (res.stdout + res.stderr).strip()
 
 
@@ -55,10 +69,12 @@ def room_for_job(name):
         'morning-command-center-digest-weekdays-830am': 'command-center',
         'ops-desk-midday-status-weekdays-1pm': 'ops-desk',
         'caruso-marketing-opportunity-scan-every-4h': 'caruso-growth',
+        'caruso-marketing-opportunity-scan-daily-1115am': 'caruso-growth',
         'caruso-weekly-marketing-pack-mondays-9am': 'caruso-growth',
         'caruso-daily-reply-pack-weekdays-930am': 'caruso-growth',
         'caruso-reddit-draft-queue-weekdays-10am': 'caruso-growth',
         'caruso-competitor-watch-every-6h': 'caruso-growth',
+        'caruso-competitor-watch-daily-530pm': 'caruso-growth',
         'caruso-product-signal-digest-weekdays-1230pm': 'caruso-product',
         'security-infra-daily-healthcheck-weekdays-845am': 'security-infra',
         'research-lab-weekly-idea-scan-mondays-11am': 'research-lab',
@@ -293,7 +309,7 @@ def build_system(jobs, status_text):
         notes.append('One or more jobs are currently running.')
     return {
         'overallStatus': overall,
-        'hostLabel': 'Jeremy’s MacBook Pro',
+        'hostLabel': HOST_LABEL,
         'gatewayStatus': 'running' if 'running' in status_text.lower() or status_text else 'unknown',
         'runtime': 'openclaw',
         'activeJobCount': sum(1 for j in jobs if j['enabled']),
@@ -333,9 +349,108 @@ def build_overview(rooms, agents, jobs, alerts, approvals, mail_state):
     }
 
 
-def write_json(name, payload):
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    (DATA_DIR / name).write_text(json.dumps(payload, indent=2) + '\n')
+def write_json(name, payload, base_dir=DATA_DIR):
+    base_dir.mkdir(parents=True, exist_ok=True)
+    (base_dir / name).write_text(json.dumps(payload, indent=2) + '\n')
+
+
+def build_game_rooms():
+    return [
+        {'id': 'game-dev', 'name': 'game-dev', 'channelId': '1485801109087060018', 'kind': 'studio-hq'},
+        {'id': 'game-design', 'name': 'game-design', 'channelId': '1485809313653063700', 'kind': 'design'},
+        {'id': 'game-engineering', 'name': 'game-engineering', 'channelId': '1485809436890239086', 'kind': 'engineering'},
+        {'id': 'game-qa', 'name': 'game-qa', 'channelId': '1485809535560974456', 'kind': 'qa'},
+    ]
+
+
+def build_game_agents():
+    return [
+        {'id': 'game-dev', 'name': 'game-dev', 'roomId': 'game-dev', 'phase': 'active', 'mission': 'Main game project room for direction, priorities, prompts, and cross-functional coordination.', 'model': 'openai/gpt-5.1-codex'},
+        {'id': 'game-design', 'name': 'game-design', 'roomId': 'game-design', 'phase': 'active', 'mission': 'Design room for systems, AI, economy, UX, and player-experience questions.', 'model': 'openai-codex/gpt-5.4'},
+        {'id': 'game-engineering', 'name': 'game-engineering', 'roomId': 'game-engineering', 'phase': 'active', 'mission': 'Implementation room for code, debugging, architecture, tools, and builds.', 'model': 'openai-codex/gpt-5.4'},
+        {'id': 'game-qa', 'name': 'game-qa', 'roomId': 'game-qa', 'phase': 'active', 'mission': 'Validation room for QA review, exploit pressure, regression checks, and release confidence.', 'model': 'openai/gpt-5.1-codex'},
+        {'id': 'Chief of Staff', 'name': 'Chief of Staff', 'roomId': 'game-dev', 'phase': 'embedded', 'mission': 'Studio coordination, synthesis, prioritization, and conflict resolution.', 'model': None},
+        {'id': 'Game Director', 'name': 'Game Director', 'roomId': 'game-dev', 'phase': 'embedded', 'mission': 'Protects vision, fun, cohesion, and core fantasy.', 'model': None},
+        {'id': 'Executive Producer', 'name': 'Executive Producer', 'roomId': 'game-dev', 'phase': 'embedded', 'mission': 'Protects scope realism, production sequencing, and ship viability.', 'model': None},
+        {'id': 'Technical Director', 'name': 'Technical Director', 'roomId': 'game-engineering', 'phase': 'embedded', 'mission': 'Protects architecture, maintainability, and technical debt control.', 'model': None},
+        {'id': 'Head of QA', 'name': 'Head of QA', 'roomId': 'game-qa', 'phase': 'embedded', 'mission': 'Defines quality standards, coverage priorities, and release confidence.', 'model': None},
+    ]
+
+
+def build_game_snapshot():
+    rooms_seed = build_game_rooms()
+    agents = build_game_agents()
+    rooms = []
+    for room in rooms_seed:
+        rooms.append({
+            'id': room['id'],
+            'name': room['name'],
+            'channelId': room['channelId'],
+            'status': 'healthy',
+            'headline': {
+                'game-dev': 'Studio HQ online. Use this room for direction, prompts, scope calls, and cross-functional decisions.',
+                'game-design': 'Design room ready for systems, UX, economy, AI, and player-experience work.',
+                'game-engineering': 'Engineering room ready for repo work, debugging, architecture, and implementation tasks.',
+                'game-qa': 'QA room ready for review passes, exploit pressure, and release confidence checks.',
+            }.get(room['id'], 'Room online.'),
+            'lastUpdateAt': now_iso(),
+            'agents': [a['name'] for a in agents if a['roomId'] == room['id']],
+            'badges': {'approvals': 0, 'alerts': 0, 'queue': 0},
+            'kind': room['kind'],
+        })
+    activity = [
+        {
+            'id': 'game-activity-bootstrap',
+            'roomId': 'game-dev',
+            'kind': 'bootstrap',
+            'title': 'Game studio rooms wired',
+            'summary': 'Game Mission Control is online with dev, design, engineering, and QA rooms plus the initial specialist roster.',
+            'priority': 'normal',
+            'at': now_iso(),
+            'sourceType': 'workspace',
+            'sourceRef': 'GAME_PROJECT_OPERATING_SPEC.md',
+        }
+    ]
+    overview = {
+        'globalHealth': {
+            'systemStatus': 'healthy',
+            'activeRooms': len(rooms),
+            'activeAgents': len(agents),
+            'pendingApprovals': 0,
+            'openAlerts': 0,
+            'failingJobs': 0,
+            'connectedChannels': len(rooms),
+            'mode': 'live-room routing',
+        },
+        'needsAttention': [
+            {'title': 'Start sending real prompts into the game rooms to generate live room traffic and workflow history.', 'roomId': 'game-dev', 'priority': 'normal'},
+            {'title': 'Use game-engineering -> game-qa as the default implementation/review loop.', 'roomId': 'game-qa', 'priority': 'normal'},
+        ],
+        'recommendedFocus': [
+            'Use game-dev for top-level game asks, routing, and studio decisions.',
+            'Use game-design for systems, UX, AI, economy, and player-facing design refinement.',
+            'Use game-engineering and game-qa as the build-and-review loop before work is treated as complete.',
+        ],
+    }
+    system = {
+        'overallStatus': 'healthy',
+        'hostLabel': HOST_LABEL,
+        'gatewayStatus': 'running',
+        'runtime': 'openclaw-game-studio',
+        'activeJobCount': 0,
+        'failingJobCount': 0,
+        'warningCount': 0,
+        'notes': [
+            'Game Mission Control is a separate studio-side view layered on top of the same host.',
+            f'Game repo anchored at {GAME_REPO}',
+        ],
+    }
+    generated = now_iso()
+    write_json('rooms.json', {'generatedAt': generated, 'rooms': rooms}, base_dir=GAME_DATA_DIR)
+    write_json('agents.json', {'generatedAt': generated, 'agents': agents}, base_dir=GAME_DATA_DIR)
+    write_json('activity.json', {'generatedAt': generated, 'activity': activity}, base_dir=GAME_DATA_DIR)
+    write_json('overview.json', {'generatedAt': generated, 'overview': overview}, base_dir=GAME_DATA_DIR)
+    write_json('system.json', {'generatedAt': generated, 'system': system}, base_dir=GAME_DATA_DIR)
 
 
 def main():
@@ -359,7 +474,8 @@ def main():
     write_json('approvals.json', {'generatedAt': generated, 'approvals': approvals})
     write_json('activity.json', {'generatedAt': generated, 'activity': activity})
     write_json('overview.json', {'generatedAt': generated, 'overview': overview})
-    print('Mission Control snapshots generated in', DATA_DIR)
+    build_game_snapshot()
+    print('Mission Control snapshots generated in', DATA_DIR, 'and', GAME_DATA_DIR)
 
 
 if __name__ == '__main__':

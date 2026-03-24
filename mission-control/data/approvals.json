@@ -1,15 +1,4 @@
 {
-  "generatedAt": "2026-03-22T02:20:48Z",
-  "approvals": [
-    {
-      "id": "approval-mail-19d0d07e37e37c0c",
-      "title": "Review Signal and Circuit email: Use Google Chat for messaging and teamwork",
-      "roomId": "signal-and-circuit",
-      "risk": "medium",
-      "decisionType": "review",
-      "summary": "Google Workspace <https://c.gle/AEJ26quE4nGVDW6ZQxkzp6EJUalfOwZUZUjzX-AHXn4w53tJ6L2H5NvXCt5LkOUzGa8QdXCFiht6TKQATXeDkVzPH6xI0QqjFiSEEUJ7U8-w8baoUsz-G9bU7DVZskgjvP4u-hlH6pGtvPQQEUPshHX5hyALJgkqC4-i6Zf9WJBE_FBywuxLySLX81QgPf0> Messaging and\u2026",
-      "requestedAt": "2026-03-21T22:35:42.547429+00:00",
-      "status": "pending"
-    }
-  ]
+  "generatedAt": "2026-03-24T01:27:36Z",
+  "approvals": []
 }

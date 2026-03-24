@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mission Control — Office Mode</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./styles.css?v=20260322a" />
 </head>
 <body>
   <header class="topbar">
@@ -12,8 +12,9 @@
       <h1>TMFPRETTY, LLC / Mission Control</h1>
       <p class="sub">Living office view of rooms, staff, handoffs, and the work happening inside the system</p>
     </div>
-    <nav class="navlinks">
+        <nav class="navlinks">
       <a href="./">Overview</a>
+      <a href="./office.html" class="active">Office Mode</a>
       <a href="./rooms.html">Rooms</a>
       <a href="./jobs.html">Jobs</a>
       <a href="./agents.html">Agents</a>
@@ -73,7 +74,7 @@
         </a>
 
         <div class="pixel-board" style="left: 510px; top: 58px;"></div>
-        <a class="station quiet" id="station-standup-room" href="./" style="left: 520px; top: 44px; width: 300px; height: 230px;">
+        <a class="station quiet" id="station-standup-room" href="./" style="left: 520px; top: 44px; width: 320px; height: 260px;">
           <div class="station-inner">
             <h3>Standup Room</h3>
             <div class="subtitle">Cross-room sync · priorities · handoffs</div>
@@ -97,7 +98,7 @@
           </div>
         </a>
 
-        <a class="station quiet" id="station-ops-desk" data-room-id="ops-desk" href="./room.html?id=ops-desk" style="left: 42px; top: 570px; width: 280px; height: 272px;">
+        <a class="station quiet" id="station-ops-desk" data-room-id="ops-desk" href="./room.html?id=ops-desk" style="left: 42px; top: 520px; width: 300px; height: 280px;">
           <div class="station-inner">
             <div class="desk-cluster"><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div></div>
             <h3>Ops Desk</h3>
@@ -108,7 +109,7 @@
           </div>
         </a>
 
-        <a class="station quiet" id="station-engineering" data-room-id="engineering" href="./room.html?id=engineering" style="left: 348px; top: 570px; width: 318px; height: 328px;">
+        <a class="station quiet" id="station-engineering" data-room-id="engineering" href="./room.html?id=engineering" style="left: 378px; top: 520px; width: 300px; height: 320px;">
           <div class="station-inner">
             <div class="desk-cluster"><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div></div>
             <h3>Engineering Bay</h3>
@@ -119,7 +120,7 @@
           </div>
         </a>
 
-        <a class="station quiet" id="station-qa-review" data-room-id="qa-review" href="./agents.html" style="left: 690px; top: 592px; width: 274px; height: 252px;">
+        <a class="station quiet" id="station-qa-review" data-room-id="qa-review" href="./agents.html" style="left: 714px; top: 520px; width: 300px; height: 280px;">
           <div class="station-inner">
             <h3>QA Review Room</h3>
             <div class="subtitle">Pass / rework / block loop</div>
@@ -132,7 +133,7 @@
           </div>
         </a>
 
-        <a class="station quiet" id="station-support-inbox" data-room-id="support-inbox" href="./room.html?id=support-inbox" style="right: 42px; top: 590px; width: 320px; height: 294px;">
+        <a class="station quiet" id="station-support-inbox" data-room-id="support-inbox" href="./room.html?id=support-inbox" style="right: 42px; top: 520px; width: 320px; height: 294px;">
           <div class="station-inner">
             <div class="pixel-trays" style="right: 20px; top: 20px;"></div>
             <h3>Support Inbox</h3>
@@ -143,7 +144,7 @@
           </div>
         </a>
 
-        <a class="station quiet" id="station-caruso-growth" data-room-id="caruso-growth" href="./room.html?id=caruso-growth" style="left: 42px; bottom: 42px; width: 280px; height: 262px;">
+        <a class="station quiet" id="station-caruso-growth" data-room-id="caruso-growth" href="./room.html?id=caruso-growth" style="left: 42px; bottom: 42px; width: 300px; height: 270px;">
           <div class="station-inner">
             <div class="desk-cluster"><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div><div class="pixel-desk"></div></div>
             <h3>Growth Room</h3>
@@ -154,7 +155,7 @@
           </div>
         </a>
 
-        <a class="station quiet" id="station-caruso-product" data-room-id="caruso-product" href="./room.html?id=caruso-product" style="left: 348px; bottom: 42px; width: 280px; height: 262px;">
+        <a class="station quiet" id="station-caruso-product" data-room-id="caruso-product" href="./room.html?id=caruso-product" style="left: 378px; bottom: 42px; width: 300px; height: 270px;">
           <div class="station-inner">
             <div class="pixel-board" style="left: 18px; top: 18px;"></div>
             <h3>Product Lab</h3>
@@ -165,7 +166,7 @@
           </div>
         </a>
 
-        <a class="station quiet" id="station-security-infra" data-room-id="security-infra" href="./room.html?id=security-infra" style="left: 654px; bottom: 42px; width: 280px; height: 262px;">
+        <a class="station quiet" id="station-security-infra" data-room-id="security-infra" href="./room.html?id=security-infra" style="left: 714px; bottom: 42px; width: 300px; height: 270px;">
           <div class="station-inner">
             <div class="pixel-rack" style="right: 18px; top: 18px;"></div>
             <h3>Security Office</h3>

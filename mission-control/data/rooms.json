@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-22T02:20:48Z",
+  "generatedAt": "2026-03-24T01:27:36Z",
   "rooms": [
     {
       "id": "command-center",
@@ -7,7 +7,7 @@
       "channelId": "1484651751108775946",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-22T02:17:02.637000Z",
+      "lastUpdateAt": "2026-03-23T13:42:06.047000Z",
       "agents": [
         "command-center"
       ],
@@ -24,7 +24,7 @@
       "channelId": "1484651772193673349",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-21T18:42:55.342000Z",
+      "lastUpdateAt": "2026-03-23T18:00:00.040000Z",
       "agents": [
         "ops-desk"
       ],
@@ -58,7 +58,7 @@
       "channelId": "1484651836966436934",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-22T02:09:48.340000Z",
+      "lastUpdateAt": "2026-03-23T22:30:00.019000Z",
       "agents": [
         "caruso-growth"
       ],
@@ -75,7 +75,7 @@
       "channelId": "1484651869593669762",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-21T18:43:33.038000Z",
+      "lastUpdateAt": "2026-03-23T17:30:00.019000Z",
       "agents": [
         "caruso-product"
       ],
@@ -92,7 +92,7 @@
       "channelId": "1484651900812001491",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-21T18:44:41.423000Z",
+      "lastUpdateAt": "2026-03-23T13:50:19.514000Z",
       "agents": [
         "security-infra"
       ],
@@ -109,7 +109,7 @@
       "channelId": "1484655635336265758",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": "2026-03-21T18:45:24.614000Z",
+      "lastUpdateAt": "2026-03-23T16:00:00.010000Z",
       "agents": [
         "research-lab"
       ],
@@ -124,16 +124,16 @@
       "id": "signal-and-circuit",
       "name": "signal-and-circuit",
       "channelId": "1485042311959416832",
-      "status": "warning",
-      "headline": "1 pending inbox item(s) need triage.",
-      "lastUpdateAt": "2026-03-22T02:19:19.427000Z",
+      "status": "quiet",
+      "headline": "No live job activity yet.",
+      "lastUpdateAt": null,
       "agents": [
         "signal-and-circuit"
       ],
       "badges": {
-        "approvals": 1,
-        "alerts": 1,
-        "queue": 1
+        "approvals": 0,
+        "alerts": 0,
+        "queue": 0
       },
       "kind": "editorial"
     },
@@ -143,7 +143,7 @@
       "channelId": "1484988049229086850",
       "status": "healthy",
       "headline": "Jobs healthy and delivering.",
-      "lastUpdateAt": null,
+      "lastUpdateAt": "2026-03-23T19:15:00.018000Z",
       "agents": [
         "engineering",
         "qa-review"

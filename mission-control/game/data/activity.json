@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-03-24T01:27:36Z",
+  "activity": [
+    {
+      "id": "game-activity-bootstrap",
+      "roomId": "game-dev",
+      "kind": "bootstrap",
+      "title": "Game studio rooms wired",
+      "summary": "Game Mission Control is online with dev, design, engineering, and QA rooms plus the initial specialist roster.",
+      "priority": "normal",
+      "at": "2026-03-24T01:27:36Z",
+      "sourceType": "workspace",
+      "sourceRef": "GAME_PROJECT_OPERATING_SPEC.md"
+    }
+  ]
+}
