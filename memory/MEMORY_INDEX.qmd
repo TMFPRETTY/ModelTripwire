@@ -84,6 +84,8 @@ It exists to make future recall easier by giving important operating context a s
 - Product Manager protects audience fit, roadmap value, product clarity, and market-facing prioritization without collapsing into trend-chasing.
 - Initial growth/community role: `Marketing and Community Director`
 - Marketing and Community Director protects player trust, external messaging clarity, brand voice, and honest audience-facing positioning.
+- Initial analytics role: `Data Analyst`
+- Data Analyst protects evidence quality, useful metric interpretation, honest uncertainty, and actionability over vanity metrics.
 
 ## Updating guidance
 Update this file when:
