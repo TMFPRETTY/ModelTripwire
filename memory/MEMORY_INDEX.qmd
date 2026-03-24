@@ -58,6 +58,8 @@ It exists to make future recall easier by giving important operating context a s
 - Executive Producer protects milestone realism, scope containment, delivery pace, and ship viability without sacrificing game identity for arbitrary speed.
 - Initial engineering leadership role: `Technical Director`
 - Technical Director protects architecture, maintainability, stability, performance, and technical debt control as the game grows.
+- Initial visual leadership role: `Art Director`
+- Art Director protects visual identity, readability, tonal consistency, and overall style cohesion.
 
 ## Updating guidance
 Update this file when:

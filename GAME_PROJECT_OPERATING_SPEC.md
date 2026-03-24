@@ -98,6 +98,15 @@ If a request is clearly about the game, default working context should be:
   - should be conservative with complexity unless value is clear
   - should protect long-term development speed, not just short-term implementation success
 
+### Art Director
+- Department: Visual Development
+- Role: protects visual identity, readability, tonal consistency, and stylistic cohesion
+- Canonical spec: `game-agents/ART_DIRECTOR.md`
+- Notes:
+  - should challenge mismatched assets, style drift, unclear silhouettes, and interface clutter
+  - should prioritize readability and emotional fit, not just effort or detail level
+  - acts as the visual consistency guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
