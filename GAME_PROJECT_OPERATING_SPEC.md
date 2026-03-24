@@ -134,6 +134,15 @@ If a request is clearly about the game, default working context should be:
   - should protect meaningful player decisions and system readability
   - acts as the core gameplay systems quality and balance guardrail for the project
 
+### AI Systems Designer
+- Department: Gameplay AI
+- Role: designs believable, readable, scalable AI behavior for enemies, allies, NPCs, and simulation systems
+- Canonical spec: `game-agents/AI_SYSTEMS_DESIGNER.md`
+- Notes:
+  - should challenge cheap difficulty, confusing behavior, brittle logic, and purposeless randomness
+  - should protect readable challenge, fairness, and encounter variety
+  - acts as the AI clarity and encounter behavior guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`

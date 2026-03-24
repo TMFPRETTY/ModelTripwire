@@ -66,6 +66,8 @@ It exists to make future recall easier by giving important operating context a s
 - Audio Director protects sonic identity, gameplay feedback clarity, emotional tone, and cohesive sound language.
 - Initial systems design role: `Gameplay Systems Designer`
 - Gameplay Systems Designer protects system depth, clarity, balance integrity, meaningful player choices, and replayable reward loops.
+- Initial gameplay AI role: `AI Systems Designer`
+- AI Systems Designer protects readable challenge, fairness, behavior variety, and scalable AI encounter quality.
 
 ## Updating guidance
 Update this file when:
