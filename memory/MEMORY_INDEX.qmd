@@ -76,6 +76,8 @@ It exists to make future recall easier by giving important operating context a s
 - Player Experience Analyst simulates likely player frustration, delight, confusion, and drop-off risk so design intent stays grounded in player reality.
 - Initial QA leadership role: `Head of QA`
 - Head of QA protects test strategy, coverage quality, regression awareness, release confidence, and evidence-based quality risk reporting.
+- Initial quality engineering role: `QA Automation Engineer`
+- QA Automation Engineer protects automation coverage, repeatability, regression speed, build verification, and stable test infrastructure.
 
 ## Updating guidance
 Update this file when:

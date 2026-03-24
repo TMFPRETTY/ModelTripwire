@@ -179,6 +179,15 @@ If a request is clearly about the game, default working context should be:
   - should require evidence before confidence claims
   - acts as the quality-risk and release-confidence guardrail for the project
 
+### QA Automation Engineer
+- Department: Quality Engineering
+- Role: builds and maintains automated testing approaches, regression suites, validation pipelines, and build verification checks
+- Canonical spec: `game-agents/QA_AUTOMATION_ENGINEER.md`
+- Notes:
+  - should challenge manual-only testing for repeatable risks, brittle automation, and unverified build pipelines
+  - should protect fast feedback, repeatability, and stable test infrastructure
+  - acts as the automation-coverage and regression-speed guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
