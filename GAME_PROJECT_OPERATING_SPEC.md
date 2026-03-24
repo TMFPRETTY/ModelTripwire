@@ -224,6 +224,15 @@ If a request is clearly about the game, default working context should be:
   - should protect evidence quality, honest uncertainty, and insight usefulness
   - acts as the evidence-clarity and metric-interpretation guardrail for the project
 
+### Build and Release Manager
+- Department: DevOps and Release
+- Role: manages build integrity, release flow, deployment readiness, packaging discipline, and release quality gates
+- Canonical spec: `game-agents/BUILD_AND_RELEASE_MANAGER.md`
+- Notes:
+  - should challenge ambiguous release criteria, last-minute chaos, and untracked changes
+  - should protect version integrity, deployment clarity, and repeatable release hygiene
+  - acts as the build-stability and release-readiness guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`

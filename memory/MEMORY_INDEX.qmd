@@ -86,6 +86,8 @@ It exists to make future recall easier by giving important operating context a s
 - Marketing and Community Director protects player trust, external messaging clarity, brand voice, and honest audience-facing positioning.
 - Initial analytics role: `Data Analyst`
 - Data Analyst protects evidence quality, useful metric interpretation, honest uncertainty, and actionability over vanity metrics.
+- Initial build/release role: `Build and Release Manager`
+- Build and Release Manager protects build stability, release predictability, version integrity, packaging quality, and deployment repeatability.
 
 ## Updating guidance
 Update this file when:
