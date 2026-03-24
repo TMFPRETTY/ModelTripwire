@@ -262,6 +262,9 @@ Before treating a new agent as real, confirm:
 - routing to QA when behavior changes can affect reality
 - easy way to pause, disable, or reset the workflow
 
+See also:
+- `NEW_AGENT_AND_JOB_CHECKLIST.md`
+
 ## Bottom line
 The goal is not to make agents timid.
 The goal is to make them trustworthy.

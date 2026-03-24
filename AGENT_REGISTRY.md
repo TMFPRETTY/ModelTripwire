@@ -214,6 +214,7 @@ This is the canonical non-gaming operating model for the current live environmen
 
 Related operating docs:
 - `AGENT_SAFEGUARDS.md`
+- `NEW_AGENT_AND_JOB_CHECKLIST.md`
 - `JOB_OPERATING_GUIDE.md`
 - `LIVE_CONFIG_AUDIT_2026-03-24.md`
 - `AGENT_SCORECARDS.md`
