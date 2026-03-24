@@ -16,17 +16,37 @@ This file defines the initial operating model for the 2D isometric RPG project.
 - Role: intake, planning, systems direction, implementation requests, coordination
 - Owning agent: `game-dev`
 
-## Relationship To Engineering And QA
-The game room is the domain room.
-Engineering is the implementation lane when work becomes code/debugging/integration/tooling work.
-QA is the validation gate for engineering-impact work.
+### game-design
+- Purpose: design and player-experience room
+- Discord channel id: `1485809313653063700`
+- Role: systems design, AI behavior thinking, economy, UX, player-experience review, narrative/gameplay alignment
+- Owning agent: `game-design`
+
+### game-engineering
+- Purpose: implementation and technical execution room
+- Discord channel id: `1485809436890239086`
+- Role: code, debugging, architecture, repo work, tooling, builds, technical implementation
+- Owning agent: `game-engineering`
+
+### game-qa
+- Purpose: validation and release confidence room
+- Discord channel id: `1485809535560974456`
+- Role: QA review, exploit findings, regression tracking, release confidence, test planning
+- Owning agent: `game-qa`
+
+## Relationship Between Game Rooms
+- `game-dev` is the top-level project and coordination room.
+- `game-design` is where design quality, systems thinking, UX, economy, AI, and player-experience questions can be worked through.
+- `game-engineering` is the implementation lane when work becomes code/debugging/integration/tooling/build work.
+- `game-qa` is the validation gate for engineering-impact work.
 
 Default loop:
-- game-dev defines the need
-- engineering implements when implementation work is required
-- QA reviews the result
-- engineering reworks if needed
-- approved result returns to the game room
+- `game-dev` defines or routes the need
+- `game-design` refines design/system/player-facing implications when needed
+- `game-engineering` implements when technical work is required
+- `game-qa` reviews the result
+- `game-engineering` reworks if needed
+- approved result returns to `game-dev` (and/or the originating game room)
 
 ## What Belongs In game-dev
 - feature ideas
