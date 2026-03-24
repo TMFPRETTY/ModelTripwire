@@ -52,6 +52,8 @@ It exists to make future recall easier by giving important operating context a s
 - Initial game project room: `game-dev`
 - Initial game coordination role: `Chief of Staff`
 - Chief of Staff is the studio-operations coordination layer, responsible for synthesis, alignment, prioritization, and conflict escalation without replacing specialist roles.
+- Initial creative leadership role: `Game Director`
+- Game Director protects the game’s vision, fun, cohesion, and player experience, and should challenge feature creep or weak-fit mechanics.
 
 ## Updating guidance
 Update this file when:

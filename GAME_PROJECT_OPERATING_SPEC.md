@@ -71,6 +71,15 @@ If a request is clearly about the game, default working context should be:
   - protects alignment, focus, and clear next actions
   - should be the first escalation point when game-agent recommendations conflict
 
+### Game Director
+- Department: Creative Leadership
+- Role: protects game vision, fun, cohesion, and player experience quality
+- Canonical spec: `game-agents/GAME_DIRECTOR.md`
+- Notes:
+  - evaluates whether features strengthen or dilute the game
+  - should challenge feature creep and weak-fit mechanics directly
+  - acts as a guardian of the core fantasy and overall game feel
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
