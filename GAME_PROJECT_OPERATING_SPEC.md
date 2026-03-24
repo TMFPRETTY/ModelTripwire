@@ -161,6 +161,15 @@ If a request is clearly about the game, default working context should be:
   - should protect usability even when style pressure pushes against it
   - acts as the player-comprehension and friction-reduction guardrail for the project
 
+### Player Experience Analyst
+- Department: User Research Simulation
+- Role: simulates likely player reactions, frustrations, delight points, and engagement risks across player archetypes
+- Canonical spec: `game-agents/PLAYER_EXPERIENCE_ANALYST.md`
+- Notes:
+  - should surface confusion, boredom, churn risk, and mismatch between intended and actual player experience
+  - should speak from the player experience lens, not pretend to be the designer unless asked
+  - acts as the likely-player-reaction and friction-detection guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`

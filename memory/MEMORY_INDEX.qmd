@@ -72,6 +72,8 @@ It exists to make future recall easier by giving important operating context a s
 - Economy Designer protects resource health, reward pacing, progression fairness, sink/faucet stability, and meaningful long-term value loops.
 - Initial user experience role: `UX Director`
 - UX Director protects usability, readability, accessibility, onboarding clarity, input confidence, and information hierarchy.
+- Initial player research simulation role: `Player Experience Analyst`
+- Player Experience Analyst simulates likely player frustration, delight, confusion, and drop-off risk so design intent stays grounded in player reality.
 
 ## Updating guidance
 Update this file when:
