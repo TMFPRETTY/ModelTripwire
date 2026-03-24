@@ -85,7 +85,19 @@ It should answer, quickly and explicitly:
 - **Escalates to:** `engineering`, `caruso-growth`, `command-center`
 - **Notes:** should prioritize evidence over anecdote and recommendation quality over volume
 
-### 6. security-infra
+### 6. caruso-product-lab
+- **Status:** active
+- **Room:** `caruso-product-lab` (`1486097589760950282`)
+- **Mission:** exploratory product ideation and concept refinement lane for Caruso, grounded in real repo and README understanding
+- **Current jobs:**
+  - room-driven conversational support
+- **Primary skill(s):** product lab behavior currently defined through room guide and runbook layers
+- **Key docs:** `AGENT_RUNBOOKS.md`, `ROOMS_AND_WORKFLOW_SPEC.md`, `CARUSO_PRODUCT_LAB_ROOM_GUIDE.md`
+- **Approval boundary:** exploratory analysis and internal drafts are fine; commitments and implementation still require proper handoff or approval
+- **Escalates to:** `caruso-product`, `engineering`, `caruso-growth`, `command-center`
+- **Notes:** should deep dive the Caruso codebase and README files before making strong system-level product claims
+
+### 7. security-infra
 - **Status:** active
 - **Room:** `security-infra` (`1484651900812001491`)
 - **Mission:** monitor host/runtime health, security posture, and infrastructure drift
@@ -97,7 +109,7 @@ It should answer, quickly and explicitly:
 - **Escalates to:** `ops-desk`, `command-center`, `engineering`
 - **Notes:** especially important before and after Mac mini cutover
 
-### 7. research-lab
+### 8. research-lab
 - **Status:** active
 - **Room:** `research-lab` (`1484655635336265758`)
 - **Mission:** discover and rank business/SaaS/product opportunities worth deeper attention
@@ -109,7 +121,7 @@ It should answer, quickly and explicitly:
 - **Escalates to:** `caruso-growth`, `caruso-product`, `command-center`
 - **Notes:** should stay selective rather than becoming an idea dump
 
-### 8. signal-and-circuit
+### 9. signal-and-circuit
 - **Status:** active
 - **Room:** `signal-and-circuit` (`1484556120025727127`)
 - **Mission:** combined operating room for editorial lookout, inbox activity, article routing, AdSense/site-quality work, and traffic growth
@@ -122,7 +134,7 @@ It should answer, quickly and explicitly:
 - **Escalates to:** `engineering`, `qa-review`, `ops-desk`, `command-center`
 - **Notes:** intentionally kept as one strong room for now rather than split too early, but operated with explicit internal lanes
 
-### 9. engineering
+### 10. engineering
 - **Status:** active
 - **Room:** `engineering` (`1484988049229086850`)
 - **Mission:** shared implementation lane for code, debugging, automation changes, integrations, and code QA coordination
@@ -140,7 +152,7 @@ It should answer, quickly and explicitly:
 
 ## Embedded / Cross-Cutting Agent
 
-### 10. qa-review
+### 11. qa-review
 - **Status:** embedded
 - **Room:** embedded in owning room; especially `engineering`
 - **Mission:** review outputs, code, automations, prompts, and configs for quality, correctness, and risk
@@ -154,7 +166,7 @@ It should answer, quickly and explicitly:
 
 ## Planned / Later Agents
 
-### 11. signal-and-circuit-editor
+### 12. signal-and-circuit-editor
 - **Status:** planned
 - **Room:** expected to operate inside `signal-and-circuit` for now
 - **Mission:** newsroom/editorial lookout for breaking or interesting coverage opportunities, with routing to the right site persona
@@ -165,7 +177,7 @@ It should answer, quickly and explicitly:
 - **Escalates to:** `signal-and-circuit`, `command-center`, `engineering` when systems work is needed
 - **Notes:** should use worth-covering / worth-watching / ignore thresholds
 
-### 12. learning-loop
+### 13. learning-loop
 - **Status:** planned
 - **Room:** not yet assigned
 - **Mission:** capture lessons, tune workflows, and improve the system based on outcomes
@@ -174,7 +186,7 @@ It should answer, quickly and explicitly:
 - **Approval boundary:** internal analysis only until defined
 - **Notes:** should become the discipline layer for postmortems and workflow tuning
 
-### 13. knowledge-base
+### 14. knowledge-base
 - **Status:** planned
 - **Room:** not yet assigned
 - **Mission:** curate durable operational knowledge and reusable context across rooms
@@ -199,6 +211,7 @@ The active non-gaming-side system now has explicit room-backed agents for:
 - support-inbox
 - caruso-growth
 - caruso-product
+- caruso-product-lab
 - security-infra
 - research-lab
 - signal-and-circuit

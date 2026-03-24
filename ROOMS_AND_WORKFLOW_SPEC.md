@@ -75,13 +75,14 @@ Use when a request requires:
 - tooling/debugging
 - integration or pipeline work
 
-### Caruso Product / Growth -> Engineering
+### Caruso Product / Product Lab / Growth -> Engineering
 Use when a request requires:
 - implementation
 - workflow/tooling changes
 - automation
 - scripts/config work
 - instrumentation or landing-page/build changes
+- technical feasibility review
 
 ### Ops / Security -> Engineering
 Use when an issue requires:
@@ -160,5 +161,8 @@ This workspace should operate as:
 - a QA-gated implementation flow
 - a system where other rooms can hand work into engineering, and engineering can inspect those rooms for context before acting
 - a support room that classifies urgency/risk before drafting or routing
-- a Signal & Circuit room that behaves as a combined editorial/inbox/site-quality/growth operating lane with explicit handoffs instead of muddled all-in-one handling
+- a Caruso product lab room that is allowed to be exploratory but is still grounded in the real codebase and docs
+- a Signal and Circuit room that behaves as a combined editorial/inbox/site-quality/growth operating lane with explicit handoffs instead of muddled all-in-one handling
+- a communication model where major changes are logged, handed off, reflected in current state, and visible in standup or engineering sync when relevant
+l/inbox/site-quality/growth operating lane with explicit handoffs instead of muddled all-in-one handling
  engineering sync when relevant

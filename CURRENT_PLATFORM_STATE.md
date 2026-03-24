@@ -28,8 +28,13 @@ Use it when a room needs the latest shared context without relying on stale chat
 
 ### Communication state
 - The system now has strong docs, but communication enforcement is still being upgraded.
-- Daily standup style communication is not yet reliable enough to assume.
+- Daily standup style communication is now documented and live, but should still be watched for quality.
 - Engineering context sync should be treated as a required operating need.
+
+### Caruso product lab state
+- `caruso-product-lab` now exists as a dedicated room for exploratory product thinking and concept refinement.
+- This room should ground itself in the actual Caruso repo and README files before giving strong system-level product opinions.
+- Treat it as the exploratory feeder into `caruso-product` and `engineering`, not as a shortcut around them.
 
 ### Current watchpoints
 - Signal and Circuit session fragility

@@ -44,6 +44,7 @@ Escalate when:
 - the recommendation changes messaging/positioning in a material way
 
 ## Relationship To Other Rooms
+- `caruso-product-lab` is the exploratory feeder for rough ideas and codebase-grounded concept shaping.
 - `support-inbox` and `caruso-growth` are major feeders.
 - `engineering` receives implementation work.
 - `command-center` receives major prioritization questions.

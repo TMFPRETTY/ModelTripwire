@@ -58,3 +58,8 @@ Keep entries short, factual, and easy to skim.
 - Why it matters: exposed a communication propagation gap between docs, room sessions, and cross room updates.
 - Affected rooms: `engineering`, `command-center`, `ops-desk`, all impacted domain rooms
 - Source docs: this changelog, `CURRENT_PLATFORM_STATE.md`, `CROSS_ROOM_HANDOFF_STANDARD.md`
+
+- Change: `caruso-product-lab` was added as a dedicated exploratory product room with explicit codebase and README grounding expectations.
+- Why it matters: gives Caruso a proper lane for rough product thinking, concept shaping, and deep repo understanding before ideas turn into formal recommendations or engineering work.
+- Affected rooms: `caruso-product-lab`, `caruso-product`, `engineering`, `command-center`
+- Source docs: `CARUSO_PRODUCT_LAB_ROOM_GUIDE.md`, `AGENT_RUNBOOKS.md`, `AGENT_REGISTRY.md`, `ROOMS_AND_WORKFLOW_SPEC.md`

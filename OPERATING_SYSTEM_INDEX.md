@@ -47,6 +47,7 @@ Start with the room guides:
 - `SUPPORT_INBOX_ROOM_GUIDE.md`
 - `CARUSO_GROWTH_ROOM_GUIDE.md`
 - `CARUSO_PRODUCT_ROOM_GUIDE.md`
+- `CARUSO_PRODUCT_LAB_ROOM_GUIDE.md`
 - `SECURITY_INFRA_ROOM_GUIDE.md`
 - `RESEARCH_LAB_ROOM_GUIDE.md`
 - `SIGNAL_AND_CIRCUIT_ROOM_GUIDE.md`
@@ -201,3 +202,4 @@ Then decide whether to:
 This operating system should be understandable without relying on memory or tribal knowledge.
 
 If a smart operator cannot find the rule, owner, safeguard, or workflow path in these docs, the system is still too implicit.
+plicit.
