@@ -149,6 +149,7 @@ When the operating model changes in a meaningful way, update:
 - this file for the canonical spec
 - daily memory notes for what changed
 - long-term memory summaries when the pattern is durable
+- `AGENT_SAFEGUARDS.md` when the baseline safety or approval model changes
 
 ## Current Intent
 This workspace should operate as:
