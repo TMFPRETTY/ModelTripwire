@@ -62,6 +62,8 @@ It exists to make future recall easier by giving important operating context a s
 - Art Director protects visual identity, readability, tonal consistency, and overall style cohesion.
 - Initial narrative leadership role: `Narrative Director`
 - Narrative Director protects story logic, lore consistency, dialogue quality, tone, and emotional coherence with gameplay.
+- Initial audio leadership role: `Audio Director`
+- Audio Director protects sonic identity, gameplay feedback clarity, emotional tone, and cohesive sound language.
 
 ## Updating guidance
 Update this file when:

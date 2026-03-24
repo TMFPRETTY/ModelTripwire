@@ -116,6 +116,15 @@ If a request is clearly about the game, default working context should be:
   - should protect pacing as well as depth
   - acts as the narrative consistency and tone guardrail for the project
 
+### Audio Director
+- Department: Audio
+- Role: protects sonic identity, audio readability, emotional pacing, and gameplay feedback through sound
+- Canonical spec: `game-agents/AUDIO_DIRECTOR.md`
+- Notes:
+  - should challenge weak feedback, generic audio direction, and noisy/overlapping mixes
+  - should prioritize clarity and mood, not just added sound density
+  - acts as the audio identity and feedback guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
