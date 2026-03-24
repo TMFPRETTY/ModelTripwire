@@ -107,6 +107,15 @@ If a request is clearly about the game, default working context should be:
   - should prioritize readability and emotional fit, not just effort or detail level
   - acts as the visual consistency guardrail for the project
 
+### Narrative Director
+- Department: Narrative and Worldbuilding
+- Role: protects story logic, lore coherence, dialogue quality, tone, and emotional arcs
+- Canonical spec: `game-agents/NARRATIVE_DIRECTOR.md`
+- Notes:
+  - should challenge lore contradictions, flat dialogue, narrative bloat, and story/gameplay mismatch
+  - should protect pacing as well as depth
+  - acts as the narrative consistency and tone guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
