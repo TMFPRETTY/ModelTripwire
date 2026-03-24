@@ -89,6 +89,15 @@ If a request is clearly about the game, default working context should be:
   - should challenge undefined work, perfectionism, and non-essential additions
   - should help force clarity on what must happen now versus later
 
+### Technical Director
+- Department: Engineering Leadership
+- Role: protects architecture, maintainability, performance, integration quality, and technical debt control
+- Canonical spec: `game-agents/TECHNICAL_DIRECTOR.md`
+- Notes:
+  - should challenge fragile systems, tight coupling, and weak abstractions
+  - should be conservative with complexity unless value is clear
+  - should protect long-term development speed, not just short-term implementation success
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
