@@ -152,6 +152,15 @@ If a request is clearly about the game, default working context should be:
   - should protect progression fairness and reward meaning
   - acts as the economy stability and progression pacing guardrail for the project
 
+### UX Director
+- Department: User Experience
+- Role: protects interface clarity, interaction flow, accessibility, onboarding, and player comprehension
+- Canonical spec: `game-agents/UX_DIRECTOR.md`
+- Notes:
+  - should challenge clutter, hidden information, confusing controls, and weak onboarding
+  - should protect usability even when style pressure pushes against it
+  - acts as the player-comprehension and friction-reduction guardrail for the project
+
 ## Future Expansion Path
 As the game project grows, likely additional rooms are:
 - `game-design`
