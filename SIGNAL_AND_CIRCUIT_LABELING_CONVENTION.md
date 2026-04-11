@@ -72,11 +72,20 @@ Use for:
 - packaging improvements
 - follow-up article ideas
 - distribution/community opportunities
+- Reddit-ready manual posting packets
 
 Format:
 - opportunity
 - why it matters
 - suggested action
+
+If the item is for Reddit, include:
+- target subreddit name
+- full subreddit link
+- full Reddit thread link if it is a reply opportunity
+- exact copy/paste title if needed
+- exact copy/paste body or reply
+- any rules or tone caveats
 
 ### `[HANDOFF]`
 Use for:

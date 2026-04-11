@@ -266,18 +266,22 @@ Escalate to `command-center` if a job failure:
 - **Room:** `signal-and-circuit`
 - **Destination:** Discord `1484556120025727127`
 - **Schedule:** weekdays 10:00 AM
-- **Purpose:** prepare Reddit-oriented draft candidates for Signal and Circuit
+- **Purpose:** prepare manual-ready Reddit opportunities for Signal and Circuit
 - **Good output looks like:**
-  - editorially credible drafts
-  - relevant subreddit/topic fit
+  - editorially credible subreddit or thread fit
+  - full subreddit link and thread link when relevant
+  - exact copy/paste title and body or reply
   - data-driven angle rather than promotion
+  - clear note on why the match is worth posting into
 - **Common failure modes:**
   - promotional tone
+  - weak subreddit fit
+  - missing links or incomplete copy
   - weak data grounding
   - room confusion with gaming/news scope
 - **Escalate when:**
   - the room's identity becomes muddled
-  - the drafts stop feeling editorially credible
+  - the packets stop being immediately usable for manual posting
 - **Approval boundary:** drafts only; not auto-posted
 - **Current audit note:** this job had an inconsistent sessionKey and was normalized to `agent:codex:main` during the 2026-03-24 audit/fix pass
 

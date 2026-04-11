@@ -45,6 +45,24 @@ Use structure like:
 - **Suggested next step**
 - **Approval needed?**
 
+For Reddit or community distribution opportunities, prefer a manual posting packet that is immediately usable.
+
+### Reddit-ready manual packet
+When suggesting a Reddit opportunity, include:
+- **Target:** `r/subredditname`
+- **Subreddit link:** full subreddit URL
+- **Target thread:** full Reddit post URL if replying to an existing thread, otherwise say `new post`
+- **Why this fits:** 1 to 3 concise lines
+- **Suggested title:** exact title for a new post when relevant
+- **Copy/paste text:** full ready-to-post body or reply with no placeholders
+- **Notes:** subreddit rules, tone caveats, disclosure needs, or timing concerns
+
+Rule:
+- Prefer manual-ready Reddit packets over vague "post this on Reddit" suggestions.
+- Include exact links whenever possible.
+- Keep language natural and non-promotional.
+- Do not use en dashes or em dashes.
+
 ## Escalation Logic
 Escalate when:
 - a site/system issue affects publishing or revenue

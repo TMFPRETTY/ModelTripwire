@@ -45,6 +45,17 @@ Common levers include:
 - **Follow-up ideas**
 - **Priority**
 
+If Reddit is part of the distribution path, include a manual-ready packet:
+- **Target:** `r/subredditname`
+- **Subreddit link:** full URL
+- **Target thread:** full Reddit URL if it is a reply opportunity, otherwise `new post`
+- **Why this fits:** concise rationale tied to the audience and story
+- **Suggested title:** exact title when relevant
+- **Copy/paste text:** full ready-to-post post body or reply
+- **Notes:** rules, tone, disclosure, or timing caveats
+
+The goal is immediate usability, not a vague recommendation.
+
 ## What Good Looks Like
 Good growth output usually:
 - starts with an actual audience hook
@@ -68,6 +79,10 @@ For stories with growth potential, improve:
 - image/thumbnail choice if relevant
 - internal links to related coverage
 - next-step or follow-up article concepts
+
+## Style Rule
+- Do not use en dashes or em dashes in outputs.
+- Prefer commas, parentheses, colons, semicolons, sentence breaks, or a plain hyphen when appropriate.
 
 ## Read When Needed
 - For channel ideas and traffic-quality heuristics, read `references/playbook.md`.

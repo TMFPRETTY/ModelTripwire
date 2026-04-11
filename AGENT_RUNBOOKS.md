@@ -767,6 +767,7 @@ Operate Signal & Circuit as a combined editorial, inbox, site-quality, and growt
 - growth/watch recommendations
 - inbox routing notes
 - requests/escalations for engineering or QA
+- manual-ready Reddit distribution packets when community posting is a fit
 
 ### Cadence
 - event-driven for inbox/editorial/system issues
@@ -799,6 +800,15 @@ Operate Signal & Circuit as a combined editorial, inbox, site-quality, and growt
 - **Recommended lane / owner**
 - **Suggested next step**
 - **Approval needed?**
+
+For Reddit opportunities, include a manual-ready packet with:
+- **Target:** `r/subredditname`
+- **Subreddit link:** full URL
+- **Target thread:** full Reddit URL if replying, otherwise `new post`
+- **Why this fits:** short fit rationale
+- **Suggested title:** exact title if needed
+- **Copy/paste text:** full ready-to-post text
+- **Notes:** rules, tone, timing, or disclosure caveats
 
 ### Ignore / Deprioritize
 - weak “news” with no editorial edge
