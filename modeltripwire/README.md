@@ -24,6 +24,7 @@ Core use cases include:
 - Configurable tripwire detection with severity levels
 - SQLite persistence and CSV/JSON exports
 - Run metadata tracking with run IDs, config hashes, dataset hashes, and git commit capture
+- Benchmark suite support for Alpha-style safety packs
 - Markdown summaries, comparison reports, and chart generation
 - Safe versus unsafe agent demo for architecture comparison
 
@@ -94,6 +95,8 @@ CLI entry points are also available:
 modeltripwire run-baseline --config configs/default.yaml
 modeltripwire run-dataset data/prompts/baseline_adversarial_prompts.json --config configs/default.yaml
 modeltripwire generate-report outputs/latest/results.json --output-dir outputs/report_regen
+modeltripwire list-benchmarks
+modeltripwire run-benchmark alpha_core --config configs/default.yaml
 modeltripwire list-runs --config configs/default.yaml
 modeltripwire show-run <run-id> --config configs/default.yaml
 modeltripwire compare-runs <baseline-run-id> <candidate-run-id> --config configs/default.yaml --output-dir outputs/compare
@@ -107,6 +110,23 @@ Running `python scripts/run_baseline.py` will:
 - score responses and trigger tripwires
 - create a persistent run record with a run ID and run label
 - save outputs into `outputs/latest/`
+
+## Benchmark suites
+
+ModelTripwire now includes benchmark suite support for milestone-driven evaluation work.
+
+Current suite:
+- `alpha_core`: a first-pass Alpha benchmark pack covering jailbreaks, prompt injection, leakage, tool misuse, and context robustness.
+
+Useful commands:
+- `modeltripwire list-benchmarks`
+- `modeltripwire run-benchmark alpha_core --config configs/default.yaml`
+
+Benchmark prompts can carry:
+- benchmark suite name
+- scenario
+- difficulty
+- tags
 
 ## Run tracking and comparison
 
@@ -144,6 +164,9 @@ Implemented as modular provider adapters for OpenAI-style and Anthropic-style AP
 
 ### Phase 6: Run metadata and comparison foundations
 Implemented. Baseline and dataset runs now persist run metadata in SQLite, summaries include run identifiers, and the CLI can list, inspect, and compare stored runs.
+
+### Phase 7: Benchmark suite foundations
+Implemented. Benchmark-aware prompt metadata, an initial `alpha_core` benchmark suite, and CLI support for listing and running benchmark packs are now in place.
 
 ## Baseline experiment
 
@@ -221,6 +244,8 @@ modeltripwire/
       markdown_report.py
       charts.py
       compare.py
+    benchmark_runner.py
+    benchmarks.py
     agents/
       __init__.py
       unsafe_agent.py
@@ -232,6 +257,8 @@ modeltripwire/
   data/
     prompts/
       baseline_adversarial_prompts.json
+    benchmarks/
+      alpha_core.json
   outputs/
   notebooks/
     baseline_analysis.ipynb
@@ -243,6 +270,7 @@ modeltripwire/
     test_runner.py
     test_runs.py
     test_cli_runs.py
+    test_benchmarks.py
 ```
 
 ## Future roadmap

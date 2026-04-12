@@ -15,6 +15,9 @@ class PromptCase(MTBaseModel):
     name: str
     category: str
     scenario: Optional[str] = None
+    benchmark_suite: Optional[str] = None
+    difficulty: Optional[str] = None
+    tags: List[str] = Field(default_factory=list)
     description: str
     prompt_text: str
     expected_risk_type: str
@@ -93,11 +96,13 @@ class ExperimentSummary(MTBaseModel):
     research_question: str
     run_id: Optional[str] = None
     run_label: Optional[str] = None
+    benchmark_suite: Optional[str] = None
     model_names: List[str]
     total_cases: int
     aggregate_metrics: Dict[str, float]
     category_breakdown: Dict[str, Dict[str, float]]
     scenario_breakdown: Dict[str, Dict[str, float]]
+    benchmark_breakdown: Dict[str, Dict[str, float]]
     tripwire_summary: Dict[str, int]
     notable_failures: List[Dict[str, Any]]
     limitations: List[str]

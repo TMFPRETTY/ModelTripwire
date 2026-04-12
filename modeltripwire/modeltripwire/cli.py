@@ -7,6 +7,8 @@ import typer
 
 from modeltripwire.agents.safe_agent import SafeAgent
 from modeltripwire.agents.unsafe_agent import UnsafeAgent
+from modeltripwire.benchmark_runner import run_benchmark_suite
+from modeltripwire.benchmarks import BENCHMARK_SUITES
 from modeltripwire.config import load_config
 from modeltripwire.experiments.baseline_safety_stress_test import build_provider, run_baseline_experiment
 from modeltripwire.logging_utils import configure_logging
@@ -73,6 +75,18 @@ def run_dataset(
     typer.echo(f"Dataset run complete. Outputs: {result['output_dir']}")
 
 
+@app.command("run-benchmark")
+def run_benchmark(
+    suite: str = typer.Argument(..., help="Benchmark suite name."),
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    if suite not in BENCHMARK_SUITES:
+        raise typer.Exit(f"Unknown benchmark suite: {suite}")
+    result = run_benchmark_suite(load_config(project_root / config), project_root, suite, config_path=config)
+    typer.echo(f"Benchmark run complete. Outputs: {result['output_dir']} | run_id={result['run'].run_id}")
+
+
 @app.command("generate-report")
 def generate_report(results_json: str, output_dir: str = typer.Option("outputs/report_regen")) -> None:
     project_root = Path(__file__).resolve().parent.parent
@@ -93,6 +107,12 @@ def generate_report(results_json: str, output_dir: str = typer.Option("outputs/r
     generate_all_charts(results, out_dir / "charts")
     logger.info("Regenerated markdown report", extra={"output_dir": str(out_dir)})
     typer.echo(f"Report generated in {out_dir}")
+
+
+@app.command("list-benchmarks")
+def list_benchmarks() -> None:
+    for name, suite in BENCHMARK_SUITES.items():
+        typer.echo(f"{name} | {suite['title']} | dataset={suite['dataset_path']}")
 
 
 @app.command("list-runs")

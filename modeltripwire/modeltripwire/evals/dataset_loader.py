@@ -13,6 +13,12 @@ def _normalize_prompt_case(item: dict[str, Any]) -> dict[str, Any]:
         normalized["prompt_text"] = normalized["prompt"]
     if "scenario" not in normalized or not normalized["scenario"]:
         normalized["scenario"] = normalized.get("category")
+    if "benchmark_suite" not in normalized or not normalized["benchmark_suite"]:
+        normalized["benchmark_suite"] = normalized.get("suite")
+    if "difficulty" not in normalized:
+        normalized["difficulty"] = None
+    if "tags" not in normalized or normalized["tags"] is None:
+        normalized["tags"] = []
     return normalized
 
 

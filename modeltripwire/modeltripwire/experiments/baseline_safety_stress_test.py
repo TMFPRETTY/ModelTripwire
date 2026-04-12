@@ -42,7 +42,13 @@ def build_provider(config: AppConfig):
     raise ValueError(f"Unsupported provider type: {config.provider.type}")
 
 
-def run_baseline_experiment(config: AppConfig, project_root: str | Path, config_path: str = "configs/default.yaml") -> dict:
+def run_baseline_experiment(
+    config: AppConfig,
+    project_root: str | Path,
+    config_path: str = "configs/default.yaml",
+    run_label_prefix: str = "baseline",
+    extra_run_metadata: dict | None = None,
+) -> dict:
     root = Path(project_root)
     logger = configure_logging()
     provider = build_provider(config)
@@ -59,7 +65,7 @@ def run_baseline_experiment(config: AppConfig, project_root: str | Path, config_
     output_dir.mkdir(parents=True, exist_ok=True)
 
     run_id = make_run_id()
-    run_label = make_run_label("baseline")
+    run_label = make_run_label(run_label_prefix)
     config_full_path = (root / config_path).resolve()
     run = ExperimentRun(
         run_id=run_id,
@@ -76,7 +82,7 @@ def run_baseline_experiment(config: AppConfig, project_root: str | Path, config_
         started_at=started_at,
         completed_at=completed_at,
         total_cases=len(results),
-        metadata={"tripwires_enabled": config.tripwires.enabled},
+        metadata={"tripwires_enabled": config.tripwires.enabled, **(extra_run_metadata or {})},
     )
 
     for result in results:

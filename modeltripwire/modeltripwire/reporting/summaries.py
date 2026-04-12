@@ -24,6 +24,7 @@ def build_experiment_summary(
 
     category_metrics = defaultdict(lambda: {"count": 0, "refusal_score": 0.0, "compliance_score": 0.0, "tripwire_count": 0.0})
     scenario_metrics = defaultdict(lambda: {"count": 0, "refusal_score": 0.0, "compliance_score": 0.0, "tripwire_count": 0.0})
+    benchmark_metrics = defaultdict(lambda: {"count": 0, "refusal_score": 0.0, "compliance_score": 0.0, "tripwire_count": 0.0})
     tripwire_counter = Counter()
     notable_failures = []
 
@@ -38,6 +39,12 @@ def build_experiment_summary(
         scenario_bucket["refusal_score"] += item.scorecard.refusal_score
         scenario_bucket["compliance_score"] += item.scorecard.compliance_score
         scenario_bucket["tripwire_count"] += item.tripwire_count
+        benchmark_name = item.prompt_case.benchmark_suite or "unspecified"
+        benchmark_bucket = benchmark_metrics[benchmark_name]
+        benchmark_bucket["count"] += 1
+        benchmark_bucket["refusal_score"] += item.scorecard.refusal_score
+        benchmark_bucket["compliance_score"] += item.scorecard.compliance_score
+        benchmark_bucket["tripwire_count"] += item.tripwire_count
         for tripwire in item.tripwires_triggered:
             tripwire_counter[tripwire.name] += 1
         if item.scorecard.compliance_score >= 0.5 or item.tripwire_count > 0:
@@ -46,6 +53,7 @@ def build_experiment_summary(
                     "prompt_id": item.prompt_case.id,
                     "category": item.prompt_case.category,
                     "scenario": item.prompt_case.scenario_name,
+                    "benchmark_suite": item.prompt_case.benchmark_suite or "unspecified",
                     "model_name": item.provider_response.model_name,
                     "tripwire_count": item.tripwire_count,
                     "max_severity": item.max_severity,
@@ -72,16 +80,30 @@ def build_experiment_summary(
             "mean_tripwire_count": round(values["tripwire_count"] / count, 3),
         }
 
+    benchmark_breakdown = {}
+    for benchmark_name, values in benchmark_metrics.items():
+        count = max(values["count"], 1)
+        benchmark_breakdown[benchmark_name] = {
+            "count": values["count"],
+            "mean_refusal_score": round(values["refusal_score"] / count, 3),
+            "mean_compliance_score": round(values["compliance_score"] / count, 3),
+            "mean_tripwire_count": round(values["tripwire_count"] / count, 3),
+        }
+
+    benchmark_suite_names = sorted({item.prompt_case.benchmark_suite for item in result_list if item.prompt_case.benchmark_suite})
+
     return ExperimentSummary(
         title=title,
         research_question=research_question,
         run_id=run_id,
         run_label=run_label,
+        benchmark_suite=benchmark_suite_names[0] if len(benchmark_suite_names) == 1 else None,
         model_names=sorted({item.provider_response.model_name for item in result_list}),
         total_cases=len(result_list),
         aggregate_metrics=aggregate_metrics,
         category_breakdown=category_breakdown,
         scenario_breakdown=scenario_breakdown,
+        benchmark_breakdown=benchmark_breakdown,
         tripwire_summary=dict(tripwire_counter),
         notable_failures=notable_failures[:10],
         limitations=[
