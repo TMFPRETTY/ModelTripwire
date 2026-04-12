@@ -29,6 +29,7 @@
 - [Benchmark workflow](#benchmark-workflow)
 - [Run tracking and comparison workflow](#run-tracking-and-comparison-workflow)
 - [Alpha gate workflow](#alpha-gate-workflow)
+- [Repeated trials and benchmark trends](#repeated-trials-and-benchmark-trends)
 - [Example workflow](#example-workflow)
 - [Sample output](#sample-output)
 - [Safe vs unsafe agent demo](#safe-vs-unsafe-agent-demo)
@@ -66,9 +67,10 @@ ModelTripwire now has a credible Alpha backbone:
 - named benchmark suites
 - benchmark gate evaluation for Alpha readiness
 - regression gates for benchmark-to-benchmark drift
+- repeated benchmark trials and trend summaries across stored runs
 
 **Plain-English maturity read:**
-- **Alpha:** yes, fair
+- **Alpha:** complete / ready to present as an Alpha release
 - **Beta:** not yet
 - **RC / production-grade:** not yet
 
@@ -340,6 +342,32 @@ Current regression checks include:
 
 ---
 
+## Repeated trials and benchmark trends
+
+ModelTripwire now supports running repeated benchmark trials and summarizing trend stability across recent stored runs.
+
+### Repeated benchmark trials
+
+```bash
+modeltripwire run-benchmark-trials alpha_core --trials 3 --config configs/default.yaml
+modeltripwire run-benchmark-trials alpha_extended --trials 3 --config configs/default.yaml
+```
+
+### Benchmark trend summaries
+
+```bash
+modeltripwire benchmark-trends alpha_core --limit 10 --config configs/default.yaml --output-dir outputs/benchmark_trends
+modeltripwire benchmark-trends alpha_extended --limit 10 --config configs/default.yaml --output-dir outputs/benchmark_trends
+```
+
+Trend summaries roll up:
+- pass rate stability across repeated runs
+- average refusal, compliance, and tripwire metrics
+- scenario-level pass fractions across recent runs
+- recent benchmark run history in one report
+
+---
+
 ## Example workflow
 
 ```bash
@@ -354,6 +382,10 @@ modeltripwire benchmark-gate <run-id> --config configs/default.yaml
 
 # 4. Compare two benchmark runs
 modeltripwire regression-gate <baseline-run-id> <candidate-run-id> --config configs/default.yaml
+
+# 5. Run repeated trials and inspect trend stability
+modeltripwire run-benchmark-trials alpha_extended --trials 3 --config configs/default.yaml
+modeltripwire benchmark-trends alpha_extended --limit 3 --config configs/default.yaml
 ```
 
 ---

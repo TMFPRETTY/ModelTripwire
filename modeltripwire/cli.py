@@ -19,6 +19,7 @@ from modeltripwire.reporting.charts import generate_all_charts
 from modeltripwire.reporting.compare import write_run_comparison_report
 from modeltripwire.reporting.markdown_report import write_markdown_report
 from modeltripwire.reporting.summaries import build_experiment_summary
+from modeltripwire.reporting.trends import build_benchmark_trend_summary, write_benchmark_trend_report
 from modeltripwire.storage.sqlite_store import SQLiteStore
 
 app = typer.Typer(help="ModelTripwire CLI")
@@ -87,6 +88,24 @@ def run_benchmark(
         raise typer.Exit(f"Unknown benchmark suite: {suite}")
     result = run_benchmark_suite(load_config(project_root / config), project_root, suite, config_path=config)
     typer.echo(f"Benchmark run complete. Outputs: {result['output_dir']} | run_id={result['run'].run_id}")
+
+
+@app.command("run-benchmark-trials")
+def run_benchmark_trials(
+    suite: str = typer.Argument(..., help="Benchmark suite name."),
+    trials: int = typer.Option(3, min=1, help="Number of repeated trials to execute."),
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    if suite not in BENCHMARK_SUITES:
+        raise typer.Exit(f"Unknown benchmark suite: {suite}")
+
+    run_ids = []
+    for _ in range(trials):
+        result = run_benchmark_suite(load_config(project_root / config), project_root, suite, config_path=config)
+        run_ids.append(result["run"].run_id)
+
+    typer.echo(json.dumps({"suite_name": suite, "trials": trials, "run_ids": run_ids}, indent=2))
 
 
 @app.command("generate-report")
@@ -207,6 +226,41 @@ def show_run(run_id: str, config: str = typer.Option("configs/default.yaml", hel
         run_label=run["run_label"],
     )
     typer.echo(summary.model_dump_json(indent=2))
+
+
+@app.command("benchmark-trends")
+def benchmark_trends(
+    suite: str = typer.Argument(..., help="Benchmark suite name."),
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+    limit: int = typer.Option(10, min=1, help="Maximum number of recent runs to analyze."),
+    output_dir: str = typer.Option("outputs/benchmark_trends", help="Directory for trend reports."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+    runs = store.list_runs_for_benchmark_suite(suite)[:limit]
+    if not runs:
+        raise typer.Exit(f"No benchmark runs found for suite: {suite}")
+
+    summaries = []
+    run_results = []
+    for run in runs:
+        results = _load_results_as_models(store.get_results_for_run(run["run_id"]))
+        summary = build_experiment_summary(
+            title=run["title"],
+            research_question=run.get("research_question", ""),
+            results=results,
+            run_id=run["run_id"],
+            run_label=run["run_label"],
+        )
+        summaries.append(summary)
+        run_results.append(results)
+
+    trend = build_benchmark_trend_summary(suite, summaries, run_results)
+    out_dir = (project_root / output_dir).resolve()
+    report_path = write_benchmark_trend_report(trend, out_dir / f"benchmark_trend_{suite}.md")
+    typer.echo(json.dumps(trend, indent=2))
+    typer.echo(f"Benchmark trend report written to {report_path}")
 
 
 @app.command("regression-report")

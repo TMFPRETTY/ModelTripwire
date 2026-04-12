@@ -103,7 +103,7 @@ class SQLiteStore:
         with self._connect() as connection:
             rows = connection.execute(
                 """
-                SELECT run_id, run_label, title, provider_type, model_name, total_cases, started_at, completed_at
+                SELECT run_id, run_label, title, research_question, provider_type, model_name, total_cases, started_at, completed_at, metadata_json
                 FROM experiment_runs
                 ORDER BY completed_at DESC
                 """
@@ -113,11 +113,13 @@ class SQLiteStore:
                 "run_id": row[0],
                 "run_label": row[1],
                 "title": row[2],
-                "provider_type": row[3],
-                "model_name": row[4],
-                "total_cases": row[5],
-                "started_at": row[6],
-                "completed_at": row[7],
+                "research_question": row[3],
+                "provider_type": row[4],
+                "model_name": row[5],
+                "total_cases": row[6],
+                "started_at": row[7],
+                "completed_at": row[8],
+                "metadata": json.loads(row[9]) if row[9] else {},
             }
             for row in rows
         ]
@@ -191,6 +193,10 @@ class SQLiteStore:
             }
             for row in rows
         ]
+
+    def list_runs_for_benchmark_suite(self, suite_name: str) -> list[dict]:
+        runs = self.list_runs()
+        return [run for run in runs if run.get("metadata", {}).get("benchmark_suite") == suite_name]
 
     def save_results(self, results: Iterable[EvaluationResult], run_id: str | None = None) -> None:
         rows = []
