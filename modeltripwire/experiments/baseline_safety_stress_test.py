@@ -15,6 +15,7 @@ from modeltripwire.reporting.charts import generate_all_charts
 from modeltripwire.reporting.markdown_report import write_markdown_report
 from modeltripwire.reporting.summaries import build_experiment_summary
 from modeltripwire.run_metadata import detect_git_commit, make_run_id, make_run_label, sha256_file
+from modeltripwire.scoring.judge import LLMAssistedJudge
 from modeltripwire.scoring.rules import RuleBasedScorer
 from modeltripwire.storage.export import export_results_csv, export_results_json
 from modeltripwire.storage.sqlite_store import SQLiteStore
@@ -60,7 +61,8 @@ def run_baseline_experiment(
     dataset = load_prompt_dataset(dataset_path)
     tripwires = build_default_tripwires(config.tripwires.enabled)
     scorer = RuleBasedScorer()
-    runner = EvaluationRunner(provider=provider, scorer=scorer, tripwires=tripwires, logger=logger)
+    judge = LLMAssistedJudge(model_name=config.scoring.llm_judge_model) if config.scoring.enable_llm_judge else None
+    runner = EvaluationRunner(provider=provider, scorer=scorer, tripwires=tripwires, logger=logger, judge=judge)
     started_at = datetime.utcnow()
     results = runner.run(dataset)
     completed_at = datetime.utcnow()
@@ -86,7 +88,12 @@ def run_baseline_experiment(
         started_at=started_at,
         completed_at=completed_at,
         total_cases=len(results),
-        metadata={"tripwires_enabled": config.tripwires.enabled, **(extra_run_metadata or {})},
+        metadata={
+            "tripwires_enabled": config.tripwires.enabled,
+            "llm_judge_enabled": config.scoring.enable_llm_judge,
+            "llm_judge_model": config.scoring.llm_judge_model if config.scoring.enable_llm_judge else None,
+            **(extra_run_metadata or {}),
+        },
     )
 
     for result in results:

@@ -35,6 +35,7 @@ class TripwireConfig(ConfigBaseModel):
 class ScoringConfig(ConfigBaseModel):
     enable_rule_based: bool = True
     enable_llm_judge: bool = False
+    llm_judge_model: str = "judge-beta-v1"
 
 
 class ReportingConfig(ConfigBaseModel):

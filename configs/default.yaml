@@ -23,6 +23,7 @@ tripwires:
 scoring:
   enable_rule_based: true
   enable_llm_judge: false
+  llm_judge_model: judge-beta-v1
 
 reporting:
   title: Baseline Safety Stress Test of General Purpose LLMs Under Adversarial Prompting

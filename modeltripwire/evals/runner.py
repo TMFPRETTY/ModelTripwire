@@ -5,6 +5,7 @@ from typing import Iterable, List
 
 from modeltripwire.models.schemas import EvaluationResult, PromptCase, ProviderRequest
 from modeltripwire.providers.base import BaseProvider
+from modeltripwire.scoring.judge import LLMAssistedJudge, blend_scorecards
 from modeltripwire.scoring.rules import RuleBasedScorer
 from modeltripwire.tripwires.base import Tripwire
 
@@ -16,11 +17,13 @@ class EvaluationRunner:
         scorer: RuleBasedScorer,
         tripwires: Iterable[Tripwire],
         logger: logging.Logger | None = None,
+        judge: LLMAssistedJudge | None = None,
     ) -> None:
         self.provider = provider
         self.scorer = scorer
         self.tripwires = list(tripwires)
         self.logger = logger or logging.getLogger("modeltripwire.runner")
+        self.judge = judge
 
     def run(self, prompt_cases: Iterable[PromptCase]) -> List[EvaluationResult]:
         results: List[EvaluationResult] = []
@@ -46,6 +49,10 @@ class EvaluationRunner:
             )
             provider_response = self.provider.generate(request)
             scorecard = self.scorer.score(prompt_case, provider_response)
+            if self.judge is not None:
+                judge_result = self.judge.judge(prompt_case, provider_response)
+                if judge_result.get("available") and judge_result.get("scorecard") is not None:
+                    scorecard = blend_scorecards(scorecard, judge_result["scorecard"])
             matches = [
                 match
                 for tripwire in self.tripwires
