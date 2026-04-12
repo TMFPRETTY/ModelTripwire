@@ -640,33 +640,18 @@ modeltripwire/
 
 ---
 
-## Roadmap from here
+## What’s next
 
-### To strengthen Alpha
-- add benchmark trend views across repeated runs
-- tighten scenario thresholds further with real-provider evidence
-- add repeated-trial support for score stability
-- expand failure analysis and benchmark comparison summaries
-
-### To strengthen Framework Beta
+### Near-term priorities
 - fuller judge-model integration beyond the current scaffold
 - richer tripwire logic and confidence handling
 - broader multi-turn benchmark coverage
 - stronger provider reliability, retries, and normalization
 - better comparative analytics across models and providers
-- tighter Beta milestone calibration using `beta_core`
-- stronger repeated-run Beta stability enforcement through trend gates
-- final release framing that distinguishes framework maturity from provider pass/fail outcomes
 - broader provider validation beyond the current OpenAI calibration path
-- one more explicit release-notes / changelog pass before tagging Beta
+- stronger failure analysis for real-provider benchmark results
 
-### After Alpha
-- calibrate gates against real-provider variability
-- extend trend gates into CI and release workflows
-- strengthen failure analysis and richer benchmark comparisons
-- expand benchmark packs further for tougher release gating
-
-### To reach release candidate
+### Toward release candidate
 - frozen benchmark sets and release gates
 - CI benchmark workflows
 - clearer documentation and contributor guidance
