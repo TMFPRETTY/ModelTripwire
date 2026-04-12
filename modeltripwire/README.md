@@ -81,29 +81,44 @@ Supported config fields include:
 
 ## Quickstart
 
-Run the baseline experiment with the mock provider:
+The simplest momentum-first path is the local mock baseline run:
+
+```bash
+python scripts/run_baseline.py
+```
+
+CLI entry points are also available:
 
 ```bash
 modeltripwire run-baseline --config configs/default.yaml
-```
-
-Run a specific dataset:
-
-```bash
 modeltripwire run-dataset data/prompts/baseline_adversarial_prompts.json --config configs/default.yaml
-```
-
-Generate a report from prior results:
-
-```bash
 modeltripwire generate-report outputs/latest/results.json --output-dir outputs/report_regen
-```
-
-Run the safe versus unsafe agent demo:
-
-```bash
 modeltripwire demo-agents --config configs/default.yaml
 ```
+
+Running `python scripts/run_baseline.py` will:
+- load the baseline adversarial dataset
+- run every prompt against the mock provider
+- print prompt-by-prompt results to the console
+- score responses and trigger tripwires
+- save outputs into `outputs/latest/`
+
+## Current implemented phases
+
+### Phase 1: README and project narrative
+Implemented. The repo documents the purpose, architecture, quickstart, and responsible-use framing.
+
+### Phase 2: Mock provider and dataset loader
+Implemented. The repository includes a runnable mock provider plus JSON dataset loading for adversarial prompt cases. The loader accepts datasets that use either `prompt_text` or `prompt` as the prompt field.
+
+### Phase 3: Baseline experiment
+Implemented. `python scripts/run_baseline.py` runs an end-to-end mock evaluation and saves outputs in `outputs/latest/`.
+
+### Phase 4: Tripwires and simple scoring
+Implemented. Each response is evaluated with rule-based scoring and keyword tripwires, then persisted into exports and SQLite.
+
+### Phase 5: Real provider integrations
+Implemented as modular provider adapters for OpenAI-style and Anthropic-style APIs, gated by environment variables.
 
 ## Baseline experiment
 
