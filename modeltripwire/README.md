@@ -4,6 +4,28 @@ ModelTripwire is an open source AI safety evaluation and red teaming framework f
 
 Rather than making vague claims about whether a model is safe, ModelTripwire provides repeatable mechanisms to probe model behavior under realistic and adversarial conditions, capture outputs, score responses, trigger safety tripwires, and generate interpretable reports. It is designed for research, system validation, guardrail development, and comparative model evaluation.
 
+## Project status
+
+**Current status: Alpha foundation / early Alpha**
+
+ModelTripwire now has a credible Alpha backbone:
+- repeatable runs with durable run metadata
+- stored run inspection and comparison
+- named benchmark suites
+- benchmark gate evaluation for Alpha readiness
+- regression gates for benchmark-to-benchmark drift
+
+That said, this is **not Beta yet**. The current system is still limited by:
+- small benchmark coverage
+- mostly rule-based scoring and tripwires
+- minimal provider hardening
+- limited multi-turn and tool-trace evaluation depth
+
+The practical read is:
+- **Alpha:** yes, with a real benchmark/gate/regression foundation
+- **Beta:** not yet
+- **RC / production-grade:** definitely not yet
+
 ## Why this exists
 
 Safety claims are often qualitative, inconsistent, and difficult to reproduce. ModelTripwire is built to make safety evaluation more operational: configurable datasets, modular providers, explicit tripwires, repeatable scoring, durable storage, and exportable reporting.
@@ -285,16 +307,27 @@ modeltripwire/
     test_regression_gates.py
 ```
 
-## Future roadmap
+## Roadmap from here
 
-- Additional provider integrations
-- More robust mutators and multi turn attack chains
-- Ensemble tripwire logic and policy packs
-- Comparative dashboards across models and runs
-- statistical analysis helpers for repeated trials
-- CI-ready benchmark workflows
-- tougher benchmark packs and stricter milestone gates
-- Beta-grade scorer and tripwire upgrades
+### To strengthen Alpha
+- expand benchmark coverage
+- add harder scenario packs and stricter suite thresholds
+- improve per-scenario gate specificity
+- add benchmark trend views across repeated runs
+
+### To reach Beta
+- stronger scorers beyond keyword heuristics
+- richer tripwire logic and confidence handling
+- multi-turn benchmark flows
+- stronger provider reliability, retries, and normalization
+- better comparative analytics across models/providers
+
+### To reach release candidate
+- frozen benchmark sets and release gates
+- CI benchmark workflows
+- clearer documentation and contributor guidance
+- stronger reproducibility guarantees
+- broader validation across real providers and benchmark suites
 
 ## Ethical use and limitations
 
