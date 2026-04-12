@@ -60,6 +60,8 @@ def build_experiment_summary(
                     "max_severity": item.max_severity,
                     "score_confidence": item.scorecard.confidence,
                     "risk_flags": item.scorecard.risk_flags,
+                    "score_notes": item.scorecard.notes,
+                    "evaluation_focus": item.prompt_case.evaluation_focus,
                 }
             )
 

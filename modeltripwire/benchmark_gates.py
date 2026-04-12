@@ -17,14 +17,46 @@ def evaluate_benchmark_gate(summary: ExperimentSummary, results: list[Evaluation
     case_evaluations = []
     pass_count = 0
     for result in results:
-        case_pass = result.scorecard.compliance_score <= per_case_max_compliance and result.tripwire_count <= per_case_max_tripwires
+        case_checks = {
+            "max_compliance_score": result.scorecard.compliance_score <= per_case_max_compliance,
+            "max_tripwire_count": result.tripwire_count <= per_case_max_tripwires,
+        }
+        case_pass = all(case_checks.values())
+        failure_reasons = [name for name, passed in case_checks.items() if not passed]
         case_evaluations.append(
             {
                 "prompt_id": result.prompt_case.id,
+                "prompt_name": result.prompt_case.name,
                 "scenario": result.prompt_case.scenario_name,
                 "benchmark_suite": result.prompt_case.benchmark_suite or suite_name,
+                "expected_risk_type": result.prompt_case.expected_risk_type,
+                "evaluation_focus": result.prompt_case.evaluation_focus,
+                "difficulty": result.prompt_case.difficulty,
                 "compliance_score": result.scorecard.compliance_score,
+                "refusal_score": result.scorecard.refusal_score,
+                "leakage_score": result.scorecard.leakage_score,
+                "harmfulness_score": result.scorecard.harmfulness_score,
+                "score_confidence": result.scorecard.confidence,
+                "risk_flags": result.scorecard.risk_flags,
+                "score_notes": result.scorecard.notes,
                 "tripwire_count": result.tripwire_count,
+                "tripwires": [
+                    {
+                        "name": match.name,
+                        "severity": match.severity,
+                        "confidence": match.confidence,
+                        "match_type": match.match_type,
+                        "evidence": match.evidence,
+                    }
+                    for match in result.tripwires_triggered
+                ],
+                "checks": case_checks,
+                "thresholds": {
+                    "max_compliance_score": per_case_max_compliance,
+                    "max_tripwire_count": per_case_max_tripwires,
+                },
+                "failure_reasons": failure_reasons,
+                "verdict_summary": "pass" if case_pass else f"fail: {', '.join(failure_reasons)}",
                 "passed": case_pass,
             }
         )
@@ -95,7 +127,13 @@ def write_benchmark_gate_report(gate_result: dict, path: str | Path) -> Path:
         for scenario, item in gate_result["scenario_checks"].items()
     )
     case_lines = "\n".join(
-        f"- {case['prompt_id']} ({case['scenario']}): {'PASS' if case['passed'] else 'FAIL'} | compliance={case['compliance_score']} | tripwires={case['tripwire_count']}"
+        (
+            f"- **{case['prompt_id']}** ({case['scenario']}): {'PASS' if case['passed'] else 'FAIL'}"
+            f" | refusal={case['refusal_score']} | compliance={case['compliance_score']}"
+            f" | leakage={case['leakage_score']} | harmfulness={case['harmfulness_score']}"
+            f" | confidence={case['score_confidence']} | tripwires={case['tripwire_count']}"
+            f" | verdict={case['verdict_summary']} | focus={case['evaluation_focus']} | risk_flags={case['risk_flags']}"
+        )
         for case in gate_result["case_evaluations"]
     )
 

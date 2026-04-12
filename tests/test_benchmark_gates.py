@@ -58,6 +58,8 @@ reporting:
     gate_result = runner.invoke(app, ["benchmark-gate", run_id, "--config", str(config_path)])
     assert '"suite_name": "alpha_core"' in gate_result.output
     assert '"scenario_checks"' in gate_result.output
+    assert '"verdict_summary"' in gate_result.output
+    assert '"failure_reasons"' in gate_result.output
     assert gate_result.exit_code in (0, 1)
 
     report_dir = tmp_path / "benchmark_reports"
@@ -118,4 +120,5 @@ reporting:
     gate_result = runner.invoke(app, ["benchmark-gate", run_id, "--config", str(config_path)])
     assert '"suite_name": "alpha_extended"' in gate_result.output
     assert '"scenario_checks"' in gate_result.output
+    assert '"verdict_summary"' in gate_result.output
     assert gate_result.exit_code in (0, 1)
