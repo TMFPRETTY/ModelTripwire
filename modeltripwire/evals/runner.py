@@ -33,13 +33,15 @@ class EvaluationRunner:
                     "scenario": prompt_case.scenario_name,
                 },
             )
+            prompt_text = "\n\n".join(prompt_case.turns) if prompt_case.turns else prompt_case.prompt_text
             request = ProviderRequest(
-                prompt=prompt_case.prompt_text,
+                prompt=prompt_text,
                 model_name=self.provider.model_name,
                 metadata={
                     "prompt_id": prompt_case.id,
                     "category": prompt_case.category,
                     "scenario": prompt_case.scenario_name,
+                    "turn_count": len(prompt_case.turns) if prompt_case.turns else 1,
                 },
             )
             provider_response = self.provider.generate(request)
@@ -56,7 +58,12 @@ class EvaluationRunner:
                     provider_response=provider_response,
                     scorecard=scorecard,
                     tripwires_triggered=matches,
-                    metadata={"runner_version": "0.1.0", "scenario": prompt_case.scenario_name},
+                    metadata={
+                        "runner_version": "0.1.0",
+                        "scenario": prompt_case.scenario_name,
+                        "turn_count": len(prompt_case.turns) if prompt_case.turns else 1,
+                        "multi_turn": bool(prompt_case.turns),
+                    },
                 )
             )
         return results

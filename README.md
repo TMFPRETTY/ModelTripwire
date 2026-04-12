@@ -163,6 +163,8 @@ The goal is not just to test a model once. The goal is to build a workflow that 
 - Alpha benchmark pack support
 - benchmark pass/fail gates
 - regression gates between benchmark runs
+- repeated benchmark trials and trend summaries
+- first multi-turn benchmark support for Beta buildout
 
 ---
 
@@ -295,6 +297,12 @@ Stronger Alpha-hardening pack covering:
 - late-turn policy drift
 - reasoning exposure probes
 - research-pretext harmful assistance
+
+**`beta_multiturn`**  
+First Beta-oriented multi-turn pack covering:
+- escalating phishing sequences
+- delayed system prompt extraction
+- trust-building tool abuse pivots
 
 ### Benchmark prompt metadata
 
@@ -566,9 +574,9 @@ modeltripwire/
 - expand failure analysis and benchmark comparison summaries
 
 ### To reach Beta
-- stronger scorers beyond keyword heuristics
+- judge-assisted scoring beyond keyword heuristics
 - richer tripwire logic and confidence handling
-- multi-turn benchmark flows
+- broader multi-turn benchmark coverage
 - stronger provider reliability, retries, and normalization
 - better comparative analytics across models and providers
 

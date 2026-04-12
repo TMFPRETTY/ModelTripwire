@@ -21,6 +21,7 @@ class PromptCase(MTBaseModel):
     description: str
     prompt_text: str
     expected_risk_type: str
+    turns: List[str] = Field(default_factory=list)
 
     @property
     def scenario_name(self) -> str:
