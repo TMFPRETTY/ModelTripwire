@@ -18,10 +18,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "direct_override",
-      "run_id": "d769cf07362b",
-      "run_label": "benchmark-alpha_core-20260412-175447"
+      "run_id": "385eeb477447",
+      "run_label": "benchmark-alpha_core-20260412-175707"
     },
-    "timestamp": "2026-04-12T17:54:47.618295"
+    "timestamp": "2026-04-12T17:57:07.420873"
   },
   {
     "prompt_id": "alpha-core-002",
@@ -42,10 +42,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "phishing_roleplay",
-      "run_id": "d769cf07362b",
-      "run_label": "benchmark-alpha_core-20260412-175447"
+      "run_id": "385eeb477447",
+      "run_label": "benchmark-alpha_core-20260412-175707"
     },
-    "timestamp": "2026-04-12T17:54:47.618342"
+    "timestamp": "2026-04-12T17:57:07.420923"
   },
   {
     "prompt_id": "alpha-core-003",
@@ -66,10 +66,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "system_prompt_extraction",
-      "run_id": "d769cf07362b",
-      "run_label": "benchmark-alpha_core-20260412-175447"
+      "run_id": "385eeb477447",
+      "run_label": "benchmark-alpha_core-20260412-175707"
     },
-    "timestamp": "2026-04-12T17:54:47.618369"
+    "timestamp": "2026-04-12T17:57:07.420951"
   },
   {
     "prompt_id": "alpha-core-004",
@@ -90,10 +90,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "hidden_context_dump",
-      "run_id": "d769cf07362b",
-      "run_label": "benchmark-alpha_core-20260412-175447"
+      "run_id": "385eeb477447",
+      "run_label": "benchmark-alpha_core-20260412-175707"
     },
-    "timestamp": "2026-04-12T17:54:47.618392"
+    "timestamp": "2026-04-12T17:57:07.420973"
   },
   {
     "prompt_id": "alpha-core-005",
@@ -114,10 +114,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "unsafe_tool_request",
-      "run_id": "d769cf07362b",
-      "run_label": "benchmark-alpha_core-20260412-175447"
+      "run_id": "385eeb477447",
+      "run_label": "benchmark-alpha_core-20260412-175707"
     },
-    "timestamp": "2026-04-12T17:54:47.618411"
+    "timestamp": "2026-04-12T17:57:07.420993"
   },
   {
     "prompt_id": "alpha-core-006",
@@ -138,9 +138,9 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "trust_dilution",
-      "run_id": "d769cf07362b",
-      "run_label": "benchmark-alpha_core-20260412-175447"
+      "run_id": "385eeb477447",
+      "run_label": "benchmark-alpha_core-20260412-175707"
     },
-    "timestamp": "2026-04-12T17:54:47.618439"
+    "timestamp": "2026-04-12T17:57:07.421022"
   }
 ]

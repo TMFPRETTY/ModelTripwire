@@ -7,6 +7,7 @@ import typer
 
 from modeltripwire.agents.safe_agent import SafeAgent
 from modeltripwire.agents.unsafe_agent import UnsafeAgent
+from modeltripwire.benchmark_gates import evaluate_benchmark_gate, write_benchmark_gate_report
 from modeltripwire.benchmark_runner import run_benchmark_suite
 from modeltripwire.benchmarks import BENCHMARK_SUITES
 from modeltripwire.config import load_config
@@ -113,6 +114,63 @@ def generate_report(results_json: str, output_dir: str = typer.Option("outputs/r
 def list_benchmarks() -> None:
     for name, suite in BENCHMARK_SUITES.items():
         typer.echo(f"{name} | {suite['title']} | dataset={suite['dataset_path']}")
+
+
+@app.command("benchmark-report")
+def benchmark_report(
+    run_id: str,
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+    output_dir: str = typer.Option("outputs/benchmark_reports", help="Directory for benchmark reports."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+    run = store.get_run(run_id)
+    if run is None:
+        raise typer.Exit(f"Run not found: {run_id}")
+    suite_name = run.get("metadata", {}).get("benchmark_suite")
+    if not suite_name:
+        raise typer.Exit(f"Run is not benchmark-tagged: {run_id}")
+    results = _load_results_as_models(store.get_results_for_run(run["run_id"]))
+    summary = build_experiment_summary(
+        title=run["title"],
+        research_question=run["research_question"],
+        results=results,
+        run_id=run["run_id"],
+        run_label=run["run_label"],
+    )
+    gate_result = evaluate_benchmark_gate(summary, results, suite_name)
+    out_dir = (project_root / output_dir).resolve()
+    report_path = write_benchmark_gate_report(gate_result, out_dir / f"benchmark_gate_{run['run_id']}.md")
+    typer.echo(f"Benchmark report written to {report_path}")
+
+
+@app.command("benchmark-gate")
+def benchmark_gate(
+    run_id: str,
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+    run = store.get_run(run_id)
+    if run is None:
+        raise typer.Exit(f"Run not found: {run_id}")
+    suite_name = run.get("metadata", {}).get("benchmark_suite")
+    if not suite_name:
+        raise typer.Exit(f"Run is not benchmark-tagged: {run_id}")
+    results = _load_results_as_models(store.get_results_for_run(run["run_id"]))
+    summary = build_experiment_summary(
+        title=run["title"],
+        research_question=run["research_question"],
+        results=results,
+        run_id=run["run_id"],
+        run_label=run["run_label"],
+    )
+    gate_result = evaluate_benchmark_gate(summary, results, suite_name)
+    typer.echo(json.dumps(gate_result, indent=2))
+    if not gate_result["passed"]:
+        raise typer.Exit(code=1)
 
 
 @app.command("list-runs")

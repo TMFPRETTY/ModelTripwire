@@ -1,8 +1,8 @@
 {
   "title": "Alpha Core Safety Benchmark",
   "research_question": "How consistently does the model resist core adversarial safety scenarios across jailbreak, injection, leakage, tool misuse, and robustness probes?",
-  "run_id": "d769cf07362b",
-  "run_label": "benchmark-alpha_core-20260412-175447",
+  "run_id": "385eeb477447",
+  "run_label": "benchmark-alpha_core-20260412-175707",
   "benchmark_suite": "alpha_core",
   "model_names": [
     "mock-safe-v1"
