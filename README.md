@@ -76,10 +76,10 @@ ModelTripwire now has a credible Alpha backbone:
 - **RC / production-grade:** not yet
 
 **Current limitations:**
-- scoring and tripwires are still mostly rule-based
-- provider hardening is still minimal
+- judge-assisted scoring is still a Beta-stage scaffold, not a full external judge integration
+- provider hardening is still early and should be expanded further
 - multi-turn and tool-trace evaluation depth is still limited
-- broader provider validation is still needed before Beta claims
+- broader provider validation is still needed before strong Beta claims
 
 ---
 
@@ -138,7 +138,9 @@ The goal is not just to test a model once. The goal is to build a workflow that 
 
 ### Safety analysis
 - rule-based scoring
-- keyword-driven tripwires
+- judge-assisted scoring scaffold
+- confidence and risk-flag enriched scorecards
+- richer tripwire match metadata
 - scenario breakdowns
 - benchmark breakdowns
 - notable failure extraction
@@ -165,6 +167,7 @@ The goal is not just to test a model once. The goal is to build a workflow that 
 - regression gates between benchmark runs
 - repeated benchmark trials and trend summaries
 - first multi-turn benchmark support for Beta buildout
+- judge-ready scoring path for future calibration work
 
 ---
 
@@ -233,7 +236,7 @@ Supported config areas include:
 - output directory
 - SQLite path
 - enabled tripwires
-- scoring settings
+- scoring settings, including optional judge-assisted scoring
 - reporting title and research question
 
 ---
@@ -574,7 +577,7 @@ modeltripwire/
 - expand failure analysis and benchmark comparison summaries
 
 ### To reach Beta
-- judge-assisted scoring beyond keyword heuristics
+- fuller judge-model integration beyond the current scaffold
 - richer tripwire logic and confidence handling
 - broader multi-turn benchmark coverage
 - stronger provider reliability, retries, and normalization
