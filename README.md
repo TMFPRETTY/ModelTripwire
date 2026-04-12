@@ -4,7 +4,7 @@
 
 ### Safety evaluation, adversarial testing, benchmark gates, and regression tracking for LLMs and agentic systems
 
-[![Status: Framework Beta Candidate](https://img.shields.io/badge/status-framework_beta_candidate-2563eb)](#project-status)
+[![Status: Framework Beta](https://img.shields.io/badge/status-framework_beta-2563eb)](#project-status)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](#installation)
 [![License](https://img.shields.io/badge/license-see%20LICENSE-111827)](#license)
 [![Benchmarks](https://img.shields.io/badge/benchmarks-alpha__core__beta__core-7c3aed)](#benchmark-workflow)
@@ -63,7 +63,7 @@ This repo is aimed at teams who want safety evaluation to feel more like enginee
 
 ## Project status
 
-> **Current status: Alpha complete, framework Beta candidate with real-provider calibration underway**
+> **Current status: Framework Beta, with real-provider calibration actively informing benchmark quality**
 
 ModelTripwire now has a credible Alpha backbone and a substantially stronger Beta framework surface:
 - repeatable runs with durable run metadata
@@ -76,8 +76,8 @@ ModelTripwire now has a credible Alpha backbone and a substantially stronger Bet
 - real-provider validation workflow for calibrating benchmark and scoring behavior
 
 **Plain-English maturity read:**
-- **Alpha:** complete / ready to present as an Alpha release
-- **Framework Beta:** close, with real-provider validation now proving out the benchmark and calibration surface
+- **Alpha:** complete
+- **Framework Beta:** reached, with benchmark gates, regression gates, trend gates, CI workflows, release-readiness workflows, and real-provider calibration in place
 - **Provider pass status:** current OpenAI `beta_core` validation still shows meaningful failures in phishing escalation and trust-buildup sensitive export scenarios
 - **RC / production-grade:** not yet
 
@@ -456,7 +456,7 @@ ModelTripwire now includes GitHub Actions workflows for baseline automation:
 - `CI` runs the full test suite and a `beta_core` mock benchmark smoke path on pushes and pull requests
 - `Release Readiness` can be triggered manually or on version tags to run tests, repeated `beta_core` trials, benchmark trend reporting, and trend report artifact generation
 
-These workflows are intended to make framework-level Beta claims more credible by ensuring the benchmark and reporting surface stays reproducible.
+These workflows are intended to make framework-level Beta claims concrete by ensuring the benchmark and reporting surface stays reproducible.
 
 Real-provider benchmark validation remains intentionally manual and local, because it depends on user-managed API credentials and should be a conscious release decision rather than a default CI side effect.
 
@@ -633,7 +633,7 @@ modeltripwire/
 - add repeated-trial support for score stability
 - expand failure analysis and benchmark comparison summaries
 
-### To reach an official Beta release
+### To strengthen Framework Beta
 - fuller judge-model integration beyond the current scaffold
 - richer tripwire logic and confidence handling
 - broader multi-turn benchmark coverage

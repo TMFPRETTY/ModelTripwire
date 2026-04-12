@@ -2,6 +2,8 @@
 
 ## 0.2.0-beta.1
 
+Framework Beta release.
+
 ### Highlights
 - Introduced explicit Beta benchmark coverage with `beta_core`
 - Added benchmark trend summaries and trend stability gates
@@ -24,4 +26,5 @@
 - Added `Release Readiness` workflow for repeated benchmark trials and trend-report artifact generation
 
 ### Framing
-- ModelTripwire is now best described as a framework Beta candidate rather than a blanket claim that tested providers already pass the Beta benchmark bar
+- ModelTripwire is now framed as a Framework Beta release rather than a blanket claim that tested providers already pass the Beta benchmark bar
+- Real-provider failures are part of the product story: the framework is Beta, while tested providers may still fail strict benchmark thresholds
