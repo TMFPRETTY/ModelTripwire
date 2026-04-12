@@ -4,11 +4,11 @@
 
 ### Safety evaluation, adversarial testing, benchmark gates, and regression tracking for LLMs and agentic systems
 
-[![Status: Alpha Foundation](https://img.shields.io/badge/status-alpha_foundation-2563eb)](#project-status)
+[![Status: Beta Milestone Buildout](https://img.shields.io/badge/status-beta_milestone_buildout-2563eb)](#project-status)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](#installation)
 [![License](https://img.shields.io/badge/license-see%20LICENSE-111827)](#license)
-[![Benchmarks](https://img.shields.io/badge/benchmarks-alpha__core-7c3aed)](#benchmark-workflow)
-[![Gates](https://img.shields.io/badge/gates-alpha%20%2B%20regression-059669)](#alpha-gate-workflow)
+[![Benchmarks](https://img.shields.io/badge/benchmarks-alpha__core__beta__core-7c3aed)](#benchmark-workflow)
+[![Gates](https://img.shields.io/badge/gates-alpha%20%2B%20beta%20%2B%20trend-059669)](#alpha-gate-workflow)
 
 *Operational safety evaluation with durable runs, benchmark suites, pass/fail gates, and regression-aware reporting.*
 
@@ -31,6 +31,7 @@
 - [Run tracking and comparison workflow](#run-tracking-and-comparison-workflow)
 - [Alpha gate workflow](#alpha-gate-workflow)
 - [Repeated trials and benchmark trends](#repeated-trials-and-benchmark-trends)
+- [Trend stability gates](#trend-stability-gates)
 - [Example workflow](#example-workflow)
 - [Sample output](#sample-output)
 - [Safe vs unsafe agent demo](#safe-vs-unsafe-agent-demo)
@@ -60,19 +61,20 @@ This repo is aimed at teams who want safety evaluation to feel more like enginee
 
 ## Project status
 
-> **Current status: Alpha foundation / early Alpha**
+> **Current status: Alpha complete, Beta milestone buildout underway**
 
-ModelTripwire now has a credible Alpha backbone:
+ModelTripwire now has a credible Alpha backbone and an active Beta milestone track:
 - repeatable runs with durable run metadata
 - stored run inspection and comparison
 - named benchmark suites
-- benchmark gate evaluation for Alpha readiness
+- benchmark gate evaluation for Alpha and Beta milestone readiness
 - regression gates for benchmark-to-benchmark drift
 - repeated benchmark trials and trend summaries across stored runs
+- trend stability gates for repeated benchmark pass/fail evaluation
 
 **Plain-English maturity read:**
 - **Alpha:** complete / ready to present as an Alpha release
-- **Beta:** now in active milestone buildout with explicit Beta benchmark work underway
+- **Beta:** in active milestone buildout with explicit Beta benchmark packs and trend stability gates
 - **RC / production-grade:** not yet
 
 **Current limitations:**
@@ -80,6 +82,7 @@ ModelTripwire now has a credible Alpha backbone:
 - provider hardening is still early and should be expanded further
 - multi-turn and tool-trace evaluation depth is still limited
 - broader provider validation is still needed before strong Beta claims
+- trend stability gates are available locally, but not yet wired into CI or release automation
 
 ---
 
@@ -162,10 +165,11 @@ The goal is not just to test a model once. The goal is to build a workflow that 
 
 ### Benchmarking
 - named benchmark suites
-- Alpha benchmark pack support
+- Alpha and Beta benchmark pack support
 - benchmark pass/fail gates
 - regression gates between benchmark runs
 - repeated benchmark trials and trend summaries
+- trend stability gates across repeated benchmark runs
 - first multi-turn benchmark support for Beta buildout
 - judge-ready scoring path for future calibration work
 
@@ -196,6 +200,7 @@ Main components:
 - `benchmarks.py` benchmark suite registry
 - `benchmark_gates.py` benchmark pass/fail logic
 - `regression_gates.py` benchmark drift/regression logic
+- `trend_gates.py` repeated-run stability gate logic
 
 ---
 
@@ -407,6 +412,7 @@ modeltripwire run-benchmark-trials alpha_extended --trials 3 --config configs/de
 ```bash
 modeltripwire benchmark-trends alpha_core --limit 10 --config configs/default.yaml --output-dir outputs/benchmark_trends
 modeltripwire benchmark-trends alpha_extended --limit 10 --config configs/default.yaml --output-dir outputs/benchmark_trends
+modeltripwire benchmark-trends beta_core --limit 10 --config configs/default.yaml --output-dir outputs/benchmark_trends
 ```
 
 Trend summaries roll up:
@@ -417,11 +423,30 @@ Trend summaries roll up:
 
 ---
 
+## Trend stability gates
+
+ModelTripwire now supports explicit trend gates so milestone readiness is not just "did one run pass?" but also "does this suite stay healthy across repeated runs?"
+
+```bash
+modeltripwire trend-gate beta_core --limit 3 --config configs/default.yaml
+modeltripwire trend-report beta_core --limit 3 --config configs/default.yaml --output-dir outputs/trend_reports
+```
+
+Trend gates evaluate:
+- fraction of repeated runs that passed the suite gate
+- average pass rate across those runs
+- average refusal, compliance, and tripwire metrics across the run set
+- scenario-level pass fractions across repeated runs
+
+For `beta_core`, the current expectation is intentionally strict: repeated runs should stay consistently passing, not just occasionally clear the bar.
+
+---
+
 ## Example workflow
 
 ```bash
 # 1. Run a benchmark
-modeltripwire run-benchmark alpha_core --config configs/default.yaml
+modeltripwire run-benchmark beta_core --config configs/default.yaml
 
 # 2. Inspect stored runs
 modeltripwire list-runs --config configs/default.yaml
@@ -433,8 +458,12 @@ modeltripwire benchmark-gate <run-id> --config configs/default.yaml
 modeltripwire regression-gate <baseline-run-id> <candidate-run-id> --config configs/default.yaml
 
 # 5. Run repeated trials and inspect trend stability
-modeltripwire run-benchmark-trials alpha_extended --trials 3 --config configs/default.yaml
-modeltripwire benchmark-trends alpha_extended --limit 3 --config configs/default.yaml
+modeltripwire run-benchmark-trials beta_core --trials 3 --config configs/default.yaml
+modeltripwire benchmark-trends beta_core --limit 3 --config configs/default.yaml
+
+# 6. Enforce repeated-run stability as a gate
+modeltripwire trend-gate beta_core --limit 3 --config configs/default.yaml
+modeltripwire trend-report beta_core --limit 3 --config configs/default.yaml --output-dir outputs/trend_reports
 ```
 
 ---
@@ -509,6 +538,7 @@ modeltripwire/
     benchmarks.py
     benchmark_gates.py
     regression_gates.py
+    trend_gates.py
     models/
       __init__.py
       schemas.py
@@ -590,10 +620,11 @@ modeltripwire/
 - stronger provider reliability, retries, and normalization
 - better comparative analytics across models and providers
 - tighter Beta milestone calibration using `beta_core`
+- stronger repeated-run Beta stability enforcement through trend gates
 
 ### After Alpha
 - calibrate gates against real-provider variability
-- add repeated-trial stability thresholds
+- extend trend gates into CI and release workflows
 - strengthen failure analysis and richer benchmark comparisons
 - expand benchmark packs further for tougher release gating
 
