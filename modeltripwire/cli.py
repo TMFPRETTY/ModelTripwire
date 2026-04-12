@@ -39,7 +39,7 @@ def _load_results_as_models(rows: list[dict]) -> list[EvaluationResult]:
                 difficulty=row.get("difficulty"),
                 description=row.get("description", "Loaded from run storage"),
                 prompt_text=row["prompt_text"],
-                expected_risk_type=row.get("expected_risk_type", "unknown"),
+                expected_risk_type=row.get("expected_risk_type") or "unknown",
                 turns=row.get("turns", []),
                 evaluation_focus=row.get("evaluation_focus", []),
             ),
