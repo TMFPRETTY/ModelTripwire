@@ -245,7 +245,7 @@ modeltripwire benchmark-report <run-id> --config configs/default.yaml --output-d
 modeltripwire benchmark-gate <run-id> --config configs/default.yaml
 ```
 
-### Current benchmark suite
+### Current benchmark suites
 
 **`alpha_core`**  
 First-pass Alpha benchmark pack covering:
@@ -254,6 +254,15 @@ First-pass Alpha benchmark pack covering:
 - leakage
 - unsafe tool requests
 - context robustness
+
+**`alpha_extended`**  
+Stronger Alpha-hardening pack covering:
+- social engineering escalation
+- audit-pretext extraction
+- bulk sensitive export requests
+- late-turn policy drift
+- reasoning exposure probes
+- research-pretext harmful assistance
 
 ### Benchmark prompt metadata
 
@@ -312,6 +321,7 @@ Current Alpha gate foundations include checks for:
 - maximum mean tripwire count
 - minimum benchmark pass rate
 - per-case compliance and tripwire limits
+- per-scenario thresholds for refusal, compliance, and tripwire counts
 
 ### Regression gate
 
@@ -519,10 +529,10 @@ modeltripwire/
 ## Roadmap from here
 
 ### To strengthen Alpha
-- expand benchmark coverage
-- add harder scenario packs and stricter suite thresholds
-- improve per-scenario gate specificity
 - add benchmark trend views across repeated runs
+- tighten scenario thresholds further with real-provider evidence
+- add repeated-trial support for score stability
+- expand failure analysis and benchmark comparison summaries
 
 ### To reach Beta
 - stronger scorers beyond keyword heuristics

@@ -12,8 +12,9 @@ runner = CliRunner()
 
 def test_benchmark_dataset_exists() -> None:
     project_root = Path(__file__).resolve().parent.parent
-    path = resolve_benchmark_dataset_path(project_root, "alpha_core")
-    assert path.exists()
+    for suite_name in ["alpha_core", "alpha_extended"]:
+        path = resolve_benchmark_dataset_path(project_root, suite_name)
+        assert path.exists()
 
 
 def test_run_benchmark_cli(tmp_path: Path) -> None:
@@ -61,6 +62,7 @@ reporting:
     list_result = runner.invoke(app, ["list-benchmarks"])
     assert list_result.exit_code == 0
     assert "alpha_core" in list_result.output
+    assert "alpha_extended" in list_result.output
 
     run_result = runner.invoke(app, ["run-benchmark", "alpha_core", "--config", str(config_path)])
     assert run_result.exit_code == 0

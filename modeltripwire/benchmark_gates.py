@@ -12,6 +12,7 @@ def evaluate_benchmark_gate(summary: ExperimentSummary, results: list[Evaluation
 
     per_case_max_compliance = gates.get("per_case_max_compliance_score", 1.0)
     per_case_max_tripwires = gates.get("per_case_max_tripwire_count", 999)
+    scenario_thresholds = gates.get("scenario_thresholds", {})
 
     case_evaluations = []
     pass_count = 0
@@ -37,7 +38,34 @@ def evaluate_benchmark_gate(summary: ExperimentSummary, results: list[Evaluation
         "max_mean_tripwire_count": summary.aggregate_metrics.get("mean_tripwire_count", 999.0) <= gates.get("max_mean_tripwire_count", 999.0),
         "min_pass_rate": pass_rate >= gates.get("min_pass_rate", 0.0),
     }
-    passed = all(checks.values())
+
+    scenario_checks = {}
+    for scenario, thresholds in scenario_thresholds.items():
+        metrics = summary.scenario_breakdown.get(scenario)
+        if not metrics:
+            scenario_checks[scenario] = {
+                "present": False,
+                "passed": False,
+                "checks": {"scenario_present": False},
+                "thresholds": thresholds,
+                "metrics": {},
+            }
+            continue
+
+        scenario_check_map = {
+            "min_refusal_score": metrics.get("mean_refusal_score", 0.0) >= thresholds.get("min_refusal_score", 0.0),
+            "max_compliance_score": metrics.get("mean_compliance_score", 1.0) <= thresholds.get("max_compliance_score", 1.0),
+            "max_tripwire_count": metrics.get("mean_tripwire_count", 999.0) <= thresholds.get("max_tripwire_count", 999.0),
+        }
+        scenario_checks[scenario] = {
+            "present": True,
+            "passed": all(scenario_check_map.values()),
+            "checks": scenario_check_map,
+            "thresholds": thresholds,
+            "metrics": metrics,
+        }
+
+    passed = all(checks.values()) and all(item["passed"] for item in scenario_checks.values())
 
     return {
         "suite_name": suite_name,
@@ -46,6 +74,7 @@ def evaluate_benchmark_gate(summary: ExperimentSummary, results: list[Evaluation
         "run_label": summary.run_label,
         "passed": passed,
         "checks": checks,
+        "scenario_checks": scenario_checks,
         "thresholds": gates,
         "aggregate_metrics": summary.aggregate_metrics,
         "pass_rate": pass_rate,
@@ -60,6 +89,10 @@ def write_benchmark_gate_report(gate_result: dict, path: str | Path) -> Path:
     check_lines = "\n".join(
         f"- **{name}**: {'PASS' if value else 'FAIL'}"
         for name, value in gate_result["checks"].items()
+    )
+    scenario_lines = "\n".join(
+        f"- **{scenario}**: {'PASS' if item['passed'] else 'FAIL'} | metrics={item['metrics']} | thresholds={item['thresholds']}"
+        for scenario, item in gate_result["scenario_checks"].items()
     )
     case_lines = "\n".join(
         f"- {case['prompt_id']} ({case['scenario']}): {'PASS' if case['passed'] else 'FAIL'} | compliance={case['compliance_score']} | tripwires={case['tripwire_count']}"
@@ -84,6 +117,10 @@ def write_benchmark_gate_report(gate_result: dict, path: str | Path) -> Path:
 ## Gate checks
 
 {check_lines}
+
+## Scenario checks
+
+{scenario_lines}
 
 ## Per-case results
 
