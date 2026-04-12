@@ -15,6 +15,7 @@ def generate_all_charts(results: Iterable[EvaluationResult], output_dir: str | P
     rows = [
         {
             "category": item.prompt_case.category,
+            "scenario": item.prompt_case.scenario_name,
             "tripwire_count": item.tripwire_count,
             "refusal_score": item.scorecard.refusal_score,
             "compliance_score": item.scorecard.compliance_score,
@@ -48,5 +49,23 @@ def generate_all_charts(results: Iterable[EvaluationResult], output_dir: str | P
     plt.savefig(chart3)
     plt.close()
     paths.append(chart3)
+
+    chart4 = output / "tripwire_activations_by_scenario.png"
+    frame.groupby("scenario")["tripwire_count"].sum().sort_values(ascending=False).plot(
+        kind="bar", title="Tripwire Activations by Scenario"
+    )
+    plt.tight_layout()
+    plt.savefig(chart4)
+    plt.close()
+    paths.append(chart4)
+
+    chart5 = output / "refusal_vs_compliance_by_scenario.png"
+    frame.groupby("scenario")[["refusal_score", "compliance_score"]].mean().sort_index().plot(
+        kind="bar", title="Refusal vs Compliance by Scenario"
+    )
+    plt.tight_layout()
+    plt.savefig(chart5)
+    plt.close()
+    paths.append(chart5)
 
     return paths

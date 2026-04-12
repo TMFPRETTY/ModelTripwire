@@ -10,9 +10,10 @@ from modeltripwire.agents.unsafe_agent import UnsafeAgent
 from modeltripwire.config import load_config
 from modeltripwire.experiments.baseline_safety_stress_test import build_provider, run_baseline_experiment
 from modeltripwire.logging_utils import configure_logging
-from modeltripwire.models.schemas import ExperimentSummary
+from modeltripwire.models.schemas import EvaluationResult, ExperimentSummary, PromptCase, ProviderResponse, ScoreCard, TripwireMatch
 from modeltripwire.reporting.charts import generate_all_charts
 from modeltripwire.reporting.markdown_report import write_markdown_report
+from modeltripwire.reporting.summaries import build_experiment_summary
 
 app = typer.Typer(help="ModelTripwire CLI")
 
@@ -42,26 +43,47 @@ def generate_report(results_json: str, output_dir: str = typer.Option("outputs/r
     logger = configure_logging()
     input_path = (project_root / results_json).resolve() if not Path(results_json).is_absolute() else Path(results_json)
     rows = json.loads(input_path.read_text(encoding="utf-8"))
-    summary = ExperimentSummary(
+    results = []
+    for row in rows:
+        results.append(
+            EvaluationResult(
+                prompt_case=PromptCase(
+                    id=row["prompt_id"],
+                    name=row.get("prompt_name", row["prompt_id"]),
+                    category=row["category"],
+                    scenario=row.get("scenario") or row["category"],
+                    description=row.get("description", "Regenerated from export"),
+                    prompt_text=row["prompt_text"],
+                    expected_risk_type=row.get("expected_risk_type", "unknown"),
+                ),
+                provider_type=row["provider_type"],
+                provider_response=ProviderResponse(
+                    model_name=row["model_name"],
+                    content=row["response_text"],
+                    raw=row.get("raw", {}),
+                    latency_ms=row.get("latency_ms"),
+                    timestamp=row.get("timestamp"),
+                ),
+                scorecard=ScoreCard(
+                    refusal_score=row["refusal_score"],
+                    compliance_score=row["compliance_score"],
+                    leakage_score=row["leakage_score"],
+                    harmfulness_score=row["harmfulness_score"],
+                    notes=row.get("notes", []),
+                ),
+                tripwires_triggered=[TripwireMatch.model_validate(item) for item in row.get("tripwires_triggered", [])],
+                metadata=row.get("metadata", {}),
+            )
+        )
+    summary = build_experiment_summary(
         title="Regenerated ModelTripwire Report",
         research_question="How consistently do models resist adversarial prompting?",
-        model_names=sorted({row['model_name'] for row in rows}),
-        total_cases=len(rows),
-        aggregate_metrics={
-            "mean_refusal_score": round(sum(row["refusal_score"] for row in rows) / max(len(rows), 1), 3),
-            "mean_compliance_score": round(sum(row["compliance_score"] for row in rows) / max(len(rows), 1), 3),
-            "mean_leakage_score": round(sum(row["leakage_score"] for row in rows) / max(len(rows), 1), 3),
-            "mean_harmfulness_score": round(sum(row["harmfulness_score"] for row in rows) / max(len(rows), 1), 3),
-        },
-        category_breakdown={},
-        tripwire_summary={},
-        notable_failures=[],
-        limitations=["Regenerated from exported JSON only."],
-        next_steps=["Re-run the full experiment for richer summaries."],
+        results=results,
     )
     out_dir = (project_root / output_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
     write_markdown_report(summary, out_dir / "report.md")
+    generate_all_charts(results, out_dir / "charts")
     logger.info("Regenerated markdown report", extra={"output_dir": str(out_dir)})
     typer.echo(f"Report generated in {out_dir}")
 

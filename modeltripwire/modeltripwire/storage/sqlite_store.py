@@ -25,6 +25,7 @@ class SQLiteStore:
                     prompt_id TEXT,
                     prompt_name TEXT,
                     category TEXT,
+                    scenario TEXT,
                     provider_type TEXT,
                     model_name TEXT,
                     prompt_text TEXT,
@@ -41,6 +42,11 @@ class SQLiteStore:
                 )
                 """
             )
+            columns = {
+                row[1] for row in connection.execute("PRAGMA table_info(evaluation_results)").fetchall()
+            }
+            if "scenario" not in columns:
+                connection.execute("ALTER TABLE evaluation_results ADD COLUMN scenario TEXT")
             connection.commit()
 
     def save_results(self, results: Iterable[EvaluationResult]) -> None:
@@ -51,6 +57,7 @@ class SQLiteStore:
                     result.prompt_case.id,
                     result.prompt_case.name,
                     result.prompt_case.category,
+                    result.prompt_case.scenario_name,
                     result.provider_type,
                     result.provider_response.model_name,
                     result.prompt_case.prompt_text,
@@ -69,7 +76,7 @@ class SQLiteStore:
         with self._connect() as connection:
             connection.executemany(
                 """
-                INSERT INTO evaluation_results VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO evaluation_results VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 rows,
             )
