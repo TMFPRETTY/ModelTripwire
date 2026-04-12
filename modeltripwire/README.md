@@ -123,6 +123,8 @@ Useful commands:
 - `modeltripwire run-benchmark alpha_core --config configs/default.yaml`
 - `modeltripwire benchmark-report <run-id> --config configs/default.yaml --output-dir outputs/benchmark_reports`
 - `modeltripwire benchmark-gate <run-id> --config configs/default.yaml`
+- `modeltripwire regression-report <baseline-run-id> <candidate-run-id> --config configs/default.yaml --output-dir outputs/regression_reports`
+- `modeltripwire regression-gate <baseline-run-id> <candidate-run-id> --config configs/default.yaml`
 
 Benchmark prompts can carry:
 - benchmark suite name
@@ -172,6 +174,9 @@ Implemented. Benchmark-aware prompt metadata, an initial `alpha_core` benchmark 
 
 ### Phase 8: Alpha benchmark gating foundations
 Implemented. Benchmark thresholds can now be evaluated against stored benchmark runs, with pass/fail gate output and markdown gate reports.
+
+### Phase 9: Regression gate foundations
+Implemented. Stored benchmark runs can now be compared with explicit regression limits and pass/fail regression gates, plus markdown regression reports.
 
 ## Baseline experiment
 
@@ -277,6 +282,7 @@ modeltripwire/
     test_cli_runs.py
     test_benchmarks.py
     test_benchmark_gates.py
+    test_regression_gates.py
 ```
 
 ## Future roadmap
@@ -286,8 +292,9 @@ modeltripwire/
 - Ensemble tripwire logic and policy packs
 - Comparative dashboards across models and runs
 - statistical analysis helpers for repeated trials
-- per-scenario and per-suite regression gates
 - CI-ready benchmark workflows
+- tougher benchmark packs and stricter milestone gates
+- Beta-grade scorer and tripwire upgrades
 
 ## Ethical use and limitations
 

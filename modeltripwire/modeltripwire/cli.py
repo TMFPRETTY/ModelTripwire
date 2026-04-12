@@ -14,6 +14,7 @@ from modeltripwire.config import load_config
 from modeltripwire.experiments.baseline_safety_stress_test import build_provider, run_baseline_experiment
 from modeltripwire.logging_utils import configure_logging
 from modeltripwire.models.schemas import EvaluationResult, ExperimentSummary, PromptCase, ProviderResponse, ScoreCard, TripwireMatch
+from modeltripwire.regression_gates import evaluate_regression_gate, write_regression_gate_report
 from modeltripwire.reporting.charts import generate_all_charts
 from modeltripwire.reporting.compare import write_run_comparison_report
 from modeltripwire.reporting.markdown_report import write_markdown_report
@@ -206,6 +207,110 @@ def show_run(run_id: str, config: str = typer.Option("configs/default.yaml", hel
         run_label=run["run_label"],
     )
     typer.echo(summary.model_dump_json(indent=2))
+
+
+@app.command("regression-report")
+def regression_report(
+    baseline_run: str,
+    candidate_run: str,
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+    output_dir: str = typer.Option("outputs/regression_reports", help="Directory for regression reports."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+
+    baseline = store.get_run(baseline_run)
+    candidate = store.get_run(candidate_run)
+    if baseline is None:
+        raise typer.Exit(f"Baseline run not found: {baseline_run}")
+    if candidate is None:
+        raise typer.Exit(f"Candidate run not found: {candidate_run}")
+
+    suite_name = baseline.get("metadata", {}).get("benchmark_suite")
+    candidate_suite = candidate.get("metadata", {}).get("benchmark_suite")
+    if not suite_name or suite_name != candidate_suite:
+        raise typer.Exit("Both runs must belong to the same benchmark suite.")
+
+    baseline_results = _load_results_as_models(store.get_results_for_run(baseline["run_id"]))
+    candidate_results = _load_results_as_models(store.get_results_for_run(candidate["run_id"]))
+    baseline_summary = build_experiment_summary(
+        title=baseline["title"],
+        research_question=baseline["research_question"],
+        results=baseline_results,
+        run_id=baseline["run_id"],
+        run_label=baseline["run_label"],
+    )
+    candidate_summary = build_experiment_summary(
+        title=candidate["title"],
+        research_question=candidate["research_question"],
+        results=candidate_results,
+        run_id=candidate["run_id"],
+        run_label=candidate["run_label"],
+    )
+    regression = evaluate_regression_gate(
+        baseline_summary,
+        baseline_results,
+        candidate_summary,
+        candidate_results,
+        suite_name,
+    )
+    out_dir = (project_root / output_dir).resolve()
+    report_path = write_regression_gate_report(
+        regression,
+        out_dir / f"regression_{baseline['run_id']}_vs_{candidate['run_id']}.md",
+    )
+    typer.echo(f"Regression report written to {report_path}")
+
+
+@app.command("regression-gate")
+def regression_gate(
+    baseline_run: str,
+    candidate_run: str,
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+
+    baseline = store.get_run(baseline_run)
+    candidate = store.get_run(candidate_run)
+    if baseline is None:
+        raise typer.Exit(f"Baseline run not found: {baseline_run}")
+    if candidate is None:
+        raise typer.Exit(f"Candidate run not found: {candidate_run}")
+
+    suite_name = baseline.get("metadata", {}).get("benchmark_suite")
+    candidate_suite = candidate.get("metadata", {}).get("benchmark_suite")
+    if not suite_name or suite_name != candidate_suite:
+        raise typer.Exit("Both runs must belong to the same benchmark suite.")
+
+    baseline_results = _load_results_as_models(store.get_results_for_run(baseline["run_id"]))
+    candidate_results = _load_results_as_models(store.get_results_for_run(candidate["run_id"]))
+    baseline_summary = build_experiment_summary(
+        title=baseline["title"],
+        research_question=baseline["research_question"],
+        results=baseline_results,
+        run_id=baseline["run_id"],
+        run_label=baseline["run_label"],
+    )
+    candidate_summary = build_experiment_summary(
+        title=candidate["title"],
+        research_question=candidate["research_question"],
+        results=candidate_results,
+        run_id=candidate["run_id"],
+        run_label=candidate["run_label"],
+    )
+    regression = evaluate_regression_gate(
+        baseline_summary,
+        baseline_results,
+        candidate_summary,
+        candidate_results,
+        suite_name,
+    )
+    typer.echo(json.dumps(regression, indent=2))
+    if not regression["passed"]:
+        raise typer.Exit(code=1)
 
 
 @app.command("compare-runs")
