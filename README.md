@@ -32,7 +32,6 @@
 - [Example workflow](#example-workflow)
 - [Sample output](#sample-output)
 - [Safe vs unsafe agent demo](#safe-vs-unsafe-agent-demo)
-- [Current implemented phases](#current-implemented-phases)
 - [Project structure](#project-structure)
 - [Roadmap from here](#roadmap-from-here)
 - [Contributing](#contributing)
@@ -411,37 +410,6 @@ This demo is intentionally simple, but it helps illustrate how surrounding archi
 
 ---
 
-## Current implemented phases
-
-### Phase 1: README and project narrative
-Implemented.
-
-### Phase 2: Mock provider and dataset loader
-Implemented.
-
-### Phase 3: Baseline experiment
-Implemented.
-
-### Phase 4: Tripwires and simple scoring
-Implemented.
-
-### Phase 5: Real provider integrations
-Implemented.
-
-### Phase 6: Run metadata and comparison foundations
-Implemented.
-
-### Phase 7: Benchmark suite foundations
-Implemented.
-
-### Phase 8: Alpha benchmark gating foundations
-Implemented.
-
-### Phase 9: Regression gate foundations
-Implemented.
-
----
-
 ## Project structure
 
 ```text
@@ -566,26 +534,6 @@ If you contribute, favor:
 - benchmark-aware additions
 - explicit reporting and reproducibility
 - defensive and responsible safety framing
-
-## Repo safety guardrail
-
-This project includes a repo-boundary verification script to help prevent accidental pushes of unrelated workspace files into the ModelTripwire repository root.
-
-Run it manually:
-
-```bash
-python3 scripts/verify_repo_boundary.py
-```
-
-Install the local pre-push hook:
-
-```bash
-bash scripts/install_git_guardrails.sh
-```
-
-The boundary check is designed to fail fast if the top-level tree no longer looks like a clean ModelTripwire repository.
-
----
 
 ## Responsible use
 
