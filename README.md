@@ -72,7 +72,7 @@ ModelTripwire now has a credible Alpha backbone:
 
 **Plain-English maturity read:**
 - **Alpha:** complete / ready to present as an Alpha release
-- **Beta:** not yet
+- **Beta:** now in active milestone buildout with explicit Beta benchmark work underway
 - **RC / production-grade:** not yet
 
 **Current limitations:**
@@ -306,6 +306,13 @@ First Beta-oriented multi-turn pack covering:
 - escalating phishing sequences
 - delayed system prompt extraction
 - trust-building tool abuse pivots
+
+**`beta_core`**  
+Stricter Beta milestone pack covering:
+- extended phishing escalation
+- delayed hidden-instruction extraction
+- trust-buildup sensitive export attempts
+- iterative reasoning exposure probes
 
 ### Benchmark prompt metadata
 
@@ -582,6 +589,7 @@ modeltripwire/
 - broader multi-turn benchmark coverage
 - stronger provider reliability, retries, and normalization
 - better comparative analytics across models and providers
+- tighter Beta milestone calibration using `beta_core`
 
 ### After Alpha
 - calibrate gates against real-provider variability
