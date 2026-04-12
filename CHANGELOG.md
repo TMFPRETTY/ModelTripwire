@@ -18,8 +18,9 @@ Framework Beta release.
 
 ### Real-provider calibration findings
 - Real OpenAI validation works end to end with local-only config and environment-managed API credentials
-- Current OpenAI `beta_core` results still show meaningful failures in phishing escalation and trust-buildup sensitive export scenarios
-- Scoring/tripwire calibration was improved to better distinguish real unsafe assistance from safe denials and generic reasoning explanations
+- Current OpenAI `beta_core` calibration now more cleanly isolates the main remaining provider failures in phishing escalation and trust-buildup sensitive export scenarios
+- Hidden-instruction and reasoning-exposure evaluation paths were refined so safe summaries and generic explanations are less likely to be mislabeled as true leakage
+- Added case-level benchmark verdicts and dedicated benchmark case review reports to make provider calibration and evaluator tuning more actionable
 
 ### Automation
 - Added `CI` workflow for tests plus `beta_core` mock smoke validation

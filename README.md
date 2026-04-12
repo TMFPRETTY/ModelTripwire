@@ -77,15 +77,16 @@ ModelTripwire now has a credible Alpha backbone and a substantially stronger Bet
 
 **Plain-English maturity read:**
 - **Alpha:** complete
-- **Framework Beta:** reached, with benchmark gates, regression gates, trend gates, CI workflows, release-readiness workflows, and real-provider calibration in place
-- **Provider pass status:** current OpenAI `beta_core` validation still shows meaningful failures in phishing escalation and trust-buildup sensitive export scenarios
+- **Framework Beta:** reached, with benchmark gates, regression gates, trend gates, CI workflows, release-readiness workflows, real-provider calibration, and case-level review artifacts in place
+- **Provider pass status:** current OpenAI `beta_core` calibration now cleanly isolates the main remaining failures in phishing escalation and trust-buildup sensitive export scenarios
 - **RC / production-grade:** not yet
 
 **Current limitations:**
 - judge-assisted scoring is still a Beta-stage scaffold, not a full external judge integration
 - provider hardening is still early and should be expanded further
 - multi-turn and tool-trace evaluation depth is still limited
-- real-provider results currently show that passing strict Beta benchmark thresholds is materially harder than passing the mock path
+- real-provider results still show that passing strict Beta benchmark thresholds is materially harder than passing the mock path
+- the clearest remaining real-provider weaknesses are phishing escalation and trust-buildup sensitive export behavior
 - CI and release-readiness workflows now exist for mock-path validation, but real-provider benchmark validation still remains a deliberate manual step
 
 ---
@@ -165,6 +166,7 @@ The goal is not just to test a model once. The goal is to build a workflow that 
 - category and scenario charts
 - run comparison reports
 - benchmark gate reports
+- benchmark case review reports for failed and borderline cases
 - regression gate reports
 
 ### Benchmarking
@@ -290,6 +292,7 @@ modeltripwire list-benchmarks
 modeltripwire run-benchmark alpha_core --config configs/default.yaml
 modeltripwire benchmark-report <run-id> --config configs/default.yaml --output-dir outputs/benchmark_reports
 modeltripwire benchmark-gate <run-id> --config configs/default.yaml
+modeltripwire benchmark-case-review <run-id> --config configs/default.yaml --output-dir outputs/case_reviews
 ```
 
 ### Current benchmark suites
@@ -375,13 +378,14 @@ modeltripwire benchmark-gate <run-id> --config configs/default.yaml
 modeltripwire benchmark-report <run-id> --config configs/default.yaml --output-dir outputs/benchmark_reports
 ```
 
-Current Alpha gate foundations include checks for:
+Current Alpha and Beta gate foundations include checks for:
 - minimum mean refusal score
 - maximum mean compliance score
 - maximum mean tripwire count
 - minimum benchmark pass rate
 - per-case compliance and tripwire limits
 - per-scenario thresholds for refusal, compliance, and tripwire counts
+- case-level verdict summaries, failure reasons, and review-ready diagnostics
 
 ### Regression gate
 
@@ -522,6 +526,8 @@ modeltripwire trend-report beta_core --limit 3 --config configs/default.yaml --o
 
 This is the shape of output intended to support milestone decisions, not just exploratory inspection.
 
+For real-provider calibration work, ModelTripwire now also supports dedicated benchmark case review reports so failed and borderline cases can be inspected with prompt turns, response text, tripwire evidence, score notes, and recommended calibration actions in one artifact.
+
 ---
 
 ## Safe vs unsafe agent demo
@@ -642,6 +648,7 @@ modeltripwire/
 - tighter Beta milestone calibration using `beta_core`
 - stronger repeated-run Beta stability enforcement through trend gates
 - final release framing that distinguishes framework maturity from provider pass/fail outcomes
+- broader provider validation beyond the current OpenAI calibration path
 - one more explicit release-notes / changelog pass before tagging Beta
 
 ### After Alpha
@@ -678,7 +685,7 @@ If you contribute, favor:
 
 ## Changelog
 
-See `CHANGELOG.md` for Beta-candidate release notes and milestone history.
+See `CHANGELOG.md` for Framework Beta release notes and milestone history.
 
 ---
 
