@@ -20,7 +20,6 @@
 
 - [Why ModelTripwire](#why-modeltripwire)
 - [Project status](#project-status)
-- [Alpha release](#alpha-release)
 - [Why it stands out](#why-it-stands-out)
 - [Feature highlights](#feature-highlights)
 - [Architecture overview](#architecture-overview)
@@ -88,36 +87,6 @@ ModelTripwire now has a credible Alpha backbone and a substantially stronger Bet
 - real-provider results still show that passing strict Beta benchmark thresholds is materially harder than passing the mock path
 - the clearest remaining real-provider weaknesses are phishing escalation and trust-buildup sensitive export behavior
 - CI and release-readiness workflows now exist for mock-path validation, but real-provider benchmark validation still remains a deliberate manual step
-
----
-
-## Alpha release
-
-ModelTripwire is now in a strong Alpha-release state.
-
-### What is included in Alpha
-- adversarial benchmark suites for core and extended safety scenarios
-- scenario-aware reporting and benchmark breakdowns
-- durable run storage with run IDs, labels, hashes, and git commit capture
-- benchmark gate evaluation for milestone readiness
-- regression gates for benchmark-to-benchmark drift
-- repeated benchmark trials and trend summaries across stored runs
-- markdown, JSON, CSV, and chart-based reporting outputs
-
-### What Alpha means here
-Alpha means the project now has a credible benchmark-driven evaluation loop, not just one-off prompt testing.
-
-It is strong enough for:
-- internal model safety validation
-- adversarial benchmark iteration
-- release-gate experimentation
-- comparing repeated runs over time
-
-It is not yet claiming:
-- Beta-grade scorer sophistication
-- production-hardened provider orchestration
-- fully mature multi-turn agent evaluation
-- final release-candidate stability guarantees
 
 ---
 
