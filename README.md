@@ -40,6 +40,7 @@
 - [Roadmap from here](#roadmap-from-here)
 - [Contributing](#contributing)
 - [Responsible use](#responsible-use)
+- [Changelog](#changelog)
 - [License](#license)
 
 ---
@@ -674,6 +675,12 @@ If you contribute, favor:
 - benchmark-aware additions
 - explicit reporting and reproducibility
 - defensive and responsible safety framing
+
+## Changelog
+
+See `CHANGELOG.md` for Beta-candidate release notes and milestone history.
+
+---
 
 ## Responsible use
 
