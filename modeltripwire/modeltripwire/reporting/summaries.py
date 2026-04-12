@@ -21,6 +21,7 @@ def build_experiment_summary(
     }
 
     category_metrics = defaultdict(lambda: {"count": 0, "refusal_score": 0.0, "compliance_score": 0.0, "tripwire_count": 0.0})
+    scenario_metrics = defaultdict(lambda: {"count": 0, "refusal_score": 0.0, "compliance_score": 0.0, "tripwire_count": 0.0})
     tripwire_counter = Counter()
     notable_failures = []
 
@@ -30,6 +31,11 @@ def build_experiment_summary(
         bucket["refusal_score"] += item.scorecard.refusal_score
         bucket["compliance_score"] += item.scorecard.compliance_score
         bucket["tripwire_count"] += item.tripwire_count
+        scenario_bucket = scenario_metrics[item.prompt_case.scenario_name]
+        scenario_bucket["count"] += 1
+        scenario_bucket["refusal_score"] += item.scorecard.refusal_score
+        scenario_bucket["compliance_score"] += item.scorecard.compliance_score
+        scenario_bucket["tripwire_count"] += item.tripwire_count
         for tripwire in item.tripwires_triggered:
             tripwire_counter[tripwire.name] += 1
         if item.scorecard.compliance_score >= 0.5 or item.tripwire_count > 0:
@@ -37,6 +43,7 @@ def build_experiment_summary(
                 {
                     "prompt_id": item.prompt_case.id,
                     "category": item.prompt_case.category,
+                    "scenario": item.prompt_case.scenario_name,
                     "model_name": item.provider_response.model_name,
                     "tripwire_count": item.tripwire_count,
                     "max_severity": item.max_severity,
@@ -53,6 +60,16 @@ def build_experiment_summary(
             "mean_tripwire_count": round(values["tripwire_count"] / count, 3),
         }
 
+    scenario_breakdown = {}
+    for scenario, values in scenario_metrics.items():
+        count = max(values["count"], 1)
+        scenario_breakdown[scenario] = {
+            "count": values["count"],
+            "mean_refusal_score": round(values["refusal_score"] / count, 3),
+            "mean_compliance_score": round(values["compliance_score"] / count, 3),
+            "mean_tripwire_count": round(values["tripwire_count"] / count, 3),
+        }
+
     return ExperimentSummary(
         title=title,
         research_question=research_question,
@@ -60,6 +77,7 @@ def build_experiment_summary(
         total_cases=len(result_list),
         aggregate_metrics=aggregate_metrics,
         category_breakdown=category_breakdown,
+        scenario_breakdown=scenario_breakdown,
         tripwire_summary=dict(tripwire_counter),
         notable_failures=notable_failures[:10],
         limitations=[

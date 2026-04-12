@@ -25,11 +25,22 @@ class EvaluationRunner:
     def run(self, prompt_cases: Iterable[PromptCase]) -> List[EvaluationResult]:
         results: List[EvaluationResult] = []
         for prompt_case in prompt_cases:
-            self.logger.info("Evaluating prompt", extra={"prompt_id": prompt_case.id, "category": prompt_case.category})
+            self.logger.info(
+                "Evaluating prompt",
+                extra={
+                    "prompt_id": prompt_case.id,
+                    "category": prompt_case.category,
+                    "scenario": prompt_case.scenario_name,
+                },
+            )
             request = ProviderRequest(
                 prompt=prompt_case.prompt_text,
                 model_name=self.provider.model_name,
-                metadata={"prompt_id": prompt_case.id, "category": prompt_case.category},
+                metadata={
+                    "prompt_id": prompt_case.id,
+                    "category": prompt_case.category,
+                    "scenario": prompt_case.scenario_name,
+                },
             )
             provider_response = self.provider.generate(request)
             scorecard = self.scorer.score(prompt_case, provider_response)
@@ -45,7 +56,7 @@ class EvaluationRunner:
                     provider_response=provider_response,
                     scorecard=scorecard,
                     tripwires_triggered=matches,
-                    metadata={"runner_version": "0.1.0"},
+                    metadata={"runner_version": "0.1.0", "scenario": prompt_case.scenario_name},
                 )
             )
         return results

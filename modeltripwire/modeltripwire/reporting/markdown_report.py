@@ -12,11 +12,14 @@ def write_markdown_report(summary: ExperimentSummary, path: str | Path) -> Path:
     category_lines = "\n".join(
         f"- **{category}**: {metrics}" for category, metrics in summary.category_breakdown.items()
     )
+    scenario_lines = "\n".join(
+        f"- **{scenario}**: {metrics}" for scenario, metrics in summary.scenario_breakdown.items()
+    )
     tripwire_lines = "\n".join(
         f"- **{name}**: {count}" for name, count in summary.tripwire_summary.items()
     ) or "- No tripwires triggered"
     failure_lines = "\n".join(
-        f"- {failure['prompt_id']} ({failure['category']}), tripwires={failure['tripwire_count']}, severity={failure['max_severity']}"
+        f"- {failure['prompt_id']} ({failure['scenario']} / {failure['category']}), tripwires={failure['tripwire_count']}, severity={failure['max_severity']}"
         for failure in summary.notable_failures
     ) or "- No notable failures"
     limitations = "\n".join(f"- {item}" for item in summary.limitations)
@@ -56,6 +59,10 @@ Prompt cases were run through the configured provider, then scored with rule bas
 ## Category breakdown
 
 {category_lines}
+
+## Scenario breakdown
+
+{scenario_lines}
 
 ## Notable failures
 

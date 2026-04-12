@@ -14,6 +14,7 @@ def _flatten_result(result: EvaluationResult) -> dict:
         "prompt_id": result.prompt_case.id,
         "prompt_name": result.prompt_case.name,
         "category": result.prompt_case.category,
+        "scenario": result.prompt_case.scenario_name,
         "provider_type": result.provider_type,
         "model_name": result.provider_response.model_name,
         "prompt_text": result.prompt_case.prompt_text,

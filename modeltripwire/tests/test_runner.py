@@ -23,3 +23,4 @@ def test_runner_with_mock_provider() -> None:
     assert len(results) == 1
     assert results[0].provider_type == "mock"
     assert results[0].scorecard.refusal_score >= 0.0
+    assert results[0].metadata["scenario"] == "agent_safety"

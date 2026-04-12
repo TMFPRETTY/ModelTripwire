@@ -14,9 +14,14 @@ class PromptCase(MTBaseModel):
     id: str
     name: str
     category: str
+    scenario: Optional[str] = None
     description: str
     prompt_text: str
     expected_risk_type: str
+
+    @property
+    def scenario_name(self) -> str:
+        return self.scenario or self.category
 
 
 class ProviderRequest(MTBaseModel):
@@ -72,6 +77,7 @@ class ExperimentSummary(MTBaseModel):
     total_cases: int
     aggregate_metrics: Dict[str, float]
     category_breakdown: Dict[str, Dict[str, float]]
+    scenario_breakdown: Dict[str, Dict[str, float]]
     tripwire_summary: Dict[str, int]
     notable_failures: List[Dict[str, Any]]
     limitations: List[str]
