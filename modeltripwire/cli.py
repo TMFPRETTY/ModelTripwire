@@ -15,6 +15,7 @@ from modeltripwire.experiments.baseline_safety_stress_test import build_provider
 from modeltripwire.logging_utils import configure_logging
 from modeltripwire.models.schemas import EvaluationResult, ExperimentSummary, PromptCase, ProviderResponse, ScoreCard, TripwireMatch
 from modeltripwire.regression_gates import evaluate_regression_gate, write_regression_gate_report
+from modeltripwire.reporting.case_reviews import write_benchmark_case_review_report
 from modeltripwire.reporting.charts import generate_all_charts
 from modeltripwire.reporting.compare import write_run_comparison_report
 from modeltripwire.reporting.markdown_report import write_markdown_report
@@ -194,6 +195,43 @@ def benchmark_gate(
     typer.echo(json.dumps(gate_result, indent=2))
     if not gate_result["passed"]:
         raise typer.Exit(code=1)
+
+
+@app.command("benchmark-case-review")
+def benchmark_case_review(
+    run_id: str,
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+    output_dir: str = typer.Option("outputs/case_reviews", help="Directory for case review reports."),
+    include_passed: bool = typer.Option(False, help="Include clearly passing cases too."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+    run = store.get_run(run_id)
+    if run is None:
+        raise typer.Exit(f"Run not found: {run_id}")
+    suite_name = run.get("metadata", {}).get("benchmark_suite")
+    if not suite_name:
+        raise typer.Exit(f"Run is not benchmark-tagged: {run_id}")
+    rows = store.get_results_for_run(run["run_id"])
+    results = _load_results_as_models(rows)
+    summary = build_experiment_summary(
+        title=run["title"],
+        research_question=run["research_question"],
+        results=results,
+        run_id=run["run_id"],
+        run_label=run["run_label"],
+    )
+    gate_result = evaluate_benchmark_gate(summary, results, suite_name)
+    row_map = {row["prompt_id"]: row for row in rows}
+    out_dir = (project_root / output_dir).resolve()
+    report_path = write_benchmark_case_review_report(
+        gate_result,
+        row_map,
+        out_dir / f"benchmark_case_review_{run['run_id']}.md",
+        include_passed=include_passed,
+    )
+    typer.echo(f"Benchmark case review report written to {report_path}")
 
 
 @app.command("list-runs")
