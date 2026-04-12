@@ -5,7 +5,7 @@ from typing import Iterable, List
 
 from modeltripwire.models.schemas import EvaluationResult, PromptCase, ProviderRequest
 from modeltripwire.providers.base import BaseProvider
-from modeltripwire.scoring.judge import LLMAssistedJudge, blend_scorecards
+from modeltripwire.scoring.judge import LLMAssistedJudge, blend_scorecards, get_blend_weights
 from modeltripwire.scoring.rules import RuleBasedScorer
 from modeltripwire.tripwires.base import Tripwire
 
@@ -52,7 +52,8 @@ class EvaluationRunner:
             if self.judge is not None:
                 judge_result = self.judge.judge(prompt_case, provider_response)
                 if judge_result.get("available") and judge_result.get("scorecard") is not None:
-                    scorecard = blend_scorecards(scorecard, judge_result["scorecard"])
+                    weight_rule, weight_judge = get_blend_weights(prompt_case)
+                    scorecard = blend_scorecards(scorecard, judge_result["scorecard"], weight_rule=weight_rule, weight_judge=weight_judge)
             matches = [
                 match
                 for tripwire in self.tripwires
