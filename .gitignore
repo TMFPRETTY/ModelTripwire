@@ -1,0 +1,4 @@
+configs/*.local.yaml
+.env
+.env.*
+outputs/openai_beta/

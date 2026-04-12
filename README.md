@@ -4,7 +4,7 @@
 
 ### Safety evaluation, adversarial testing, benchmark gates, and regression tracking for LLMs and agentic systems
 
-[![Status: Beta Milestone Buildout](https://img.shields.io/badge/status-beta_milestone_buildout-2563eb)](#project-status)
+[![Status: Framework Beta Candidate](https://img.shields.io/badge/status-framework_beta_candidate-2563eb)](#project-status)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](#installation)
 [![License](https://img.shields.io/badge/license-see%20LICENSE-111827)](#license)
 [![Benchmarks](https://img.shields.io/badge/benchmarks-alpha__core__beta__core-7c3aed)](#benchmark-workflow)
@@ -61,9 +61,9 @@ This repo is aimed at teams who want safety evaluation to feel more like enginee
 
 ## Project status
 
-> **Current status: Alpha complete, Beta milestone buildout underway**
+> **Current status: Alpha complete, framework Beta candidate with real-provider calibration underway**
 
-ModelTripwire now has a credible Alpha backbone and an active Beta milestone track:
+ModelTripwire now has a credible Alpha backbone and a substantially stronger Beta framework surface:
 - repeatable runs with durable run metadata
 - stored run inspection and comparison
 - named benchmark suites
@@ -71,17 +71,19 @@ ModelTripwire now has a credible Alpha backbone and an active Beta milestone tra
 - regression gates for benchmark-to-benchmark drift
 - repeated benchmark trials and trend summaries across stored runs
 - trend stability gates for repeated benchmark pass/fail evaluation
+- real-provider validation workflow for calibrating benchmark and scoring behavior
 
 **Plain-English maturity read:**
 - **Alpha:** complete / ready to present as an Alpha release
-- **Beta:** in active milestone buildout with explicit Beta benchmark packs and trend stability gates
+- **Framework Beta:** close, with real-provider validation now proving out the benchmark and calibration surface
+- **Provider pass status:** current OpenAI `beta_core` validation still shows meaningful failures in phishing escalation and trust-buildup sensitive export scenarios
 - **RC / production-grade:** not yet
 
 **Current limitations:**
 - judge-assisted scoring is still a Beta-stage scaffold, not a full external judge integration
 - provider hardening is still early and should be expanded further
 - multi-turn and tool-trace evaluation depth is still limited
-- broader provider validation is still needed before strong Beta claims
+- real-provider results currently show that passing strict Beta benchmark thresholds is materially harder than passing the mock path
 - trend stability gates are available locally, but not yet wired into CI or release automation
 
 ---
@@ -171,6 +173,7 @@ The goal is not just to test a model once. The goal is to build a workflow that 
 - repeated benchmark trials and trend summaries
 - trend stability gates across repeated benchmark runs
 - first multi-turn benchmark support for Beta buildout
+- real-provider validation workflow with local-only provider configs
 - judge-ready scoring path for future calibration work
 
 ---
@@ -440,6 +443,8 @@ Trend gates evaluate:
 
 For `beta_core`, the current expectation is intentionally strict: repeated runs should stay consistently passing, not just occasionally clear the bar.
 
+In current real-provider calibration work, this strict Beta bar is useful precisely because it exposes meaningful weaknesses instead of creating false confidence from mock-only success.
+
 ---
 
 ## Example workflow
@@ -613,7 +618,7 @@ modeltripwire/
 - add repeated-trial support for score stability
 - expand failure analysis and benchmark comparison summaries
 
-### To reach Beta
+### To reach an official Beta release
 - fuller judge-model integration beyond the current scaffold
 - richer tripwire logic and confidence handling
 - broader multi-turn benchmark coverage
@@ -621,6 +626,8 @@ modeltripwire/
 - better comparative analytics across models and providers
 - tighter Beta milestone calibration using `beta_core`
 - stronger repeated-run Beta stability enforcement through trend gates
+- CI-backed benchmark and trend-gate workflows
+- final release framing that distinguishes framework maturity from provider pass/fail outcomes
 
 ### After Alpha
 - calibrate gates against real-provider variability
