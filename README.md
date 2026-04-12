@@ -20,6 +20,7 @@
 
 - [Why ModelTripwire](#why-modeltripwire)
 - [Project status](#project-status)
+- [Alpha release](#alpha-release)
 - [Why it stands out](#why-it-stands-out)
 - [Feature highlights](#feature-highlights)
 - [Architecture overview](#architecture-overview)
@@ -75,10 +76,40 @@ ModelTripwire now has a credible Alpha backbone:
 - **RC / production-grade:** not yet
 
 **Current limitations:**
-- benchmark coverage is still small
 - scoring and tripwires are still mostly rule-based
 - provider hardening is still minimal
 - multi-turn and tool-trace evaluation depth is still limited
+- broader provider validation is still needed before Beta claims
+
+---
+
+## Alpha release
+
+ModelTripwire is now in a strong Alpha-release state.
+
+### What is included in Alpha
+- adversarial benchmark suites for core and extended safety scenarios
+- scenario-aware reporting and benchmark breakdowns
+- durable run storage with run IDs, labels, hashes, and git commit capture
+- benchmark gate evaluation for milestone readiness
+- regression gates for benchmark-to-benchmark drift
+- repeated benchmark trials and trend summaries across stored runs
+- markdown, JSON, CSV, and chart-based reporting outputs
+
+### What Alpha means here
+Alpha means the project now has a credible benchmark-driven evaluation loop, not just one-off prompt testing.
+
+It is strong enough for:
+- internal model safety validation
+- adversarial benchmark iteration
+- release-gate experimentation
+- comparing repeated runs over time
+
+It is not yet claiming:
+- Beta-grade scorer sophistication
+- production-hardened provider orchestration
+- fully mature multi-turn agent evaluation
+- final release-candidate stability guarantees
 
 ---
 
@@ -540,6 +571,12 @@ modeltripwire/
 - multi-turn benchmark flows
 - stronger provider reliability, retries, and normalization
 - better comparative analytics across models and providers
+
+### After Alpha
+- calibrate gates against real-provider variability
+- add repeated-trial stability thresholds
+- strengthen failure analysis and richer benchmark comparisons
+- expand benchmark packs further for tougher release gating
 
 ### To reach release candidate
 - frozen benchmark sets and release gates
