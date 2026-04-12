@@ -1,4 +1,9 @@
 configs/*.local.yaml
 .env
 .env.*
+.DS_Store
 outputs/openai_beta/
+outputs/benchmark_trends/
+outputs/case_reviews/
+outputs/trend_reports/
+outputs/latest/
