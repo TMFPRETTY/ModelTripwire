@@ -29,9 +29,12 @@ def test_run_metadata_is_persisted(tmp_path: Path) -> None:
         metadata = json.loads(run_row[3])
         assert "tripwires_enabled" in metadata
 
-        result_row = connection.execute("SELECT run_id, scenario FROM evaluation_results LIMIT 1").fetchone()
+        result_row = connection.execute("SELECT run_id, scenario, expected_risk_type, evaluation_focus_json, turns_json FROM evaluation_results LIMIT 1").fetchone()
         assert result_row is not None
         assert result_row[0] == run.run_id
         assert result_row[1]
+        assert result_row[2]
+        assert result_row[3] is not None
+        assert result_row[4] is not None
     finally:
         connection.close()

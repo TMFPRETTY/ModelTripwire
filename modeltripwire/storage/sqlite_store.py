@@ -48,6 +48,11 @@ class SQLiteStore:
                     prompt_name TEXT,
                     category TEXT,
                     scenario TEXT,
+                    benchmark_suite TEXT,
+                    difficulty TEXT,
+                    expected_risk_type TEXT,
+                    evaluation_focus_json TEXT,
+                    turns_json TEXT,
                     provider_type TEXT,
                     model_name TEXT,
                     prompt_text TEXT,
@@ -71,6 +76,16 @@ class SQLiteStore:
                 connection.execute("ALTER TABLE evaluation_results ADD COLUMN scenario TEXT")
             if "run_id" not in columns:
                 connection.execute("ALTER TABLE evaluation_results ADD COLUMN run_id TEXT")
+            if "benchmark_suite" not in columns:
+                connection.execute("ALTER TABLE evaluation_results ADD COLUMN benchmark_suite TEXT")
+            if "difficulty" not in columns:
+                connection.execute("ALTER TABLE evaluation_results ADD COLUMN difficulty TEXT")
+            if "expected_risk_type" not in columns:
+                connection.execute("ALTER TABLE evaluation_results ADD COLUMN expected_risk_type TEXT")
+            if "evaluation_focus_json" not in columns:
+                connection.execute("ALTER TABLE evaluation_results ADD COLUMN evaluation_focus_json TEXT")
+            if "turns_json" not in columns:
+                connection.execute("ALTER TABLE evaluation_results ADD COLUMN turns_json TEXT")
             connection.commit()
 
     def save_run(self, run: ExperimentRun) -> None:
@@ -161,7 +176,8 @@ class SQLiteStore:
         with self._connect() as connection:
             rows = connection.execute(
                 """
-                SELECT run_id, prompt_id, prompt_name, category, scenario, provider_type, model_name,
+                SELECT run_id, prompt_id, prompt_name, category, scenario, benchmark_suite, difficulty,
+                       expected_risk_type, evaluation_focus_json, turns_json, provider_type, model_name,
                        prompt_text, response_text, refusal_score, compliance_score, leakage_score,
                        harmfulness_score, tripwire_count, max_severity, tripwires_json, metadata_json, timestamp
                 FROM evaluation_results
@@ -177,19 +193,24 @@ class SQLiteStore:
                 "prompt_name": row[2],
                 "category": row[3],
                 "scenario": row[4],
-                "provider_type": row[5],
-                "model_name": row[6],
-                "prompt_text": row[7],
-                "response_text": row[8],
-                "refusal_score": row[9],
-                "compliance_score": row[10],
-                "leakage_score": row[11],
-                "harmfulness_score": row[12],
-                "tripwire_count": row[13],
-                "max_severity": row[14],
-                "tripwires_triggered": json.loads(row[15]) if row[15] else [],
-                "metadata": json.loads(row[16]) if row[16] else {},
-                "timestamp": row[17],
+                "benchmark_suite": row[5],
+                "difficulty": row[6],
+                "expected_risk_type": row[7],
+                "evaluation_focus": json.loads(row[8]) if row[8] else [],
+                "turns": json.loads(row[9]) if row[9] else [],
+                "provider_type": row[10],
+                "model_name": row[11],
+                "prompt_text": row[12],
+                "response_text": row[13],
+                "refusal_score": row[14],
+                "compliance_score": row[15],
+                "leakage_score": row[16],
+                "harmfulness_score": row[17],
+                "tripwire_count": row[18],
+                "max_severity": row[19],
+                "tripwires_triggered": json.loads(row[20]) if row[20] else [],
+                "metadata": json.loads(row[21]) if row[21] else {},
+                "timestamp": row[22],
             }
             for row in rows
         ]
@@ -208,6 +229,11 @@ class SQLiteStore:
                     result.prompt_case.name,
                     result.prompt_case.category,
                     result.prompt_case.scenario_name,
+                    result.prompt_case.benchmark_suite,
+                    result.prompt_case.difficulty,
+                    result.prompt_case.expected_risk_type,
+                    json.dumps(result.prompt_case.evaluation_focus),
+                    json.dumps(result.prompt_case.turns),
                     result.provider_type,
                     result.provider_response.model_name,
                     result.prompt_case.prompt_text,
@@ -232,6 +258,11 @@ class SQLiteStore:
                     prompt_name,
                     category,
                     scenario,
+                    benchmark_suite,
+                    difficulty,
+                    expected_risk_type,
+                    evaluation_focus_json,
+                    turns_json,
                     provider_type,
                     model_name,
                     prompt_text,
@@ -245,7 +276,7 @@ class SQLiteStore:
                     tripwires_json,
                     metadata_json,
                     timestamp
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 rows,
             )
