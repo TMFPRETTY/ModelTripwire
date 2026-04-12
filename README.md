@@ -557,6 +557,24 @@ If you contribute, favor:
 - explicit reporting and reproducibility
 - defensive and responsible safety framing
 
+## Repo safety guardrail
+
+This project includes a repo-boundary verification script to help prevent accidental pushes of unrelated workspace files into the ModelTripwire repository root.
+
+Run it manually:
+
+```bash
+python3 scripts/verify_repo_boundary.py
+```
+
+Install the local pre-push hook:
+
+```bash
+bash scripts/install_git_guardrails.sh
+```
+
+The boundary check is designed to fail fast if the top-level tree no longer looks like a clean ModelTripwire repository.
+
 ---
 
 ## Responsible use
