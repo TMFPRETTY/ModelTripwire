@@ -1,8 +1,36 @@
 # ModelTripwire
 
-ModelTripwire is an open source AI safety evaluation and red teaming framework for large language models and agentic AI systems. It helps researchers, engineers, and security minded builders detect unsafe behavior, quantify failure modes, and analyze model risk through structured evaluations, adversarial testing, tripwire detection, and reporting.
+> Safety evaluation, adversarial testing, benchmark gating, and regression tracking for LLMs and agentic systems.
 
-Rather than making vague claims about whether a model is safe, ModelTripwire provides repeatable mechanisms to probe model behavior under realistic and adversarial conditions, capture outputs, score responses, trigger safety tripwires, and generate interpretable reports. It is designed for research, system validation, guardrail development, and comparative model evaluation.
+ModelTripwire is an open source AI safety evaluation and red teaming framework for large language models and agentic AI systems. It helps researchers, engineers, and security-minded builders detect unsafe behavior, quantify failure modes, track benchmark performance, and analyze model risk through structured evaluations, adversarial testing, tripwire detection, and reporting.
+
+Rather than making vague claims about whether a model is safe, ModelTripwire provides repeatable mechanisms to probe model behavior under realistic and adversarial conditions, capture outputs, score responses, trigger safety tripwires, persist runs, compare results over time, and generate interpretable reports.
+
+---
+
+## Why ModelTripwire exists
+
+Safety work often breaks down in practice because teams lack one or more of these:
+- repeatable datasets
+- durable run records
+- interpretable scoring
+- explicit tripwires
+- benchmark gates
+- regression detection over time
+
+ModelTripwire is built to make safety evaluation more operational.
+
+Core use cases:
+- jailbreak susceptibility testing
+- prompt injection resilience analysis
+- system prompt leakage checks
+- policy violation detection
+- tool misuse and agent safety evaluation
+- benchmark-based milestone tracking
+- regression detection across stored runs
+- safe versus unsafe agent architecture comparison
+
+---
 
 ## Project status
 
@@ -15,60 +43,105 @@ ModelTripwire now has a credible Alpha backbone:
 - benchmark gate evaluation for Alpha readiness
 - regression gates for benchmark-to-benchmark drift
 
-That said, this is **not Beta yet**. The current system is still limited by:
-- small benchmark coverage
-- mostly rule-based scoring and tripwires
-- minimal provider hardening
-- limited multi-turn and tool-trace evaluation depth
-
-The practical read is:
-- **Alpha:** yes, with a real benchmark/gate/regression foundation
+What that means in plain English:
+- **Alpha:** yes, this is fair
 - **Beta:** not yet
-- **RC / production-grade:** definitely not yet
+- **RC / production-grade:** not yet
 
-## Why this exists
+Current limitations:
+- benchmark coverage is still small
+- scoring and tripwires are still mostly rule-based
+- provider hardening is still minimal
+- multi-turn and tool-trace evaluation depth is still limited
 
-Safety claims are often qualitative, inconsistent, and difficult to reproduce. ModelTripwire is built to make safety evaluation more operational: configurable datasets, modular providers, explicit tripwires, repeatable scoring, durable storage, and exportable reporting.
+---
 
-Core use cases include:
-- jailbreak susceptibility testing
-- prompt injection resilience analysis
-- policy violation and leakage detection
-- safe versus unsafe agent architecture comparison
-- evidence driven safety reporting and system hardening
+## What you get today
 
-## Key capabilities
+### Evaluation framework
+- prompt dataset loading
+- batch evaluation runner
+- provider abstraction for mock, OpenAI-style, and Anthropic-style backends
+- scenario-aware prompt metadata
 
-- Batch evaluation harness for prompt datasets
-- Provider abstraction for OpenAI style, Anthropic style, and mock providers
-- Baseline adversarial prompt library and prompt mutators
-- Rule based safety scoring plus LLM-as-judge scaffold
-- Configurable tripwire detection with severity levels
-- SQLite persistence and CSV/JSON exports
-- Run metadata tracking with run IDs, config hashes, dataset hashes, and git commit capture
-- Benchmark suite support for Alpha-style safety packs
-- Markdown summaries, comparison reports, and chart generation
-- Safe versus unsafe agent demo for architecture comparison
+### Safety analysis
+- rule-based scoring
+- keyword-driven tripwires
+- scenario breakdowns
+- benchmark breakdowns
+- notable failure extraction
+
+### Run management
+- persistent run IDs and run labels
+- config hash capture
+- dataset hash capture
+- git commit capture when available
+- SQLite-backed run/result persistence
+
+### Reporting
+- JSON and CSV exports
+- markdown reports
+- category and scenario charts
+- run comparison reports
+- benchmark gate reports
+- regression gate reports
+
+### Benchmarking
+- named benchmark suites
+- Alpha benchmark pack support
+- benchmark pass/fail gates
+- regression gates between benchmark runs
+
+---
+
+## Key capabilities at a glance
+
+| Capability | Status |
+|---|---|
+| Baseline dataset evaluation | Implemented |
+| Mock provider | Implemented |
+| OpenAI-style provider | Implemented |
+| Anthropic-style provider | Implemented |
+| Rule-based scoring | Implemented |
+| Keyword tripwires | Implemented |
+| Run persistence | Implemented |
+| Run comparison | Implemented |
+| Benchmark suites | Implemented |
+| Alpha benchmark gates | Implemented |
+| Regression gates | Implemented |
+| Multi-turn benchmark packs | Planned |
+| Judge-model scoring | Planned |
+| CI release gates | Planned |
+
+---
 
 ## Architecture overview
 
 ```text
-Dataset -> Runner -> Provider -> Response
-                     -> Scoring
-                     -> Tripwires
-                     -> Storage
-                     -> Reporting
+Dataset / Benchmark Suite
+        -> Runner
+        -> Provider
+        -> Response
+        -> Scoring
+        -> Tripwires
+        -> Storage
+        -> Reports / Charts / Gates
 ```
 
 Main components:
-- `providers/`: model backends
-- `evals/`: dataset loading and orchestration
-- `scoring/`: rule scoring and judge scaffolding
-- `tripwires/`: unsafe behavior detection
-- `storage/`: SQLite and export logic
-- `reporting/`: summaries, markdown reports, charts
-- `agents/`: safe and unsafe agent demo implementations
-- `experiments/`: reproducible experiment entry points
+- `providers/` model backends
+- `evals/` dataset loading and orchestration
+- `scoring/` scoring logic and future judge scaffolding
+- `tripwires/` unsafe behavior detection logic
+- `storage/` SQLite persistence and exports
+- `reporting/` summaries, markdown reports, comparison reports, charts
+- `agents/` safe and unsafe agent demos
+- `experiments/` reproducible experiment entry points
+- `benchmarks.py` benchmark suite registry
+- `benchmark_gates.py` benchmark pass/fail logic
+- `regression_gates.py` benchmark drift/regression logic
+
+---
 
 ## Installation
 
@@ -78,154 +151,231 @@ source .venv/bin/activate
 pip install -e .
 ```
 
-Or with requirements style tooling:
+Or simply:
 
 ```bash
 pip install -e .
 ```
 
-## Configuration
-
-Copy the environment template if you plan to use external APIs:
+If you plan to use external APIs:
 
 ```bash
 cp .env.example .env
 ```
 
-Default configuration lives in `configs/default.yaml`.
+---
 
-Supported config fields include:
-- provider type
-- model name
-- API key env var names
+## Configuration
+
+Default configuration lives in:
+
+```bash
+configs/default.yaml
+```
+
+Supported config areas include:
+- provider type and model name
+- API key environment variable names
 - dataset path
 - output directory
+- SQLite path
 - enabled tripwires
-- scorer settings
+- scoring settings
+- reporting title and research question
+
+---
 
 ## Quickstart
 
-The simplest momentum-first path is the local mock baseline run:
+The fastest way to get momentum is the local mock baseline:
 
 ```bash
 python scripts/run_baseline.py
 ```
 
-CLI entry points are also available:
+You can also use the CLI directly:
 
 ```bash
 modeltripwire run-baseline --config configs/default.yaml
 modeltripwire run-dataset data/prompts/baseline_adversarial_prompts.json --config configs/default.yaml
 modeltripwire generate-report outputs/latest/results.json --output-dir outputs/report_regen
-modeltripwire list-benchmarks
-modeltripwire run-benchmark alpha_core --config configs/default.yaml
-modeltripwire list-runs --config configs/default.yaml
-modeltripwire show-run <run-id> --config configs/default.yaml
-modeltripwire compare-runs <baseline-run-id> <candidate-run-id> --config configs/default.yaml --output-dir outputs/compare
-modeltripwire demo-agents --config configs/default.yaml
 ```
 
-Running `python scripts/run_baseline.py` will:
-- load the baseline adversarial dataset
-- run every prompt against the mock provider
-- print prompt-by-prompt results to the console
-- score responses and trigger tripwires
-- create a persistent run record with a run ID and run label
-- save outputs into `outputs/latest/`
+What the baseline run does:
+- loads the baseline adversarial dataset
+- runs prompts against the configured provider
+- scores responses
+- evaluates tripwires
+- persists a run record
+- exports JSON and CSV
+- writes a markdown report
+- generates charts
 
-## Benchmark suites
+---
 
-ModelTripwire now includes benchmark suite support for milestone-driven evaluation work.
+## Benchmark workflow
 
-Current suite:
-- `alpha_core`: a first-pass Alpha benchmark pack covering jailbreaks, prompt injection, leakage, tool misuse, and context robustness.
+ModelTripwire includes benchmark suite support for milestone-driven evaluation.
 
-Useful commands:
-- `modeltripwire list-benchmarks`
-- `modeltripwire run-benchmark alpha_core --config configs/default.yaml`
-- `modeltripwire benchmark-report <run-id> --config configs/default.yaml --output-dir outputs/benchmark_reports`
-- `modeltripwire benchmark-gate <run-id> --config configs/default.yaml`
-- `modeltripwire regression-report <baseline-run-id> <candidate-run-id> --config configs/default.yaml --output-dir outputs/regression_reports`
-- `modeltripwire regression-gate <baseline-run-id> <candidate-run-id> --config configs/default.yaml`
+### Available benchmark commands
+
+```bash
+modeltripwire list-benchmarks
+modeltripwire run-benchmark alpha_core --config configs/default.yaml
+modeltripwire benchmark-report <run-id> --config configs/default.yaml --output-dir outputs/benchmark_reports
+modeltripwire benchmark-gate <run-id> --config configs/default.yaml
+```
+
+### Current benchmark suite
+
+- `alpha_core`  
+  First-pass Alpha benchmark pack covering:
+  - jailbreaks
+  - prompt injection
+  - leakage
+  - unsafe tool requests
+  - context robustness
+
+### Benchmark prompt metadata
 
 Benchmark prompts can carry:
 - benchmark suite name
 - scenario
 - difficulty
 - tags
+- expected risk type
 
-## Run tracking and comparison
+---
 
-ModelTripwire now records each experiment run with:
-- run ID and run label
-- provider type and model name
-- dataset path and dataset hash
-- config path and config hash
-- git commit when available
-- start and completion timestamps
+## Run tracking and comparison workflow
 
-Useful commands:
-- `modeltripwire list-runs --config configs/default.yaml`
-- `modeltripwire show-run <run-id> --config configs/default.yaml`
-- `modeltripwire compare-runs <baseline-run-id> <candidate-run-id> --config configs/default.yaml --output-dir outputs/compare`
+### Run inspection
 
-This makes it possible to inspect prior runs and generate markdown comparison reports between two stored runs.
+```bash
+modeltripwire list-runs --config configs/default.yaml
+modeltripwire show-run <run-id> --config configs/default.yaml
+```
+
+### Run comparison
+
+```bash
+modeltripwire compare-runs <baseline-run-id> <candidate-run-id> --config configs/default.yaml --output-dir outputs/compare
+```
+
+Each run can persist:
+- run ID
+- run label
+- provider type
+- model name
+- dataset path
+- dataset hash
+- config path
+- config hash
+- git commit
+- started/completed timestamps
+
+---
+
+## Alpha gate workflow
+
+### Benchmark gate
+
+Use benchmark gates to ask, “does this run meet the current Alpha threshold?”
+
+```bash
+modeltripwire benchmark-gate <run-id> --config configs/default.yaml
+modeltripwire benchmark-report <run-id> --config configs/default.yaml --output-dir outputs/benchmark_reports
+```
+
+Current Alpha gate foundations include checks for:
+- minimum mean refusal score
+- maximum mean compliance score
+- maximum mean tripwire count
+- minimum benchmark pass rate
+- per-case compliance/tripwire limits
+
+### Regression gate
+
+Use regression gates to ask, “did this candidate get worse than the baseline?”
+
+```bash
+modeltripwire regression-gate <baseline-run-id> <candidate-run-id> --config configs/default.yaml
+modeltripwire regression-report <baseline-run-id> <candidate-run-id> --config configs/default.yaml --output-dir outputs/regression_reports
+```
+
+Current regression checks include:
+- refusal score drop
+- compliance score increase
+- tripwire count increase
+- pass-rate drop
+- scenario-level drift summary
+
+---
+
+## Example workflow
+
+```bash
+# 1. Run a benchmark
+modeltripwire run-benchmark alpha_core --config configs/default.yaml
+
+# 2. Inspect stored runs
+modeltripwire list-runs --config configs/default.yaml
+
+# 3. Gate a benchmark run
+modeltripwire benchmark-gate <run-id> --config configs/default.yaml
+
+# 4. Compare two benchmark runs
+modeltripwire regression-gate <baseline-run-id> <candidate-run-id> --config configs/default.yaml
+```
+
+---
+
+## Safe vs unsafe agent demo
+
+The repo includes a small architectural demo:
+- `UnsafeAgent` forwards user input directly to the provider
+- `SafeAgent` applies input checks, output checks, and structured logging
+
+Run it with:
+
+```bash
+modeltripwire demo-agents --config configs/default.yaml
+```
+
+This demo is intentionally simple, but it helps illustrate how surrounding architecture changes safety outcomes even when the underlying model stays the same.
+
+---
 
 ## Current implemented phases
 
 ### Phase 1: README and project narrative
-Implemented. The repo documents the purpose, architecture, quickstart, and responsible-use framing.
+Implemented.
 
 ### Phase 2: Mock provider and dataset loader
-Implemented. The repository includes a runnable mock provider plus JSON dataset loading for adversarial prompt cases. The loader accepts datasets that use either `prompt_text` or `prompt` as the prompt field.
+Implemented.
 
 ### Phase 3: Baseline experiment
-Implemented. `python scripts/run_baseline.py` runs an end-to-end mock evaluation and saves outputs in `outputs/latest/`.
+Implemented.
 
 ### Phase 4: Tripwires and simple scoring
-Implemented. Each response is evaluated with rule-based scoring and keyword tripwires, then persisted into exports and SQLite.
+Implemented.
 
 ### Phase 5: Real provider integrations
-Implemented as modular provider adapters for OpenAI-style and Anthropic-style APIs, gated by environment variables.
+Implemented.
 
 ### Phase 6: Run metadata and comparison foundations
-Implemented. Baseline and dataset runs now persist run metadata in SQLite, summaries include run identifiers, and the CLI can list, inspect, and compare stored runs.
+Implemented.
 
 ### Phase 7: Benchmark suite foundations
-Implemented. Benchmark-aware prompt metadata, an initial `alpha_core` benchmark suite, and CLI support for listing and running benchmark packs are now in place.
+Implemented.
 
 ### Phase 8: Alpha benchmark gating foundations
-Implemented. Benchmark thresholds can now be evaluated against stored benchmark runs, with pass/fail gate output and markdown gate reports.
+Implemented.
 
 ### Phase 9: Regression gate foundations
-Implemented. Stored benchmark runs can now be compared with explicit regression limits and pass/fail regression gates, plus markdown regression reports.
+Implemented.
 
-## Baseline experiment
-
-The included baseline experiment is titled:
-
-**Baseline Safety Stress Test of General Purpose LLMs Under Adversarial Prompting**
-
-Research question:
-
-**How consistently do general purpose LLMs resist common adversarial prompt patterns across jailbreak, injection, leakage, escalation, and agent misuse scenarios?**
-
-The experiment:
-- loads 10 baseline adversarial prompts
-- runs prompts against a configured provider
-- scores responses
-- applies tripwires
-- stores structured results
-- exports JSON and CSV
-- generates markdown summaries and charts
-
-## Safe versus unsafe agent demo
-
-The demo contrasts two agent architectures:
-- `UnsafeAgent`: forwards user input directly to the provider
-- `SafeAgent`: applies input filtering, policy checks, output filtering, and structured logging
-
-This is intentionally simple, but useful for illustrating why architecture matters even when the underlying model is unchanged.
+---
 
 ## Project structure
 
@@ -241,6 +391,10 @@ modeltripwire/
     cli.py
     config.py
     logging_utils.py
+    benchmark_runner.py
+    benchmarks.py
+    benchmark_gates.py
+    regression_gates.py
     models/
       __init__.py
       schemas.py
@@ -276,8 +430,6 @@ modeltripwire/
       markdown_report.py
       charts.py
       compare.py
-    benchmark_runner.py
-    benchmarks.py
     agents/
       __init__.py
       unsafe_agent.py
@@ -307,6 +459,8 @@ modeltripwire/
     test_regression_gates.py
 ```
 
+---
+
 ## Roadmap from here
 
 ### To strengthen Alpha
@@ -320,7 +474,7 @@ modeltripwire/
 - richer tripwire logic and confidence handling
 - multi-turn benchmark flows
 - stronger provider reliability, retries, and normalization
-- better comparative analytics across models/providers
+- better comparative analytics across models and providers
 
 ### To reach release candidate
 - frozen benchmark sets and release gates
@@ -329,6 +483,16 @@ modeltripwire/
 - stronger reproducibility guarantees
 - broader validation across real providers and benchmark suites
 
-## Ethical use and limitations
+---
 
-ModelTripwire is designed for defensive research, system hardening, and safety evaluation. It should be used to improve safeguards, not to operationalize harmful behavior. Included prompts reflect realistic adversarial patterns, but the framework is intentionally conservative about response handling, scoring, and reporting. Any use with external models should respect provider terms, legal boundaries, and responsible disclosure norms.
+## Responsible use
+
+ModelTripwire is designed for defensive research, system hardening, and safety evaluation. It should be used to improve safeguards, not to operationalize harmful behavior.
+
+Included prompts reflect realistic adversarial patterns, but the framework is intentionally conservative about response handling, scoring, and reporting. Any use with external models should respect provider terms, legal boundaries, and responsible disclosure norms.
+
+---
+
+## License
+
+See `LICENSE`.
