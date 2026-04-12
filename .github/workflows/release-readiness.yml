@@ -1,0 +1,46 @@
+name: Release Readiness
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  beta-readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install pytest
+
+      - name: Run tests
+        run: python -m pytest
+
+      - name: Run repeated beta_core benchmark trials
+        run: python -m modeltripwire.cli run-benchmark-trials beta_core --trials 3 --config configs/default.yaml
+
+      - name: Generate beta_core trend report
+        run: |
+          python -m modeltripwire.cli benchmark-trends beta_core --limit 3 --config configs/default.yaml --output-dir outputs/benchmark_trends
+          python -m modeltripwire.cli trend-report beta_core --limit 3 --config configs/default.yaml --output-dir outputs/trend_reports
+
+      - name: Upload readiness artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-readiness-artifacts
+          path: |
+            outputs/latest/
+            outputs/benchmark_trends/
+            outputs/trend_reports/
+          if-no-files-found: error

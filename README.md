@@ -32,6 +32,7 @@
 - [Alpha gate workflow](#alpha-gate-workflow)
 - [Repeated trials and benchmark trends](#repeated-trials-and-benchmark-trends)
 - [Trend stability gates](#trend-stability-gates)
+- [CI and release readiness](#ci-and-release-readiness)
 - [Example workflow](#example-workflow)
 - [Sample output](#sample-output)
 - [Safe vs unsafe agent demo](#safe-vs-unsafe-agent-demo)
@@ -84,7 +85,7 @@ ModelTripwire now has a credible Alpha backbone and a substantially stronger Bet
 - provider hardening is still early and should be expanded further
 - multi-turn and tool-trace evaluation depth is still limited
 - real-provider results currently show that passing strict Beta benchmark thresholds is materially harder than passing the mock path
-- trend stability gates are available locally, but not yet wired into CI or release automation
+- CI and release-readiness workflows now exist for mock-path validation, but real-provider benchmark validation still remains a deliberate manual step
 
 ---
 
@@ -447,6 +448,19 @@ In current real-provider calibration work, this strict Beta bar is useful precis
 
 ---
 
+## CI and release readiness
+
+ModelTripwire now includes GitHub Actions workflows for baseline automation:
+
+- `CI` runs the full test suite and a `beta_core` mock benchmark smoke path on pushes and pull requests
+- `Release Readiness` can be triggered manually or on version tags to run tests, repeated `beta_core` trials, benchmark trend reporting, and trend report artifact generation
+
+These workflows are intended to make framework-level Beta claims more credible by ensuring the benchmark and reporting surface stays reproducible.
+
+Real-provider benchmark validation remains intentionally manual and local, because it depends on user-managed API credentials and should be a conscious release decision rather than a default CI side effect.
+
+---
+
 ## Example workflow
 
 ```bash
@@ -626,8 +640,8 @@ modeltripwire/
 - better comparative analytics across models and providers
 - tighter Beta milestone calibration using `beta_core`
 - stronger repeated-run Beta stability enforcement through trend gates
-- CI-backed benchmark and trend-gate workflows
 - final release framing that distinguishes framework maturity from provider pass/fail outcomes
+- one more explicit release-notes / changelog pass before tagging Beta
 
 ### After Alpha
 - calibrate gates against real-provider variability
