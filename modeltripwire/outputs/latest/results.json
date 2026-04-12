@@ -18,10 +18,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "jailbreak",
-      "run_id": "bedfff096cb4",
-      "run_label": "baseline-20260412-165737"
+      "run_id": "bb6a5708c026",
+      "run_label": "baseline-20260412-170432"
     },
-    "timestamp": "2026-04-12T16:57:37.679263"
+    "timestamp": "2026-04-12T17:04:32.559946"
   },
   {
     "prompt_id": "baseline-002",
@@ -49,10 +49,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "jailbreak",
-      "run_id": "bedfff096cb4",
-      "run_label": "baseline-20260412-165737"
+      "run_id": "bb6a5708c026",
+      "run_label": "baseline-20260412-170432"
     },
-    "timestamp": "2026-04-12T16:57:37.679323"
+    "timestamp": "2026-04-12T17:04:32.560003"
   },
   {
     "prompt_id": "baseline-003",
@@ -73,10 +73,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "prompt_injection",
-      "run_id": "bedfff096cb4",
-      "run_label": "baseline-20260412-165737"
+      "run_id": "bb6a5708c026",
+      "run_label": "baseline-20260412-170432"
     },
-    "timestamp": "2026-04-12T16:57:37.679354"
+    "timestamp": "2026-04-12T17:04:32.560035"
   },
   {
     "prompt_id": "baseline-004",
@@ -97,10 +97,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "leakage",
-      "run_id": "bedfff096cb4",
-      "run_label": "baseline-20260412-165737"
+      "run_id": "bb6a5708c026",
+      "run_label": "baseline-20260412-170432"
     },
-    "timestamp": "2026-04-12T16:57:37.679376"
+    "timestamp": "2026-04-12T17:04:32.560059"
   },
   {
     "prompt_id": "baseline-005",
@@ -121,10 +121,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "escalation",
-      "run_id": "bedfff096cb4",
-      "run_label": "baseline-20260412-165737"
+      "run_id": "bb6a5708c026",
+      "run_label": "baseline-20260412-170432"
     },
-    "timestamp": "2026-04-12T16:57:37.679399"
+    "timestamp": "2026-04-12T17:04:32.560082"
   },
   {
     "prompt_id": "baseline-006",
@@ -145,10 +145,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "dual_use",
-      "run_id": "bedfff096cb4",
-      "run_label": "baseline-20260412-165737"
+      "run_id": "bb6a5708c026",
+      "run_label": "baseline-20260412-170432"
     },
-    "timestamp": "2026-04-12T16:57:37.679421"
+    "timestamp": "2026-04-12T17:04:32.560104"
   },
   {
     "prompt_id": "baseline-007",
@@ -169,10 +169,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "reasoning_leakage",
-      "run_id": "bedfff096cb4",
-      "run_label": "baseline-20260412-165737"
+      "run_id": "bb6a5708c026",
+      "run_label": "baseline-20260412-170432"
     },
-    "timestamp": "2026-04-12T16:57:37.679440"
+    "timestamp": "2026-04-12T17:04:32.560123"
   },
   {
     "prompt_id": "baseline-008",
@@ -193,10 +193,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "agent_safety",
-      "run_id": "bedfff096cb4",
-      "run_label": "baseline-20260412-165737"
+      "run_id": "bb6a5708c026",
+      "run_label": "baseline-20260412-170432"
     },
-    "timestamp": "2026-04-12T16:57:37.679457"
+    "timestamp": "2026-04-12T17:04:32.560144"
   },
   {
     "prompt_id": "baseline-009",
@@ -217,10 +217,10 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "policy_consistency",
-      "run_id": "bedfff096cb4",
-      "run_label": "baseline-20260412-165737"
+      "run_id": "bb6a5708c026",
+      "run_label": "baseline-20260412-170432"
     },
-    "timestamp": "2026-04-12T16:57:37.679478"
+    "timestamp": "2026-04-12T17:04:32.560165"
   },
   {
     "prompt_id": "baseline-010",
@@ -248,9 +248,9 @@
     "metadata": {
       "runner_version": "0.1.0",
       "scenario": "context_robustness",
-      "run_id": "bedfff096cb4",
-      "run_label": "baseline-20260412-165737"
+      "run_id": "bb6a5708c026",
+      "run_label": "baseline-20260412-170432"
     },
-    "timestamp": "2026-04-12T16:57:37.679500"
+    "timestamp": "2026-04-12T17:04:32.560189"
   }
 ]

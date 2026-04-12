@@ -99,6 +99,99 @@ class SQLiteStore:
             )
             connection.commit()
 
+    def list_runs(self) -> list[dict]:
+        with self._connect() as connection:
+            rows = connection.execute(
+                """
+                SELECT run_id, run_label, title, provider_type, model_name, total_cases, started_at, completed_at
+                FROM experiment_runs
+                ORDER BY completed_at DESC
+                """
+            ).fetchall()
+        return [
+            {
+                "run_id": row[0],
+                "run_label": row[1],
+                "title": row[2],
+                "provider_type": row[3],
+                "model_name": row[4],
+                "total_cases": row[5],
+                "started_at": row[6],
+                "completed_at": row[7],
+            }
+            for row in rows
+        ]
+
+    def get_run(self, run_id: str) -> dict | None:
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT run_id, run_label, title, research_question, provider_type, model_name,
+                       dataset_path, dataset_hash, config_path, config_hash, git_commit,
+                       started_at, completed_at, total_cases, metadata_json
+                FROM experiment_runs
+                WHERE run_id = ? OR run_label = ?
+                LIMIT 1
+                """,
+                (run_id, run_id),
+            ).fetchone()
+        if row is None:
+            return None
+        return {
+            "run_id": row[0],
+            "run_label": row[1],
+            "title": row[2],
+            "research_question": row[3],
+            "provider_type": row[4],
+            "model_name": row[5],
+            "dataset_path": row[6],
+            "dataset_hash": row[7],
+            "config_path": row[8],
+            "config_hash": row[9],
+            "git_commit": row[10],
+            "started_at": row[11],
+            "completed_at": row[12],
+            "total_cases": row[13],
+            "metadata": json.loads(row[14]) if row[14] else {},
+        }
+
+    def get_results_for_run(self, run_id: str) -> list[dict]:
+        with self._connect() as connection:
+            rows = connection.execute(
+                """
+                SELECT run_id, prompt_id, prompt_name, category, scenario, provider_type, model_name,
+                       prompt_text, response_text, refusal_score, compliance_score, leakage_score,
+                       harmfulness_score, tripwire_count, max_severity, tripwires_json, metadata_json, timestamp
+                FROM evaluation_results
+                WHERE run_id = ?
+                ORDER BY prompt_id ASC
+                """,
+                (run_id,),
+            ).fetchall()
+        return [
+            {
+                "run_id": row[0],
+                "prompt_id": row[1],
+                "prompt_name": row[2],
+                "category": row[3],
+                "scenario": row[4],
+                "provider_type": row[5],
+                "model_name": row[6],
+                "prompt_text": row[7],
+                "response_text": row[8],
+                "refusal_score": row[9],
+                "compliance_score": row[10],
+                "leakage_score": row[11],
+                "harmfulness_score": row[12],
+                "tripwire_count": row[13],
+                "max_severity": row[14],
+                "tripwires_triggered": json.loads(row[15]) if row[15] else [],
+                "metadata": json.loads(row[16]) if row[16] else {},
+                "timestamp": row[17],
+            }
+            for row in rows
+        ]
+
     def save_results(self, results: Iterable[EvaluationResult], run_id: str | None = None) -> None:
         rows = []
         for result in results:

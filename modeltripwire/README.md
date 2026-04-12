@@ -23,7 +23,8 @@ Core use cases include:
 - Rule based safety scoring plus LLM-as-judge scaffold
 - Configurable tripwire detection with severity levels
 - SQLite persistence and CSV/JSON exports
-- Markdown summaries and chart generation
+- Run metadata tracking with run IDs, config hashes, dataset hashes, and git commit capture
+- Markdown summaries, comparison reports, and chart generation
 - Safe versus unsafe agent demo for architecture comparison
 
 ## Architecture overview
@@ -93,6 +94,9 @@ CLI entry points are also available:
 modeltripwire run-baseline --config configs/default.yaml
 modeltripwire run-dataset data/prompts/baseline_adversarial_prompts.json --config configs/default.yaml
 modeltripwire generate-report outputs/latest/results.json --output-dir outputs/report_regen
+modeltripwire list-runs --config configs/default.yaml
+modeltripwire show-run <run-id> --config configs/default.yaml
+modeltripwire compare-runs <baseline-run-id> <candidate-run-id> --config configs/default.yaml --output-dir outputs/compare
 modeltripwire demo-agents --config configs/default.yaml
 ```
 
@@ -101,7 +105,25 @@ Running `python scripts/run_baseline.py` will:
 - run every prompt against the mock provider
 - print prompt-by-prompt results to the console
 - score responses and trigger tripwires
+- create a persistent run record with a run ID and run label
 - save outputs into `outputs/latest/`
+
+## Run tracking and comparison
+
+ModelTripwire now records each experiment run with:
+- run ID and run label
+- provider type and model name
+- dataset path and dataset hash
+- config path and config hash
+- git commit when available
+- start and completion timestamps
+
+Useful commands:
+- `modeltripwire list-runs --config configs/default.yaml`
+- `modeltripwire show-run <run-id> --config configs/default.yaml`
+- `modeltripwire compare-runs <baseline-run-id> <candidate-run-id> --config configs/default.yaml --output-dir outputs/compare`
+
+This makes it possible to inspect prior runs and generate markdown comparison reports between two stored runs.
 
 ## Current implemented phases
 
@@ -119,6 +141,9 @@ Implemented. Each response is evaluated with rule-based scoring and keyword trip
 
 ### Phase 5: Real provider integrations
 Implemented as modular provider adapters for OpenAI-style and Anthropic-style APIs, gated by environment variables.
+
+### Phase 6: Run metadata and comparison foundations
+Implemented. Baseline and dataset runs now persist run metadata in SQLite, summaries include run identifiers, and the CLI can list, inspect, and compare stored runs.
 
 ## Baseline experiment
 
@@ -195,6 +220,7 @@ modeltripwire/
       summaries.py
       markdown_report.py
       charts.py
+      compare.py
     agents/
       __init__.py
       unsafe_agent.py
@@ -215,6 +241,8 @@ modeltripwire/
     test_tripwires.py
     test_scoring.py
     test_runner.py
+    test_runs.py
+    test_cli_runs.py
 ```
 
 ## Future roadmap
@@ -224,6 +252,7 @@ modeltripwire/
 - Ensemble tripwire logic and policy packs
 - Comparative dashboards across models and runs
 - Statistical analysis helpers for repeated trials
+- richer run diffing and regression gates
 - CI-ready benchmark workflows
 
 ## Ethical use and limitations
