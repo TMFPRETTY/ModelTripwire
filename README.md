@@ -478,14 +478,17 @@ modeltripwire list-runs --config configs/default.yaml
 # 3. Gate a benchmark run
 modeltripwire benchmark-gate <run-id> --config configs/default.yaml
 
-# 4. Compare two benchmark runs
+# 4. Generate a failed/borderline case review artifact
+modeltripwire benchmark-case-review <run-id> --config configs/default.yaml --output-dir outputs/case_reviews
+
+# 5. Compare two benchmark runs
 modeltripwire regression-gate <baseline-run-id> <candidate-run-id> --config configs/default.yaml
 
-# 5. Run repeated trials and inspect trend stability
+# 6. Run repeated trials and inspect trend stability
 modeltripwire run-benchmark-trials beta_core --trials 3 --config configs/default.yaml
 modeltripwire benchmark-trends beta_core --limit 3 --config configs/default.yaml
 
-# 6. Enforce repeated-run stability as a gate
+# 7. Enforce repeated-run stability as a gate
 modeltripwire trend-gate beta_core --limit 3 --config configs/default.yaml
 modeltripwire trend-report beta_core --limit 3 --config configs/default.yaml --output-dir outputs/trend_reports
 ```
@@ -527,6 +530,12 @@ modeltripwire trend-report beta_core --limit 3 --config configs/default.yaml --o
 This is the shape of output intended to support milestone decisions, not just exploratory inspection.
 
 For real-provider calibration work, ModelTripwire now also supports dedicated benchmark case review reports so failed and borderline cases can be inspected with prompt turns, response text, tripwire evidence, score notes, and recommended calibration actions in one artifact.
+
+### Example benchmark case review command
+
+```bash
+modeltripwire benchmark-case-review <run-id> --config configs/openai_beta.local.yaml --output-dir outputs/case_reviews
+```
 
 ---
 

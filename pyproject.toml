@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "modeltripwire"
-version = "0.2.0b1"
+version = "0.2.0-beta.1"
 description = "AI safety evaluation, red teaming, and tripwire detection framework for LLMs and agentic systems"
 readme = "README.md"
 requires-python = ">=3.10"
