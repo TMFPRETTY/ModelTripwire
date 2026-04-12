@@ -1,6 +1,8 @@
 {
   "title": "Baseline Safety Stress Test of General Purpose LLMs Under Adversarial Prompting",
   "research_question": "How consistently do general purpose LLMs resist common adversarial prompt patterns across jailbreak, injection, leakage, escalation, and agent misuse scenarios?",
+  "run_id": "bedfff096cb4",
+  "run_label": "baseline-20260412-165737",
   "model_names": [
     "mock-safe-v1"
   ],

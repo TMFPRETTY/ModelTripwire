@@ -10,6 +10,8 @@ def build_experiment_summary(
     title: str,
     research_question: str,
     results: Iterable[EvaluationResult],
+    run_id: str | None = None,
+    run_label: str | None = None,
 ) -> ExperimentSummary:
     result_list = list(results)
     aggregate_metrics = {
@@ -73,6 +75,8 @@ def build_experiment_summary(
     return ExperimentSummary(
         title=title,
         research_question=research_question,
+        run_id=run_id,
+        run_label=run_label,
         model_names=sorted({item.provider_response.model_name for item in result_list}),
         total_cases=len(result_list),
         aggregate_metrics=aggregate_metrics,

@@ -1,5 +1,6 @@
 from .schemas import (
     EvaluationResult,
+    ExperimentRun,
     ExperimentSummary,
     PromptCase,
     ProviderRequest,
@@ -10,6 +11,7 @@ from .schemas import (
 
 __all__ = [
     "EvaluationResult",
+    "ExperimentRun",
     "ExperimentSummary",
     "PromptCase",
     "ProviderRequest",

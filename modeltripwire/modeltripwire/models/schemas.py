@@ -70,9 +70,29 @@ class EvaluationResult(MTBaseModel):
         return max((match.severity for match in self.tripwires_triggered), default=0)
 
 
+class ExperimentRun(MTBaseModel):
+    run_id: str
+    run_label: str
+    title: str
+    research_question: str
+    provider_type: str
+    model_name: str
+    dataset_path: str
+    dataset_hash: str
+    config_path: str
+    config_hash: str
+    git_commit: Optional[str] = None
+    started_at: datetime
+    completed_at: datetime
+    total_cases: int
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+
+
 class ExperimentSummary(MTBaseModel):
     title: str
     research_question: str
+    run_id: Optional[str] = None
+    run_label: Optional[str] = None
     model_names: List[str]
     total_cases: int
     aggregate_metrics: Dict[str, float]

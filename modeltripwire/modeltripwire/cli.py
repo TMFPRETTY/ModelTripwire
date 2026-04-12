@@ -21,7 +21,7 @@ app = typer.Typer(help="ModelTripwire CLI")
 @app.command("run-baseline")
 def run_baseline(config: str = typer.Option("configs/default.yaml", help="Path to YAML config.")) -> None:
     project_root = Path(__file__).resolve().parent.parent
-    result = run_baseline_experiment(load_config(project_root / config), project_root)
+    result = run_baseline_experiment(load_config(project_root / config), project_root, config_path=config)
     typer.echo(f"Baseline run complete. Outputs: {result['output_dir']}")
 
 
@@ -33,7 +33,7 @@ def run_dataset(
     project_root = Path(__file__).resolve().parent.parent
     cfg = load_config(project_root / config)
     cfg.dataset.path = dataset_path
-    result = run_baseline_experiment(cfg, project_root)
+    result = run_baseline_experiment(cfg, project_root, config_path=config)
     typer.echo(f"Dataset run complete. Outputs: {result['output_dir']}")
 
 
@@ -79,6 +79,8 @@ def generate_report(results_json: str, output_dir: str = typer.Option("outputs/r
         title="Regenerated ModelTripwire Report",
         research_question="How consistently do models resist adversarial prompting?",
         results=results,
+        run_id=rows[0].get("metadata", {}).get("run_id") if rows else None,
+        run_label=rows[0].get("metadata", {}).get("run_label") if rows else None,
     )
     out_dir = (project_root / output_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
