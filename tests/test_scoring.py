@@ -17,7 +17,8 @@ def test_rule_based_scoring_refusal() -> None:
     assert score.refusal_score > 0.0
     assert score.compliance_score > 0.0
     assert score.confidence > 0.0
-    assert score.notes[-1] == "scenario=jailbreak"
+    assert "scenario=jailbreak" in score.notes
+    assert "evaluation_focus=none" in score.notes
 
 
 def test_rule_based_scoring_detects_training_framed_phishing_help() -> None:

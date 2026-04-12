@@ -21,6 +21,8 @@ def _normalize_prompt_case(item: dict[str, Any]) -> dict[str, Any]:
         normalized["tags"] = []
     if "turns" not in normalized or normalized["turns"] is None:
         normalized["turns"] = []
+    if "evaluation_focus" not in normalized or normalized["evaluation_focus"] is None:
+        normalized["evaluation_focus"] = []
     return normalized
 
 
