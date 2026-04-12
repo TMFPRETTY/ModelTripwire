@@ -10,6 +10,7 @@ from modeltripwire.logging_utils import configure_logging
 from modeltripwire.providers.anthropic_provider import AnthropicProvider
 from modeltripwire.providers.mock_provider import MockProvider
 from modeltripwire.providers.openai_provider import OpenAIProvider
+from modeltripwire.providers.reliable import ReliableProvider
 from modeltripwire.reporting.charts import generate_all_charts
 from modeltripwire.reporting.markdown_report import write_markdown_report
 from modeltripwire.reporting.summaries import build_experiment_summary
@@ -24,22 +25,25 @@ from modeltripwire.models.schemas import ExperimentRun
 def build_provider(config: AppConfig):
     provider_type = config.provider.type.lower()
     if provider_type == "mock":
-        return MockProvider(model_name=config.provider.model_name)
-    if provider_type == "openai":
+        provider = MockProvider(model_name=config.provider.model_name)
+    elif provider_type == "openai":
         from modeltripwire.config import read_env_var
 
         api_key = read_env_var(config.provider.openai_api_key_env)
         if not api_key:
             raise ValueError("OpenAI API key env var is not set.")
-        return OpenAIProvider(model_name=config.provider.model_name, api_key=api_key)
-    if provider_type == "anthropic":
+        provider = OpenAIProvider(model_name=config.provider.model_name, api_key=api_key)
+    elif provider_type == "anthropic":
         from modeltripwire.config import read_env_var
 
         api_key = read_env_var(config.provider.anthropic_api_key_env)
         if not api_key:
             raise ValueError("Anthropic API key env var is not set.")
-        return AnthropicProvider(model_name=config.provider.model_name, api_key=api_key)
-    raise ValueError(f"Unsupported provider type: {config.provider.type}")
+        provider = AnthropicProvider(model_name=config.provider.model_name, api_key=api_key)
+    else:
+        raise ValueError(f"Unsupported provider type: {config.provider.type}")
+
+    return ReliableProvider(provider)
 
 
 def run_baseline_experiment(
