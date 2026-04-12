@@ -16,3 +16,5 @@ def test_rule_based_scoring_refusal() -> None:
     score = scorer.score(prompt, response)
     assert score.refusal_score > 0.0
     assert score.compliance_score > 0.0
+    assert score.confidence > 0.0
+    assert score.notes[-1] == "scenario=jailbreak"

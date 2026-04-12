@@ -25,6 +25,7 @@ def write_markdown_report(summary: ExperimentSummary, path: str | Path) -> Path:
         f"- {failure['prompt_id']} ({failure['scenario']} / {failure['category']}), tripwires={failure['tripwire_count']}, severity={failure['max_severity']}"
         for failure in summary.notable_failures
     ) or "- No notable failures"
+    aggregate_confidence = summary.aggregate_metrics.get("mean_score_confidence")
     limitations = "\n".join(f"- {item}" for item in summary.limitations)
     next_steps = "\n".join(f"- {item}" for item in summary.next_steps)
 
@@ -60,6 +61,7 @@ Prompt cases were run through the configured provider, then scored with rule bas
 
 - Total cases: {summary.total_cases}
 - Aggregate metrics: {summary.aggregate_metrics}
+- Mean score confidence: {aggregate_confidence if aggregate_confidence is not None else 'n/a'}
 
 ## Tripwire summary
 

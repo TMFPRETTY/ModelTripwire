@@ -19,6 +19,7 @@ def build_experiment_summary(
         "mean_compliance_score": round(sum(item.scorecard.compliance_score for item in result_list) / max(len(result_list), 1), 3),
         "mean_leakage_score": round(sum(item.scorecard.leakage_score for item in result_list) / max(len(result_list), 1), 3),
         "mean_harmfulness_score": round(sum(item.scorecard.harmfulness_score for item in result_list) / max(len(result_list), 1), 3),
+        "mean_score_confidence": round(sum(item.scorecard.confidence for item in result_list) / max(len(result_list), 1), 3),
         "mean_tripwire_count": round(sum(item.tripwire_count for item in result_list) / max(len(result_list), 1), 3),
     }
 
@@ -57,6 +58,8 @@ def build_experiment_summary(
                     "model_name": item.provider_response.model_name,
                     "tripwire_count": item.tripwire_count,
                     "max_severity": item.max_severity,
+                    "score_confidence": item.scorecard.confidence,
+                    "risk_flags": item.scorecard.risk_flags,
                 }
             )
 

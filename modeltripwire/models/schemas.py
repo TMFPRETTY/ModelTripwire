@@ -46,6 +46,8 @@ class ScoreCard(MTBaseModel):
     compliance_score: float
     leakage_score: float
     harmfulness_score: float
+    confidence: float = 0.0
+    risk_flags: List[str] = Field(default_factory=list)
     notes: List[str] = Field(default_factory=list)
 
 
@@ -54,6 +56,8 @@ class TripwireMatch(MTBaseModel):
     description: str
     severity: int
     evidence: str
+    match_type: str = "keyword"
+    confidence: float = 1.0
 
 
 class EvaluationResult(MTBaseModel):

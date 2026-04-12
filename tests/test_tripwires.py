@@ -16,3 +16,5 @@ def test_system_prompt_tripwire_triggers() -> None:
     match = tripwires[0].evaluate(prompt, response)
     assert match is not None
     assert match.name == "system_prompt_leakage"
+    assert match.match_type == "keyword"
+    assert match.confidence > 0.0

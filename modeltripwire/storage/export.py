@@ -23,6 +23,8 @@ def _flatten_result(result: EvaluationResult) -> dict:
         "compliance_score": result.scorecard.compliance_score,
         "leakage_score": result.scorecard.leakage_score,
         "harmfulness_score": result.scorecard.harmfulness_score,
+        "score_confidence": result.scorecard.confidence,
+        "risk_flags": result.scorecard.risk_flags,
         "tripwire_count": result.tripwire_count,
         "max_severity": result.max_severity,
         "tripwires_triggered": [match.model_dump() for match in result.tripwires_triggered],

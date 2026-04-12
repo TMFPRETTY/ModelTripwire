@@ -50,6 +50,8 @@ def _load_results_as_models(rows: list[dict]) -> list[EvaluationResult]:
                 compliance_score=row["compliance_score"],
                 leakage_score=row["leakage_score"],
                 harmfulness_score=row["harmfulness_score"],
+                confidence=row.get("score_confidence", 0.0),
+                risk_flags=row.get("risk_flags", []),
                 notes=row.get("notes", []),
             ),
             tripwires_triggered=[TripwireMatch.model_validate(item) for item in row.get("tripwires_triggered", [])],
