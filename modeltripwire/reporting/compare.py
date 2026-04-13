@@ -5,6 +5,46 @@ from pathlib import Path
 from modeltripwire.models.schemas import ExperimentSummary
 
 
+def write_provider_comparison_report(
+    summaries: list[ExperimentSummary],
+    path: str | Path,
+) -> Path:
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    metric_keys = sorted({key for summary in summaries for key in summary.aggregate_metrics})
+    provider_lines = []
+    for summary in summaries:
+        provider_name = ", ".join(summary.model_names) or "unknown"
+        provider_lines.append(f"- **{provider_name}** | run_id={summary.run_id or 'n/a'} | run_label={summary.run_label or 'n/a'}")
+
+    metric_sections = []
+    for key in metric_keys:
+        metric_sections.append(f"### {key}\n")
+        ordered = sorted(
+            summaries,
+            key=lambda item: item.aggregate_metrics.get(key, 0.0),
+            reverse=key.startswith("mean_refusal")
+        )
+        for summary in ordered:
+            provider_name = ", ".join(summary.model_names) or "unknown"
+            metric_sections.append(f"- **{provider_name}**: {summary.aggregate_metrics.get(key, 0.0)}")
+        metric_sections.append("")
+
+    content = f"""# ModelTripwire Provider Comparison
+
+## Compared runs
+
+{chr(10).join(provider_lines) or '- No runs provided'}
+
+## Aggregate metric leaderboard
+
+{chr(10).join(metric_sections).strip() or '- No aggregate metrics available'}
+"""
+    output_path.write_text(content, encoding="utf-8")
+    return output_path
+
+
 def write_run_comparison_report(
     baseline: ExperimentSummary,
     candidate: ExperimentSummary,

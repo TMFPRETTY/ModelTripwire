@@ -17,7 +17,7 @@ from modeltripwire.models.schemas import EvaluationResult, ExperimentSummary, Pr
 from modeltripwire.regression_gates import evaluate_regression_gate, write_regression_gate_report
 from modeltripwire.reporting.case_reviews import write_benchmark_case_review_report
 from modeltripwire.reporting.charts import generate_all_charts
-from modeltripwire.reporting.compare import write_run_comparison_report
+from modeltripwire.reporting.compare import write_provider_comparison_report, write_run_comparison_report
 from modeltripwire.reporting.markdown_report import write_markdown_report
 from modeltripwire.reporting.summaries import build_experiment_summary
 from modeltripwire.reporting.trends import build_benchmark_trend_summary, write_benchmark_trend_report
@@ -532,6 +532,49 @@ def compare_runs(
         out_dir / f"compare_{baseline['run_id']}_vs_{candidate['run_id']}.md",
     )
     typer.echo(f"Comparison report written to {report_path}")
+
+
+@app.command("compare-providers")
+def compare_providers(
+    run_ids: list[str] = typer.Argument(..., help="Two or more run IDs to compare across providers/models."),
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+    output_dir: str = typer.Option("outputs/provider_compare", help="Directory for provider comparison report."),
+) -> None:
+    if len(run_ids) < 2:
+        raise typer.Exit("Provide at least two run IDs.")
+
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+
+    summaries = []
+    suite_names = set()
+    for run_id in run_ids:
+        run = store.get_run(run_id)
+        if run is None:
+            raise typer.Exit(f"Run not found: {run_id}")
+        suite_names.add(run.get("metadata", {}).get("benchmark_suite"))
+        results = _load_results_as_models(store.get_results_for_run(run["run_id"]))
+        summaries.append(
+            build_experiment_summary(
+                title=run["title"],
+                research_question=run["research_question"],
+                results=results,
+                run_id=run["run_id"],
+                run_label=run["run_label"],
+            )
+        )
+
+    if len(suite_names) != 1:
+        raise typer.Exit("All compared runs must belong to the same benchmark suite.")
+
+    out_dir = (project_root / output_dir).resolve()
+    out_dir.mkdir(parents=True, exist_ok=True)
+    report_path = write_provider_comparison_report(
+        summaries,
+        out_dir / f"provider_compare_{'_vs_'.join(run_ids)}.md",
+    )
+    typer.echo(f"Provider comparison report written to {report_path}")
 
 
 @app.command("demo-agents")

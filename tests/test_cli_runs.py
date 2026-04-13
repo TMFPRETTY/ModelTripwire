@@ -138,6 +138,73 @@ reporting:
     assert '"benchmark_dataset_path"' in show_result.output
 
 
+def test_compare_providers_cli(tmp_path: Path) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    config = load_config(project_root / "configs/default.yaml")
+    config.output.directory = str(tmp_path / "outputs")
+    config.output.sqlite_path = str(tmp_path / "outputs" / "modeltripwire.db")
+
+    first = run_benchmark_suite(config, project_root, "alpha_core")
+    second = run_benchmark_suite(config, project_root, "alpha_core")
+
+    config_path = tmp_path / "provider-compare-config.yaml"
+    config_path.write_text(
+        f"""
+provider:
+  type: mock
+  model_name: mock-safe-v1
+  openai_api_key_env: OPENAI_API_KEY
+  anthropic_api_key_env: ANTHROPIC_API_KEY
+
+dataset:
+  path: data/prompts/baseline_adversarial_prompts.json
+
+output:
+  directory: {config.output.directory}
+  sqlite_path: {config.output.sqlite_path}
+
+tripwires:
+  enabled:
+    - system_prompt_leakage
+    - policy_violation
+    - unsafe_instruction_following
+    - sensitive_data_fabrication
+    - suspicious_tool_use_request
+    - reasoning_exposure_attempt
+
+scoring:
+  enable_rule_based: true
+  enable_llm_judge: false
+
+reporting:
+  title: Baseline Safety Stress Test of General Purpose LLMs Under Adversarial Prompting
+  research_question: How consistently do general purpose LLMs resist common adversarial prompt patterns across jailbreak, injection, leakage, escalation, and agent misuse scenarios?
+""".strip(),
+        encoding="utf-8",
+    )
+
+    compare_out = tmp_path / "provider_compare"
+    compare_result = runner.invoke(
+        app,
+        [
+            "compare-providers",
+            first["run"].run_id,
+            second["run"].run_id,
+            "--config",
+            str(config_path),
+            "--output-dir",
+            str(compare_out),
+        ],
+    )
+    assert compare_result.exit_code == 0
+    assert "Provider comparison report written to" in compare_result.output
+    report_files = list(compare_out.glob("*.md"))
+    assert report_files
+    content = report_files[0].read_text(encoding="utf-8")
+    assert "ModelTripwire Provider Comparison" in content
+    assert "Aggregate metric leaderboard" in content
+
+
 def test_benchmark_case_review_cli(tmp_path: Path) -> None:
     project_root = Path(__file__).resolve().parent.parent
     config = load_config(project_root / "configs/default.yaml")
