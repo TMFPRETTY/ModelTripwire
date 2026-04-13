@@ -66,6 +66,7 @@ reporting:
     assert show_result.exit_code == 0
     assert first["run"].run_id in show_result.output
     assert '"scenario_breakdown"' in show_result.output
+    assert '"decision_summary"' in show_result.output
 
     compare_out = tmp_path / "compare"
     compare_result = runner.invoke(
@@ -203,6 +204,7 @@ reporting:
     content = report_files[0].read_text(encoding="utf-8")
     assert "ModelTripwire Provider Comparison" in content
     assert "Aggregate metric leaderboard" in content
+    assert "Decision overview" in content
 
 
 def test_benchmark_case_review_cli(tmp_path: Path) -> None:

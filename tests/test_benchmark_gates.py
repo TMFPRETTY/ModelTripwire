@@ -60,6 +60,7 @@ reporting:
     assert '"scenario_checks"' in gate_result.output
     assert '"verdict_summary"' in gate_result.output
     assert '"failure_reasons"' in gate_result.output
+    assert '"decision_summary"' in gate_result.output
     assert gate_result.exit_code in (0, 1)
 
     report_dir = tmp_path / "benchmark_reports"
@@ -69,7 +70,10 @@ reporting:
     )
     assert report_result.exit_code == 0
     assert "Benchmark report written to" in report_result.output
-    assert list(report_dir.glob("*.md"))
+    report_files = list(report_dir.glob("*.md"))
+    assert report_files
+    content = report_files[0].read_text(encoding="utf-8")
+    assert "Decision summary" in content
 
 
 def test_alpha_extended_benchmark_gate_cli(tmp_path: Path) -> None:
@@ -121,4 +125,5 @@ reporting:
     assert '"suite_name": "alpha_extended"' in gate_result.output
     assert '"scenario_checks"' in gate_result.output
     assert '"verdict_summary"' in gate_result.output
+    assert '"decision_summary"' in gate_result.output
     assert gate_result.exit_code in (0, 1)

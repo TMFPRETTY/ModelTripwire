@@ -16,7 +16,10 @@ def write_provider_comparison_report(
     provider_lines = []
     for summary in summaries:
         provider_name = ", ".join(summary.model_names) or "unknown"
-        provider_lines.append(f"- **{provider_name}** | run_id={summary.run_id or 'n/a'} | run_label={summary.run_label or 'n/a'}")
+        provider_lines.append(
+            f"- **{provider_name}** | run_id={summary.run_id or 'n/a'} | run_label={summary.run_label or 'n/a'}"
+            f" | decision={summary.decision_summary.get('status', 'n/a')}"
+        )
 
     metric_sections = []
     for key in metric_keys:
@@ -40,6 +43,10 @@ def write_provider_comparison_report(
 ## Aggregate metric leaderboard
 
 {chr(10).join(metric_sections).strip() or '- No aggregate metrics available'}
+
+## Decision overview
+
+{chr(10).join(f"- **{', '.join(summary.model_names) or 'unknown'}**: {summary.decision_summary.get('status', 'n/a')} | action={summary.decision_summary.get('recommended_action', 'n/a')} | reasons={summary.decision_summary.get('reasons', [])}" for summary in summaries)}
 """
     output_path.write_text(content, encoding="utf-8")
     return output_path
@@ -94,6 +101,11 @@ def write_run_comparison_report(
 
 - Run ID: {candidate.run_id or 'n/a'}
 - Run label: {candidate.run_label or 'n/a'}
+
+## Decision comparison
+
+- Baseline: {baseline.decision_summary.get('status', 'n/a')} | action={baseline.decision_summary.get('recommended_action', 'n/a')} | reasons={baseline.decision_summary.get('reasons', [])}
+- Candidate: {candidate.decision_summary.get('status', 'n/a')} | action={candidate.decision_summary.get('recommended_action', 'n/a')} | reasons={candidate.decision_summary.get('reasons', [])}
 
 ## Aggregate metric deltas
 

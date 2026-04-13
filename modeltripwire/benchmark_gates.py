@@ -99,12 +99,25 @@ def evaluate_benchmark_gate(summary: ExperimentSummary, results: list[Evaluation
 
     passed = all(checks.values()) and all(item["passed"] for item in scenario_checks.values())
 
+    decision_summary = {
+        "status": "SHIP" if passed else "DO_NOT_SHIP",
+        "recommended_action": "safe to advance to the next validation stage" if passed else "block release and review failing benchmark checks",
+        "reasons": [
+            "benchmark gate passed"
+        ] if passed else [
+            name for name, value in checks.items() if not value
+        ] + [
+            f"scenario:{scenario}" for scenario, item in scenario_checks.items() if not item["passed"]
+        ],
+    }
+
     return {
         "suite_name": suite_name,
         "title": suite["title"],
         "run_id": summary.run_id,
         "run_label": summary.run_label,
         "passed": passed,
+        "decision_summary": decision_summary,
         "checks": checks,
         "scenario_checks": scenario_checks,
         "thresholds": gates,
@@ -146,6 +159,12 @@ def write_benchmark_gate_report(gate_result: dict, path: str | Path) -> Path:
 - Run ID: {gate_result['run_id'] or 'n/a'}
 - Run label: {gate_result['run_label'] or 'n/a'}
 - Overall result: {'PASS' if gate_result['passed'] else 'FAIL'}
+
+## Decision summary
+
+- Status: {gate_result.get('decision_summary', {}).get('status', 'n/a')}
+- Recommended action: {gate_result.get('decision_summary', {}).get('recommended_action', 'n/a')}
+- Reasons: {gate_result.get('decision_summary', {}).get('reasons', [])}
 
 ## Aggregate metrics
 
