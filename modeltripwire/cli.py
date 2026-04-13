@@ -649,6 +649,131 @@ def rc_report(
     typer.echo(f"RC gate report written to {report_path}")
 
 
+@app.command("rc-review-bundle")
+def rc_review_bundle(
+    run_id: str,
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+    output_dir: str = typer.Option("outputs/rc_bundle", help="Directory for RC review bundle artifacts."),
+    trend_limit: int = typer.Option(5, min=1, help="How many recent runs to use for trend gating when applicable."),
+    include_passed_case_reviews: bool = typer.Option(False, help="Include clearly passing cases in the case review artifact."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+    run = store.get_run(run_id)
+    if run is None:
+        raise typer.Exit(f"Run not found: {run_id}")
+    suite_name = run.get("metadata", {}).get("benchmark_suite")
+    if not suite_name:
+        raise typer.Exit(f"Run is not benchmark-tagged: {run_id}")
+
+    rows = store.get_results_for_run(run["run_id"])
+    results = _load_results_as_models(rows)
+    summary = build_experiment_summary(
+        title=run["title"],
+        research_question=run["research_question"],
+        results=results,
+        run_id=run["run_id"],
+        run_label=run["run_label"],
+    )
+    benchmark_gate = evaluate_benchmark_gate(summary, results, suite_name)
+
+    trend_gate = None
+    recent_runs = store.list_runs_for_benchmark_suite(suite_name)[:trend_limit]
+    if len(recent_runs) >= 2:
+        summaries = []
+        run_results = []
+        for item in recent_runs:
+            item_results = _load_results_as_models(store.get_results_for_run(item["run_id"]))
+            item_summary = build_experiment_summary(
+                title=item["title"],
+                research_question=item["research_question"],
+                results=item_results,
+                run_id=item["run_id"],
+                run_label=item["run_label"],
+            )
+            summaries.append(item_summary)
+            run_results.append(item_results)
+        trend_gate = evaluate_trend_gate(suite_name, summaries, run_results)
+
+    rc_gate_result = evaluate_release_candidate_gate(suite_name, benchmark_gate, trend_gate)
+    out_dir = (project_root / output_dir).resolve()
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    benchmark_report_path = write_benchmark_gate_report(benchmark_gate, out_dir / "benchmark_reports" / f"benchmark_gate_{run['run_id']}.md")
+    trend_report_path = None
+    if trend_gate is not None:
+        trend_report_path = write_trend_gate_report(trend_gate, out_dir / "trend_reports" / f"trend_gate_{suite_name}.md")
+    rc_report_path = write_release_candidate_gate_report(rc_gate_result, out_dir / "rc_reports" / f"rc_gate_{run['run_id']}.md")
+
+    row_map = {row["prompt_id"]: row for row in rows}
+    case_review_path = write_benchmark_case_review_report(
+        benchmark_gate,
+        row_map,
+        out_dir / "case_reviews" / f"benchmark_case_review_{run['run_id']}.md",
+        include_passed=include_passed_case_reviews,
+    )
+
+    html_dir = out_dir / "html_reports"
+    cases_dir = html_dir / f"report_{run['run_id']}_cases"
+    case_links = {}
+    for row in rows:
+        if row["prompt_id"] in {item.get("prompt_id") for item in summary.notable_failures}:
+            case_path = cases_dir / f"{row['prompt_id']}.html"
+            write_case_detail_page(row, case_path)
+            case_links[row["prompt_id"]] = f"{cases_dir.name}/{case_path.name}"
+    html_report_path = write_html_report(
+        summary,
+        html_dir / f"report_{run['run_id']}.html",
+        benchmark_gate=benchmark_gate,
+        trend_gate=trend_gate,
+        rc_gate=rc_gate_result,
+        case_links=case_links,
+    )
+    dashboard_path = write_html_index(
+        [
+            {
+                "href": html_report_path.name,
+                "title": run["title"],
+                "run_id": run["run_id"],
+                "benchmark_suite": run.get("metadata", {}).get("benchmark_suite", "n/a"),
+                "benchmark_version": run.get("metadata", {}).get("benchmark_version", "n/a"),
+                "model_name": run["model_name"],
+                "total_cases": run["total_cases"],
+                "completed_at": run["completed_at"],
+                "status": summary.decision_summary.get("status", "n/a"),
+                "status_class": {
+                    "SHIP": "status-ship",
+                    "REVIEW_REQUIRED": "status-review",
+                    "DO_NOT_SHIP": "status-block",
+                }.get(summary.decision_summary.get("status", "n/a"), "status-neutral"),
+                "artifact_links_html": " | ".join(
+                    [
+                        f'<a href="../benchmark_reports/{benchmark_report_path.name}">Benchmark gate</a>',
+                        f'<a href="../case_reviews/{case_review_path.name}">Case review</a>',
+                        f'<a href="../rc_reports/{rc_report_path.name}">RC gate</a>',
+                    ] + ([f'<a href="../trend_reports/{trend_report_path.name}">Trend gate</a>'] if trend_report_path else [])
+                ),
+            }
+        ],
+        html_dir / "index.html",
+    )
+
+    typer.echo(json.dumps({
+        "run_id": run["run_id"],
+        "suite_name": suite_name,
+        "benchmark_report": str(benchmark_report_path),
+        "trend_report": str(trend_report_path) if trend_report_path else None,
+        "rc_report": str(rc_report_path),
+        "case_review": str(case_review_path),
+        "html_report": str(html_report_path),
+        "html_dashboard": str(dashboard_path),
+        "rc_passed": rc_gate_result["passed"],
+    }, indent=2))
+    if not rc_gate_result["passed"]:
+        raise typer.Exit(code=1)
+
+
 @app.command("regression-report")
 def regression_report(
     baseline_run: str,
