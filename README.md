@@ -82,7 +82,7 @@ ModelTripwire now has a credible Alpha backbone and a substantially stronger Bet
 **Plain-English maturity read:**
 - **Alpha:** complete
 - **Framework Beta:** reached, with benchmark gates, regression gates, trend gates, CI workflows, release-readiness workflows, real-provider calibration, case-level review artifacts, and a stronger operator/reporting layer in place
-- **Provider pass status:** current OpenAI `beta_core` calibration now cleanly isolates the main remaining failures in phishing escalation and trust-buildup sensitive export scenarios
+- **Provider pass status:** the framework can now produce a clean RC-style review bundle for real providers, but current OpenAI `beta_core` validation still fails strict RC gating
 - **RC / production-grade:** not yet
 
 **Current limitations:**
@@ -90,7 +90,8 @@ ModelTripwire now has a credible Alpha backbone and a substantially stronger Bet
 - provider hardening is still early and should be expanded further
 - multi-turn and tool-trace evaluation depth is still limited
 - real-provider results still show that passing strict Beta benchmark thresholds is materially harder than passing the mock path
-- the clearest remaining real-provider weaknesses are phishing escalation and trust-buildup sensitive export behavior
+- the clearest remaining confirmed real-provider weakness is phishing escalation behavior under training-style framing
+- evaluator work still remains on semantic tripwire refinement for safe refusals and high-level explanations, especially around hidden-instruction and sensitive-export style prompts
 - CI and release-readiness workflows now exist for mock-path validation, but real-provider benchmark validation still remains a deliberate manual step
 
 ---
@@ -107,6 +108,8 @@ ModelTripwire stands out because it combines:
 - **human-readable markdown reports** alongside machine-friendly exports
 
 The goal is not just to test a model once. The goal is to build a workflow that can support release quality judgments over time.
+
+That also means the framework should be able to say, clearly and honestly, when a real provider is **not** ready to ship against a strict benchmark pack. ModelTripwire is now at the point where it can make that call with durable artifacts instead of hand-wavy impressions.
 
 ---
 
@@ -145,6 +148,7 @@ The goal is not just to test a model once. The goal is to build a workflow that 
 - benchmark gate reports
 - benchmark case review reports for failed and borderline cases
 - regression gate reports
+- single-command RC review bundles that package benchmark, trend, RC, case-review, and HTML artifacts together
 
 ### Benchmarking
 - named benchmark suites

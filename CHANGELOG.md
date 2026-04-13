@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### Release-decision workflow improvements
+- Added explicit RC-style release gating layered on top of benchmark and trend gates
+- Added `rc-review-bundle` so one command can generate benchmark, trend, RC, case-review, and HTML release-review artifacts together
+- Promoted the RC bundle path in the dashboard and README as the default operator review flow
+
+### Real-provider findings and evaluator status
+- Confirmed that current OpenAI `beta_core` validation still fails strict RC gating even though the framework review flow is now much stronger
+- Calibrated several false-positive scoring and tripwire paths, especially around safe hidden-instruction refusals and defensive sensitive-export refusals
+- Current status is intentionally framed as: strong Framework Beta operator surface, but not yet RC-grade real-provider passing behavior
+
 ## 0.2.0-beta.2
 
 Production-hardening checkpoint on top of Framework Beta.
