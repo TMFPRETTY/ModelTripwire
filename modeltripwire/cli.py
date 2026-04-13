@@ -15,6 +15,7 @@ from modeltripwire.experiments.baseline_safety_stress_test import build_provider
 from modeltripwire.logging_utils import configure_logging
 from modeltripwire.models.schemas import EvaluationResult, ExperimentSummary, PromptCase, ProviderResponse, ScoreCard, TripwireMatch
 from modeltripwire.regression_gates import evaluate_regression_gate, write_regression_gate_report
+from modeltripwire.release_gates import evaluate_release_candidate_gate, write_release_candidate_gate_report
 from modeltripwire.reporting.case_reviews import write_benchmark_case_review_report
 from modeltripwire.reporting.charts import generate_all_charts
 from modeltripwire.reporting.compare import write_provider_comparison_report, write_run_comparison_report
@@ -516,6 +517,107 @@ def trend_report(
     report_path = write_trend_gate_report(result, out_dir / f"trend_gate_{suite}.md")
     typer.echo(json.dumps(result, indent=2))
     typer.echo(f"Trend gate report written to {report_path}")
+
+
+@app.command("rc-gate")
+def rc_gate(
+    run_id: str,
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+    trend_limit: int = typer.Option(5, min=1, help="How many recent runs to use for trend gating when applicable."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+    run = store.get_run(run_id)
+    if run is None:
+        raise typer.Exit(f"Run not found: {run_id}")
+    suite_name = run.get("metadata", {}).get("benchmark_suite")
+    if not suite_name:
+        raise typer.Exit(f"Run is not benchmark-tagged: {run_id}")
+
+    results = _load_results_as_models(store.get_results_for_run(run["run_id"]))
+    summary = build_experiment_summary(
+        title=run["title"],
+        research_question=run["research_question"],
+        results=results,
+        run_id=run["run_id"],
+        run_label=run["run_label"],
+    )
+    benchmark_gate = evaluate_benchmark_gate(summary, results, suite_name)
+
+    trend_gate = None
+    recent_runs = store.list_runs_for_benchmark_suite(suite_name)[:trend_limit]
+    if len(recent_runs) >= 2:
+        summaries = []
+        run_results = []
+        for item in recent_runs:
+            item_results = _load_results_as_models(store.get_results_for_run(item["run_id"]))
+            item_summary = build_experiment_summary(
+                title=item["title"],
+                research_question=item["research_question"],
+                results=item_results,
+                run_id=item["run_id"],
+                run_label=item["run_label"],
+            )
+            summaries.append(item_summary)
+            run_results.append(item_results)
+        trend_gate = evaluate_trend_gate(suite_name, summaries, run_results)
+
+    result = evaluate_release_candidate_gate(suite_name, benchmark_gate, trend_gate)
+    typer.echo(json.dumps(result, indent=2))
+    if not result["passed"]:
+        raise typer.Exit(code=1)
+
+
+@app.command("rc-report")
+def rc_report(
+    run_id: str,
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+    output_dir: str = typer.Option("outputs/rc_reports", help="Directory for RC gate reports."),
+    trend_limit: int = typer.Option(5, min=1, help="How many recent runs to use for trend gating when applicable."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+    run = store.get_run(run_id)
+    if run is None:
+        raise typer.Exit(f"Run not found: {run_id}")
+    suite_name = run.get("metadata", {}).get("benchmark_suite")
+    if not suite_name:
+        raise typer.Exit(f"Run is not benchmark-tagged: {run_id}")
+
+    results = _load_results_as_models(store.get_results_for_run(run["run_id"]))
+    summary = build_experiment_summary(
+        title=run["title"],
+        research_question=run["research_question"],
+        results=results,
+        run_id=run["run_id"],
+        run_label=run["run_label"],
+    )
+    benchmark_gate = evaluate_benchmark_gate(summary, results, suite_name)
+
+    trend_gate = None
+    recent_runs = store.list_runs_for_benchmark_suite(suite_name)[:trend_limit]
+    if len(recent_runs) >= 2:
+        summaries = []
+        run_results = []
+        for item in recent_runs:
+            item_results = _load_results_as_models(store.get_results_for_run(item["run_id"]))
+            item_summary = build_experiment_summary(
+                title=item["title"],
+                research_question=item["research_question"],
+                results=item_results,
+                run_id=item["run_id"],
+                run_label=item["run_label"],
+            )
+            summaries.append(item_summary)
+            run_results.append(item_results)
+        trend_gate = evaluate_trend_gate(suite_name, summaries, run_results)
+
+    result = evaluate_release_candidate_gate(suite_name, benchmark_gate, trend_gate)
+    out_dir = (project_root / output_dir).resolve()
+    report_path = write_release_candidate_gate_report(result, out_dir / f"rc_gate_{run['run_id']}.md")
+    typer.echo(f"RC gate report written to {report_path}")
 
 
 @app.command("regression-report")
