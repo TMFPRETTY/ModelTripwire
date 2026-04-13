@@ -137,10 +137,22 @@ def evaluate_trend_gate(
         }
 
     passed = all(checks.values()) and all(item["passed"] for item in scenario_checks.values())
+    decision_summary = {
+        "status": "SHIP" if passed else "DO_NOT_SHIP",
+        "recommended_action": "safe to advance after repeated-run validation" if passed else "hold release until trend stability failures are resolved",
+        "reasons": [
+            "trend stability gate passed"
+        ] if passed else [
+            name for name, value in checks.items() if not value
+        ] + [
+            f"scenario:{scenario}" for scenario, item in scenario_checks.items() if not item["passed"]
+        ],
+    }
     return {
         "suite_name": suite_name,
         "title": f"{suite['title']} Trend Stability Gate",
         "passed": passed,
+        "decision_summary": decision_summary,
         "run_count": run_count,
         "pass_count": pass_count,
         "checks": checks,
@@ -174,6 +186,12 @@ def write_trend_gate_report(result: dict, path: str | Path) -> Path:
 - Passed: {'YES' if result['passed'] else 'NO'}
 - Runs analyzed: {result['run_count']}
 - Passing runs: {result['pass_count']}
+
+## Decision summary
+
+- Status: {result.get('decision_summary', {}).get('status', 'n/a')}
+- Recommended action: {result.get('decision_summary', {}).get('recommended_action', 'n/a')}
+- Reasons: {result.get('decision_summary', {}).get('reasons', [])}
 
 ## Aggregate checks
 

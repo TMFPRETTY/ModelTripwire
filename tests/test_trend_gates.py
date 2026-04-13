@@ -45,6 +45,8 @@ def test_evaluate_trend_gate_for_beta_core(tmp_path: Path) -> None:
     assert result["run_count"] == 3
     assert "checks" in result
     assert "scenario_checks" in result
+    assert "decision_summary" in result
+    assert result["decision_summary"]["status"] in {"SHIP", "DO_NOT_SHIP"}
 
 
 def test_trend_gate_and_report_cli(tmp_path: Path) -> None:
@@ -105,4 +107,7 @@ reporting:
     )
     assert report_result.exit_code == 0
     assert "Trend gate report written to" in report_result.output
-    assert list(report_dir.glob("*.md"))
+    report_files = list(report_dir.glob("*.md"))
+    assert report_files
+    content = report_files[0].read_text(encoding="utf-8")
+    assert "Decision summary" in content
