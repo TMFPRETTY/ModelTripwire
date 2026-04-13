@@ -276,6 +276,7 @@ modeltripwire benchmark-gate <run-id> --config configs/default.yaml
 modeltripwire benchmark-case-review <run-id> --config configs/default.yaml --output-dir outputs/case_reviews
 modeltripwire rc-gate <run-id> --config configs/default.yaml
 modeltripwire rc-report <run-id> --config configs/default.yaml --output-dir outputs/rc_reports
+modeltripwire rc-review-bundle <run-id> --config configs/default.yaml --output-dir outputs/rc_bundle
 ```
 
 ### Current benchmark suites
@@ -388,6 +389,14 @@ Use the HTML workflow when you want a more product-like review surface for:
 - benchmark run inspection
 - case-by-case failure review
 - quick operator handoff or stakeholder review
+
+For the default release-decision path, prefer:
+
+```bash
+modeltripwire rc-review-bundle <run-id> --config configs/default.yaml --output-dir outputs/rc_bundle
+```
+
+That single command writes the benchmark gate, trend gate when available, RC gate, case review, HTML run report, and HTML index in one operator package.
 
 ## Alpha gate workflow
 
@@ -514,11 +523,14 @@ modeltripwire benchmark-trends beta_core --limit 3 --config configs/default.yaml
 modeltripwire trend-gate beta_core --limit 3 --config configs/default.yaml
 modeltripwire trend-report beta_core --limit 3 --config configs/default.yaml --output-dir outputs/trend_reports
 
-# 8. Evaluate release-candidate readiness
+# 8. Build a full release review bundle
+modeltripwire rc-review-bundle <run-id> --config configs/default.yaml --output-dir outputs/rc_bundle
+
+# 9. Optionally inspect individual RC artifacts directly
 modeltripwire rc-gate <run-id> --config configs/default.yaml
 modeltripwire rc-report <run-id> --config configs/default.yaml --output-dir outputs/rc_reports
 
-# 9. Generate operator-facing HTML output
+# 10. Generate operator-facing HTML output directly when needed
 modeltripwire html-report <run-id> --config configs/default.yaml --output-dir outputs/html_reports
 modeltripwire html-dashboard --config configs/default.yaml --output-dir outputs/html_reports
 ```

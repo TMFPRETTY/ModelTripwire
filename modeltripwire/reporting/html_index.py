@@ -70,6 +70,7 @@ def write_html_index(run_cards: list[dict], path: str | Path) -> Path:
     .status-block {{ background: #4a1717; color: #ff9a9a; }}
     .status-neutral {{ background: #23304f; color: #d7def0; }}
     .muted {{ color: #9eb0d1; }}
+    code {{ color: #d7def0; }}
     ul {{ margin: 10px 0 0 18px; }}
     li {{ margin: 6px 0; }}
     @media (max-width: 800px) {{ .summary, .grid {{ grid-template-columns: 1fr; }} }}
@@ -79,6 +80,10 @@ def write_html_index(run_cards: list[dict], path: str | Path) -> Path:
   <div class=\"wrap\">
     <h1>ModelTripwire Report Hub</h1>
     <p class=\"muted\">HTML index for recent runs and operator reports.</p>
+    <div class=\"summary-card\" style=\"margin-bottom: 20px;\">
+      <div class=\"muted\">Default release review workflow</div>
+      <div style=\"margin-top: 8px;\"><code>modeltripwire rc-review-bundle &lt;run-id&gt; --config configs/default.yaml --output-dir outputs/rc_bundle</code></div>
+    </div>
     <div class=\"summary\">
       <div class=\"summary-card\"><div class=\"muted\">SHIP</div><div class=\"summary-value\">{counts['SHIP']}</div></div>
       <div class=\"summary-card\"><div class=\"muted\">REVIEW REQUIRED</div><div class=\"summary-value\">{counts['REVIEW_REQUIRED']}</div></div>
