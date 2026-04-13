@@ -18,6 +18,7 @@ from modeltripwire.regression_gates import evaluate_regression_gate, write_regre
 from modeltripwire.reporting.case_reviews import write_benchmark_case_review_report
 from modeltripwire.reporting.charts import generate_all_charts
 from modeltripwire.reporting.compare import write_provider_comparison_report, write_run_comparison_report
+from modeltripwire.reporting.html_report import write_html_report
 from modeltripwire.reporting.markdown_report import write_markdown_report
 from modeltripwire.reporting.summaries import build_experiment_summary
 from modeltripwire.reporting.trends import build_benchmark_trend_summary, write_benchmark_trend_report
@@ -139,9 +140,37 @@ def generate_report(results_json: str, output_dir: str = typer.Option("outputs/r
     out_dir = (project_root / output_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
     write_markdown_report(summary, out_dir / "report.md")
+    write_html_report(summary, out_dir / "report.html")
     generate_all_charts(results, out_dir / "charts")
     logger.info("Regenerated markdown report", extra={"output_dir": str(out_dir)})
     typer.echo(f"Report generated in {out_dir}")
+
+
+@app.command("html-report")
+def html_report(
+    run_id: str,
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+    output_dir: str = typer.Option("outputs/html_reports", help="Directory for HTML reports."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+    run = store.get_run(run_id)
+    if run is None:
+        raise typer.Exit(f"Run not found: {run_id}")
+
+    results = _load_results_as_models(store.get_results_for_run(run["run_id"]))
+    summary = build_experiment_summary(
+        title=run["title"],
+        research_question=run["research_question"],
+        results=results,
+        run_id=run["run_id"],
+        run_label=run["run_label"],
+    )
+    out_dir = (project_root / output_dir).resolve()
+    out_dir.mkdir(parents=True, exist_ok=True)
+    report_path = write_html_report(summary, out_dir / f"report_{run['run_id']}.html")
+    typer.echo(f"HTML report written to {report_path}")
 
 
 @app.command("list-benchmarks")

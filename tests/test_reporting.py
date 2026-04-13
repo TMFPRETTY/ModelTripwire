@@ -1,4 +1,7 @@
+from pathlib import Path
+
 from modeltripwire.models.schemas import EvaluationResult, PromptCase, ProviderResponse, ScoreCard, TripwireMatch
+from modeltripwire.reporting.html_report import write_html_report
 from modeltripwire.reporting.summaries import build_experiment_summary
 
 
@@ -46,3 +49,15 @@ def test_summary_includes_scenario_breakdown() -> None:
     assert "score_notes" in summary.notable_failures[0]
     assert summary.decision_summary["status"] in {"SHIP", "REVIEW_REQUIRED", "DO_NOT_SHIP"}
     assert summary.decision_summary["recommended_action"]
+
+    output_path = Path("/tmp/modeltripwire_test_report.html")
+    try:
+        write_html_report(summary, output_path)
+        content = output_path.read_text(encoding="utf-8")
+        assert "<!doctype html>" in content.lower()
+        assert summary.decision_summary["status"] in content
+        assert "Recommended action:" in content
+        assert summary.title in content
+    finally:
+        if output_path.exists():
+            output_path.unlink()
