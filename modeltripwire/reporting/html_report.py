@@ -35,7 +35,27 @@ def _render_simple_list(items: list[str]) -> str:
     return "".join(f"<li>{html.escape(str(item))}</li>" for item in items)
 
 
-def write_html_report(summary: ExperimentSummary, path: str | Path) -> Path:
+def _render_gate_panel(title: str, gate_result: dict | None) -> str:
+    if not gate_result:
+        return f"<div class=\"card\"><h2>{html.escape(title)}</h2><p class=\"muted\">No gate data available.</p></div>"
+    decision = gate_result.get("decision_summary", {})
+    return (
+        f"<div class=\"card\">"
+        f"<h2>{html.escape(title)}</h2>"
+        f"<p><strong>Status:</strong> {html.escape(str(decision.get('status', 'n/a')))}</p>"
+        f"<p><strong>Recommended action:</strong> {html.escape(str(decision.get('recommended_action', 'n/a')))}</p>"
+        f"<p><strong>Reasons:</strong></p>"
+        f"<ul>{_render_simple_list(decision.get('reasons', []))}</ul>"
+        f"</div>"
+    )
+
+
+def write_html_report(
+    summary: ExperimentSummary,
+    path: str | Path,
+    benchmark_gate: dict | None = None,
+    trend_gate: dict | None = None,
+) -> Path:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -45,6 +65,11 @@ def write_html_report(summary: ExperimentSummary, path: str | Path) -> Path:
         "REVIEW_REQUIRED": "status-review",
         "DO_NOT_SHIP": "status-block",
     }.get(status, "status-neutral")
+
+    metrics_html = "".join(
+        f'<div class="metric"><div class="metric-label">{html.escape(key)}</div><div class="metric-value">{html.escape(str(value))}</div></div>'
+        for key, value in summary.aggregate_metrics.items()
+    )
 
     content = f"""<!doctype html>
 <html lang=\"en\">
@@ -99,9 +124,12 @@ def write_html_report(summary: ExperimentSummary, path: str | Path) -> Path:
 
     <div class=\"card\" style=\"margin-bottom: 20px;\">
       <h2>Aggregate metrics</h2>
-      <div class=\"metrics\">
-        {''.join(f'<div class="metric"><div class="metric-label">{html.escape(key)}</div><div class="metric-value">{html.escape(str(value))}</div></div>' for key, value in summary.aggregate_metrics.items())}
-      </div>
+      <div class=\"metrics\">{metrics_html}</div>
+    </div>
+
+    <div class=\"grid\" style=\"margin-bottom: 20px;\">
+      {_render_gate_panel('Benchmark gate', benchmark_gate)}
+      {_render_gate_panel('Trend gate', trend_gate)}
     </div>
 
     <div class=\"grid\">

@@ -139,8 +139,13 @@ def generate_report(results_json: str, output_dir: str = typer.Option("outputs/r
     )
     out_dir = (project_root / output_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
+    benchmark_gate = None
+    trend_gate = None
+    benchmark_suite = summary.benchmark_suite
+    if benchmark_suite:
+        benchmark_gate = evaluate_benchmark_gate(summary, results, benchmark_suite)
     write_markdown_report(summary, out_dir / "report.md")
-    write_html_report(summary, out_dir / "report.html")
+    write_html_report(summary, out_dir / "report.html", benchmark_gate=benchmark_gate, trend_gate=trend_gate)
     generate_all_charts(results, out_dir / "charts")
     logger.info("Regenerated markdown report", extra={"output_dir": str(out_dir)})
     typer.echo(f"Report generated in {out_dir}")
@@ -167,9 +172,30 @@ def html_report(
         run_id=run["run_id"],
         run_label=run["run_label"],
     )
+    benchmark_gate = None
+    trend_gate = None
+    suite_name = run.get("metadata", {}).get("benchmark_suite")
+    if suite_name:
+        benchmark_gate = evaluate_benchmark_gate(summary, results, suite_name)
+        recent_runs = store.list_runs_for_benchmark_suite(suite_name)[:5]
+        if len(recent_runs) >= 2:
+            summaries = []
+            run_results = []
+            for item in recent_runs:
+                item_results = _load_results_as_models(store.get_results_for_run(item["run_id"]))
+                item_summary = build_experiment_summary(
+                    title=item["title"],
+                    research_question=item["research_question"],
+                    results=item_results,
+                    run_id=item["run_id"],
+                    run_label=item["run_label"],
+                )
+                summaries.append(item_summary)
+                run_results.append(item_results)
+            trend_gate = evaluate_trend_gate(suite_name, summaries, run_results)
     out_dir = (project_root / output_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
-    report_path = write_html_report(summary, out_dir / f"report_{run['run_id']}.html")
+    report_path = write_html_report(summary, out_dir / f"report_{run['run_id']}.html", benchmark_gate=benchmark_gate, trend_gate=trend_gate)
     typer.echo(f"HTML report written to {report_path}")
 
 
