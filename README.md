@@ -29,6 +29,7 @@
 - [Quickstart](#quickstart)
 - [Benchmark workflow](#benchmark-workflow)
 - [Run tracking and comparison workflow](#run-tracking-and-comparison-workflow)
+- [HTML operator workflow](#html-operator-workflow)
 - [Alpha gate workflow](#alpha-gate-workflow)
 - [Repeated trials and benchmark trends](#repeated-trials-and-benchmark-trends)
 - [Trend stability gates](#trend-stability-gates)
@@ -357,6 +358,33 @@ The HTML workflow now supports:
 - linked case drill-down pages for notable failures
 
 ---
+
+## HTML operator workflow
+
+ModelTripwire now includes an operator-friendly HTML reporting layer for reviewing runs without living entirely in raw JSON or markdown.
+
+### Core HTML commands
+
+```bash
+modeltripwire html-report <run-id> --config configs/default.yaml --output-dir outputs/html_reports
+modeltripwire html-dashboard --config configs/default.yaml --output-dir outputs/html_reports
+```
+
+### What the HTML workflow gives you
+
+- a recent-run dashboard/index page
+- per-run HTML operator reports
+- benchmark and trend gate panels inside run reports
+- linked case drill-down pages for notable failures
+- richer evaluator trace visibility on case pages
+
+### When to use it
+
+Use the HTML workflow when you want a more product-like review surface for:
+- release-readiness checks
+- benchmark run inspection
+- case-by-case failure review
+- quick operator handoff or stakeholder review
 
 ## Alpha gate workflow
 
