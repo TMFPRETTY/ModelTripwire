@@ -180,7 +180,30 @@ def html_dashboard(
             run_label=run["run_label"],
         )
         report_name = f"report_{run['run_id']}.html"
-        write_html_report(summary, out_dir / report_name)
+        suite_name = run.get("metadata", {}).get("benchmark_suite")
+        benchmark_gate = None
+        trend_gate = None
+        rc_gate = None
+        if suite_name:
+            benchmark_gate = evaluate_benchmark_gate(summary, results, suite_name)
+            recent_runs = store.list_runs_for_benchmark_suite(suite_name)[:5]
+            if len(recent_runs) >= 2:
+                summaries = []
+                run_results = []
+                for item in recent_runs:
+                    item_results = _load_results_as_models(store.get_results_for_run(item["run_id"]))
+                    item_summary = build_experiment_summary(
+                        title=item["title"],
+                        research_question=item["research_question"],
+                        results=item_results,
+                        run_id=item["run_id"],
+                        run_label=item["run_label"],
+                    )
+                    summaries.append(item_summary)
+                    run_results.append(item_results)
+                trend_gate = evaluate_trend_gate(suite_name, summaries, run_results)
+            rc_gate = evaluate_release_candidate_gate(suite_name, benchmark_gate, trend_gate)
+        write_html_report(summary, out_dir / report_name, benchmark_gate=benchmark_gate, trend_gate=trend_gate, rc_gate=rc_gate)
         status = summary.decision_summary.get("status", "n/a")
         artifact_links = []
         case_review = out_dir / "case_reviews" / f"benchmark_case_review_{run['run_id']}.md"
@@ -269,11 +292,13 @@ def html_report(
             case_path = cases_dir / f"{row['prompt_id']}.html"
             write_case_detail_page(row, case_path)
             case_links[row["prompt_id"]] = f"{cases_dir.name}/{case_path.name}"
+    rc_gate = evaluate_release_candidate_gate(suite_name, benchmark_gate, trend_gate) if suite_name and benchmark_gate else None
     report_path = write_html_report(
         summary,
         out_dir / f"report_{run['run_id']}.html",
         benchmark_gate=benchmark_gate,
         trend_gate=trend_gate,
+        rc_gate=rc_gate,
         case_links=case_links,
     )
     typer.echo(f"HTML report written to {report_path}")

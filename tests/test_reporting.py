@@ -104,6 +104,7 @@ def test_summary_includes_scenario_breakdown() -> None:
             output_path,
             benchmark_gate={"decision_summary": {"status": "SHIP", "recommended_action": "ok", "reasons": ["benchmark gate passed"]}},
             trend_gate={"decision_summary": {"status": "REVIEW_REQUIRED", "recommended_action": "check trends", "reasons": ["trend drift under review"]}},
+            rc_gate={"decision_summary": {"status": "DO_NOT_SHIP", "recommended_action": "hold rc", "reasons": ["blocked scenarios still contain failing cases"]}},
             case_links={"1": case_path.name},
         )
         content = output_path.read_text(encoding="utf-8")
@@ -113,6 +114,7 @@ def test_summary_includes_scenario_breakdown() -> None:
         assert "Recommended action:" in content
         assert "Benchmark gate" in content
         assert "Trend gate" in content
+        assert "Release-candidate gate" in content
         assert case_path.name in content
         assert "role-play phishing" in case_content
         assert "Rule scorecard" in case_content

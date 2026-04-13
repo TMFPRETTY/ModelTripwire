@@ -274,6 +274,8 @@ modeltripwire run-benchmark alpha_core --config configs/default.yaml
 modeltripwire benchmark-report <run-id> --config configs/default.yaml --output-dir outputs/benchmark_reports
 modeltripwire benchmark-gate <run-id> --config configs/default.yaml
 modeltripwire benchmark-case-review <run-id> --config configs/default.yaml --output-dir outputs/case_reviews
+modeltripwire rc-gate <run-id> --config configs/default.yaml
+modeltripwire rc-report <run-id> --config configs/default.yaml --output-dir outputs/rc_reports
 ```
 
 ### Current benchmark suites
@@ -354,7 +356,7 @@ Each run can persist:
 The HTML workflow now supports:
 - a recent-run dashboard/index page
 - per-run HTML operator reports
-- benchmark/trend gate panels inside HTML reports
+- benchmark/trend/RC gate panels inside HTML reports
 - linked case drill-down pages for notable failures
 
 ---
@@ -377,6 +379,7 @@ modeltripwire html-dashboard --config configs/default.yaml --output-dir outputs/
 - benchmark and trend gate panels inside run reports
 - linked case drill-down pages for notable failures
 - richer evaluator trace visibility on case pages
+- release-candidate gate visibility inside run reports
 
 ### When to use it
 
@@ -511,7 +514,11 @@ modeltripwire benchmark-trends beta_core --limit 3 --config configs/default.yaml
 modeltripwire trend-gate beta_core --limit 3 --config configs/default.yaml
 modeltripwire trend-report beta_core --limit 3 --config configs/default.yaml --output-dir outputs/trend_reports
 
-# 8. Generate operator-facing HTML output
+# 8. Evaluate release-candidate readiness
+modeltripwire rc-gate <run-id> --config configs/default.yaml
+modeltripwire rc-report <run-id> --config configs/default.yaml --output-dir outputs/rc_reports
+
+# 9. Generate operator-facing HTML output
 modeltripwire html-report <run-id> --config configs/default.yaml --output-dir outputs/html_reports
 modeltripwire html-dashboard --config configs/default.yaml --output-dir outputs/html_reports
 ```

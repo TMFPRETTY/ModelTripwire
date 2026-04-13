@@ -60,6 +60,7 @@ def write_html_report(
     path: str | Path,
     benchmark_gate: dict | None = None,
     trend_gate: dict | None = None,
+    rc_gate: dict | None = None,
     case_links: dict[str, str] | None = None,
 ) -> Path:
     output_path = Path(path)
@@ -136,6 +137,10 @@ def write_html_report(
     <div class=\"grid\" style=\"margin-bottom: 20px;\">
       {_render_gate_panel('Benchmark gate', benchmark_gate)}
       {_render_gate_panel('Trend gate', trend_gate)}
+    </div>
+
+    <div class=\"grid\" style=\"margin-bottom: 20px;\">
+      {_render_gate_panel('Release-candidate gate', rc_gate)}
     </div>
 
     <div class=\"grid\">
