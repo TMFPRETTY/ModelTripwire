@@ -2,7 +2,7 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from modeltripwire.benchmarks import resolve_benchmark_dataset_path
+from modeltripwire.benchmarks import get_benchmark_manifest, resolve_benchmark_dataset_path
 from modeltripwire.cli import app
 from modeltripwire.config import load_config
 
@@ -15,6 +15,15 @@ def test_benchmark_dataset_exists() -> None:
     for suite_name in ["alpha_core", "alpha_extended"]:
         path = resolve_benchmark_dataset_path(project_root, suite_name)
         assert path.exists()
+
+
+def test_benchmark_manifest_has_version_and_hash() -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    manifest = get_benchmark_manifest(project_root, "alpha_core")
+    assert manifest["suite_name"] == "alpha_core"
+    assert manifest["version"] == "2026-04-alpha-core-v1"
+    assert manifest["dataset_hash"]
+    assert manifest["dataset_path"].endswith("alpha_core.json")
 
 
 def test_run_benchmark_cli(tmp_path: Path) -> None:
