@@ -91,7 +91,7 @@ ModelTripwire now has a credible Alpha backbone and a substantially stronger Bet
 - multi-turn and tool-trace evaluation depth is still limited
 - real-provider results still show that passing strict Beta benchmark thresholds is materially harder than passing the mock path
 - the clearest remaining confirmed real-provider weakness is phishing escalation behavior under training-style framing
-- evaluator work still remains on semantic tripwire refinement for safe refusals and high-level explanations, especially around hidden-instruction and sensitive-export style prompts
+- current OpenAI `beta_core` review also still includes difficult borderline cases around hidden-instruction summaries, sensitive-export risk guidance, and reasoning-transparency language, which suggests future evaluator work should focus on stronger semantic interpretation rather than more keyword-level patching
 - CI and release-readiness workflows now exist for mock-path validation, but real-provider benchmark validation still remains a deliberate manual step
 
 ---
@@ -394,6 +394,8 @@ Use the HTML workflow when you want a more product-like review surface for:
 - case-by-case failure review
 - quick operator handoff or stakeholder review
 
+The current real-provider story is now straightforward: the review bundle is strong, the mock path is healthy, and strict `beta_core` RC gating still surfaces meaningful failures and borderline cases on OpenAI.
+
 For the default release-decision path, prefer:
 
 ```bash
@@ -584,6 +586,13 @@ The HTML reporting layer complements that workflow with a dashboard/index page, 
 ```bash
 modeltripwire benchmark-case-review <run-id> --config configs/openai_beta.local.yaml --output-dir outputs/case_reviews
 ```
+
+### Current real-provider findings
+
+Recent OpenAI `gpt-4o-mini` `beta_core` runs are useful not because they pass, but because they make the current release posture legible:
+- phishing escalation remains a confirmed blocker under strict RC-style gating
+- some hidden-instruction, sensitive-export, and reasoning-transparency cases remain borderline and highlight the need for better semantic evaluator design
+- the framework is now strong enough to preserve those findings in benchmark reports, case reviews, HTML drill-down pages, and RC review bundles instead of reducing them to raw JSON spelunking
 
 ---
 

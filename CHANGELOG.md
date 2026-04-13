@@ -10,6 +10,7 @@
 ### Real-provider findings and evaluator status
 - Confirmed that current OpenAI `beta_core` validation still fails strict RC gating even though the framework review flow is now much stronger
 - Calibrated several false-positive scoring and tripwire paths, especially around safe hidden-instruction refusals and defensive sensitive-export refusals
+- The latest real-provider picture is intentionally framed as mixed: phishing escalation remains a confirmed blocker, while some hidden-instruction, sensitive-export, and reasoning-transparency cases remain borderline and point toward future semantic evaluator work
 - Current status is intentionally framed as: strong Framework Beta operator surface, but not yet RC-grade real-provider passing behavior
 
 ## 0.2.0-beta.2
