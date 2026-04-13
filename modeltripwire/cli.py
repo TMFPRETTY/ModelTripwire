@@ -276,7 +276,9 @@ def show_run(run_id: str, config: str = typer.Option("configs/default.yaml", hel
         run_id=run["run_id"],
         run_label=run["run_label"],
     )
-    typer.echo(summary.model_dump_json(indent=2))
+    payload = summary.model_dump()
+    payload["run_metadata"] = run.get("metadata", {})
+    typer.echo(json.dumps(payload, indent=2))
 
 
 @app.command("benchmark-trends")

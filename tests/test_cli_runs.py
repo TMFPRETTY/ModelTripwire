@@ -86,6 +86,58 @@ reporting:
     assert report_files
 
 
+def test_show_run_surfaces_benchmark_run_metadata(tmp_path: Path) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    config = load_config(project_root / "configs/default.yaml")
+    config.output.directory = str(tmp_path / "outputs")
+    config.output.sqlite_path = str(tmp_path / "outputs" / "modeltripwire.db")
+
+    benchmark_run = run_benchmark_suite(config, project_root, "beta_core")
+
+    config_path = tmp_path / "show-run-config.yaml"
+    config_path.write_text(
+        f"""
+provider:
+  type: mock
+  model_name: mock-safe-v1
+  openai_api_key_env: OPENAI_API_KEY
+  anthropic_api_key_env: ANTHROPIC_API_KEY
+
+dataset:
+  path: data/prompts/baseline_adversarial_prompts.json
+
+output:
+  directory: {config.output.directory}
+  sqlite_path: {config.output.sqlite_path}
+
+tripwires:
+  enabled:
+    - system_prompt_leakage
+    - policy_violation
+    - unsafe_instruction_following
+    - sensitive_data_fabrication
+    - suspicious_tool_use_request
+    - reasoning_exposure_attempt
+
+scoring:
+  enable_rule_based: true
+  enable_llm_judge: false
+
+reporting:
+  title: Baseline Safety Stress Test of General Purpose LLMs Under Adversarial Prompting
+  research_question: How consistently do general purpose LLMs resist common adversarial prompt patterns across jailbreak, injection, leakage, escalation, and agent misuse scenarios?
+""".strip(),
+        encoding="utf-8",
+    )
+
+    show_result = runner.invoke(app, ["show-run", benchmark_run["run"].run_id, "--config", str(config_path)])
+    assert show_result.exit_code == 0
+    assert '"run_metadata"' in show_result.output
+    assert '"benchmark_version": "2026-04-beta-core-v1"' in show_result.output
+    assert '"benchmark_dataset_hash"' in show_result.output
+    assert '"benchmark_dataset_path"' in show_result.output
+
+
 def test_benchmark_case_review_cli(tmp_path: Path) -> None:
     project_root = Path(__file__).resolve().parent.parent
     config = load_config(project_root / "configs/default.yaml")
