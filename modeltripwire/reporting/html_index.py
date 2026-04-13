@@ -25,20 +25,23 @@ def write_html_index(run_cards: list[dict], path: str | Path) -> Path:
 
     cards_html = "".join(
         f"""
-        <a class=\"card\" href=\"{html.escape(card['href'])}\">
-          <div class=\"top\">
-            <span class=\"pill {html.escape(card.get('status_class', 'status-neutral'))}\">{html.escape(card.get('status', 'n/a'))}</span>
-            <span class=\"muted\">{html.escape(card.get('completed_at', 'n/a'))}</span>
-          </div>
-          <h2>{html.escape(card.get('title', 'Run'))}</h2>
-          <p class=\"muted\">run_id={html.escape(card.get('run_id', 'n/a'))}</p>
-          <ul>
-            <li><strong>Benchmark:</strong> {html.escape(card.get('benchmark_suite', 'n/a'))}</li>
-            <li><strong>Benchmark version:</strong> {html.escape(card.get('benchmark_version', 'n/a'))}</li>
-            <li><strong>Model:</strong> {html.escape(card.get('model_name', 'n/a'))}</li>
-            <li><strong>Cases:</strong> {html.escape(str(card.get('total_cases', 'n/a')))}</li>
-          </ul>
-        </a>
+        <div class=\"card\">
+          <a class=\"card-main\" href=\"{html.escape(card['href'])}\">
+            <div class=\"top\">
+              <span class=\"pill {html.escape(card.get('status_class', 'status-neutral'))}\">{html.escape(card.get('status', 'n/a'))}</span>
+              <span class=\"muted\">{html.escape(card.get('completed_at', 'n/a'))}</span>
+            </div>
+            <h2>{html.escape(card.get('title', 'Run'))}</h2>
+            <p class=\"muted\">run_id={html.escape(card.get('run_id', 'n/a'))}</p>
+            <ul>
+              <li><strong>Benchmark:</strong> {html.escape(card.get('benchmark_suite', 'n/a'))}</li>
+              <li><strong>Benchmark version:</strong> {html.escape(card.get('benchmark_version', 'n/a'))}</li>
+              <li><strong>Model:</strong> {html.escape(card.get('model_name', 'n/a'))}</li>
+              <li><strong>Cases:</strong> {html.escape(str(card.get('total_cases', 'n/a')))}</li>
+            </ul>
+          </a>
+          <div class=\"artifact-links\">{card.get('artifact_links_html', '')}</div>
+        </div>
         """
         for card in run_cards
     ) or '<p class="muted">No runs available.</p>'
@@ -56,7 +59,10 @@ def write_html_index(run_cards: list[dict], path: str | Path) -> Path:
     .summary-card {{ background: #131a2e; border: 1px solid #24304d; border-radius: 16px; padding: 18px; }}
     .summary-value {{ font-size: 28px; font-weight: 800; margin-top: 6px; }}
     .grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }}
-    .card {{ display: block; text-decoration: none; color: inherit; background: #131a2e; border: 1px solid #24304d; border-radius: 16px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.25); }}
+    .card {{ background: #131a2e; border: 1px solid #24304d; border-radius: 16px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.25); }}
+    .card-main {{ display: block; text-decoration: none; color: inherit; }}
+    .artifact-links {{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }}
+    .artifact-links a {{ color: #8bb8ff; text-decoration: none; font-weight: 600; }}
     .top {{ display: flex; justify-content: space-between; align-items: center; gap: 12px; }}
     .pill {{ display: inline-block; padding: 8px 12px; border-radius: 999px; font-weight: 700; }}
     .status-ship {{ background: #123a2a; color: #7ef0b0; }}

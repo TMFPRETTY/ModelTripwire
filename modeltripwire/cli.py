@@ -181,6 +181,16 @@ def html_dashboard(
         report_name = f"report_{run['run_id']}.html"
         write_html_report(summary, out_dir / report_name)
         status = summary.decision_summary.get("status", "n/a")
+        artifact_links = []
+        case_review = out_dir / "case_reviews" / f"benchmark_case_review_{run['run_id']}.md"
+        if case_review.exists():
+            artifact_links.append(f'<a href="{case_review.relative_to(out_dir)}">Case review</a>')
+        provider_compare_dir = out_dir / "provider_compare"
+        if provider_compare_dir.exists():
+            matches = sorted(provider_compare_dir.glob(f"*{run['run_id']}*.md"))
+            if matches:
+                artifact_links.append(f'<a href="{matches[0].relative_to(out_dir)}">Provider compare</a>')
+
         cards.append(
             {
                 "href": report_name,
@@ -197,6 +207,7 @@ def html_dashboard(
                     "REVIEW_REQUIRED": "status-review",
                     "DO_NOT_SHIP": "status-block",
                 }.get(status, "status-neutral"),
+                "artifact_links_html": " | ".join(artifact_links),
             }
         )
 

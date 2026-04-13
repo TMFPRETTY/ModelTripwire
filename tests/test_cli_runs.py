@@ -213,7 +213,7 @@ def test_html_dashboard_cli(tmp_path: Path) -> None:
     config.output.directory = str(tmp_path / "outputs")
     config.output.sqlite_path = str(tmp_path / "outputs" / "modeltripwire.db")
 
-    run_benchmark_suite(config, project_root, "beta_core")
+    benchmark_result = run_benchmark_suite(config, project_root, "beta_core")
     run_baseline_experiment(config, project_root)
 
     config_path = tmp_path / "dashboard-config.yaml"
@@ -253,6 +253,8 @@ reporting:
     )
 
     dashboard_out = tmp_path / "html_reports"
+    (dashboard_out / "case_reviews").mkdir(parents=True, exist_ok=True)
+    (dashboard_out / "case_reviews" / f"benchmark_case_review_{benchmark_result['run'].run_id}.md").write_text("placeholder", encoding="utf-8")
     dashboard_result = runner.invoke(
         app,
         [
@@ -276,6 +278,7 @@ reporting:
     assert "beta_core" in content
     assert "Benchmark version:" in content
     assert "2026-04-beta-core-v1" in content
+    assert "Case review" in content
     assert "report_" in content
 
 
