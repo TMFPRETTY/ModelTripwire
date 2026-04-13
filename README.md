@@ -244,6 +244,7 @@ modeltripwire run-baseline --config configs/default.yaml
 modeltripwire run-dataset data/prompts/baseline_adversarial_prompts.json --config configs/default.yaml
 modeltripwire generate-report outputs/latest/results.json --output-dir outputs/report_regen
 modeltripwire html-report <run-id> --config configs/default.yaml --output-dir outputs/html_reports
+modeltripwire html-dashboard --config configs/default.yaml --output-dir outputs/html_reports
 ```
 
 **What the baseline run does:**
@@ -255,6 +256,7 @@ modeltripwire html-report <run-id> --config configs/default.yaml --output-dir ou
 - exports JSON and CSV
 - writes a markdown report
 - writes an HTML operator report
+- can participate in an HTML dashboard/report hub workflow
 - generates charts
 
 ---
@@ -323,6 +325,8 @@ Benchmark prompts can carry:
 ```bash
 modeltripwire list-runs --config configs/default.yaml
 modeltripwire show-run <run-id> --config configs/default.yaml
+modeltripwire html-report <run-id> --config configs/default.yaml --output-dir outputs/html_reports
+modeltripwire html-dashboard --config configs/default.yaml --output-dir outputs/html_reports
 ```
 
 ### Run comparison
@@ -345,6 +349,12 @@ Each run can persist:
 - started/completed timestamps
 - benchmark version / dataset hash for frozen benchmark runs
 - evaluator trace metadata for rule, judge, and blended scoring
+
+The HTML workflow now supports:
+- a recent-run dashboard/index page
+- per-run HTML operator reports
+- benchmark/trend gate panels inside HTML reports
+- linked case drill-down pages for notable failures
 
 ---
 
@@ -472,6 +482,10 @@ modeltripwire benchmark-trends beta_core --limit 3 --config configs/default.yaml
 # 7. Enforce repeated-run stability as a gate
 modeltripwire trend-gate beta_core --limit 3 --config configs/default.yaml
 modeltripwire trend-report beta_core --limit 3 --config configs/default.yaml --output-dir outputs/trend_reports
+
+# 8. Generate operator-facing HTML output
+modeltripwire html-report <run-id> --config configs/default.yaml --output-dir outputs/html_reports
+modeltripwire html-dashboard --config configs/default.yaml --output-dir outputs/html_reports
 ```
 
 ---
@@ -511,6 +525,8 @@ modeltripwire trend-report beta_core --limit 3 --config configs/default.yaml --o
 This is the shape of output intended to support milestone decisions, not just exploratory inspection.
 
 For real-provider calibration work, ModelTripwire now also supports dedicated benchmark case review reports so failed and borderline cases can be inspected with prompt turns, response text, tripwire evidence, score notes, and recommended calibration actions in one artifact.
+
+The HTML reporting layer complements that workflow with a dashboard/index page, operator-friendly run summaries, gate panels, and linked case drill-down pages.
 
 ### Example benchmark case review command
 
