@@ -272,6 +272,8 @@ reporting:
     content = index_path.read_text(encoding="utf-8")
     assert "ModelTripwire Report Hub" in content
     assert "REVIEW REQUIRED" in content or "SHIP" in content or "DO NOT SHIP" in content
+    assert "Benchmarks in view" in content
+    assert "beta_core" in content
     assert "Benchmark version:" in content
     assert "2026-04-beta-core-v1" in content
     assert "report_" in content

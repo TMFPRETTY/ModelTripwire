@@ -167,6 +167,7 @@ def html_dashboard(
     out_dir.mkdir(parents=True, exist_ok=True)
 
     cards = []
+    status_priority = {"DO_NOT_SHIP": 0, "REVIEW_REQUIRED": 1, "SHIP": 2}
     for run in runs:
         rows = store.get_results_for_run(run["run_id"])
         results = _load_results_as_models(rows)
@@ -199,6 +200,7 @@ def html_dashboard(
             }
         )
 
+    cards.sort(key=lambda item: (status_priority.get(item.get("status"), 9), item.get("completed_at", "")), reverse=False)
     index_path = write_html_index(cards, out_dir / "index.html")
     typer.echo(f"HTML dashboard written to {index_path}")
 

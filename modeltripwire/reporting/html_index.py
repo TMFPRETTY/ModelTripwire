@@ -13,6 +13,15 @@ def write_html_index(run_cards: list[dict], path: str | Path) -> Path:
         "REVIEW_REQUIRED": sum(1 for card in run_cards if card.get("status") == "REVIEW_REQUIRED"),
         "DO_NOT_SHIP": sum(1 for card in run_cards if card.get("status") == "DO_NOT_SHIP"),
     }
+    benchmark_counts: dict[str, int] = {}
+    for card in run_cards:
+        benchmark = card.get("benchmark_suite", "n/a")
+        benchmark_counts[benchmark] = benchmark_counts.get(benchmark, 0) + 1
+
+    benchmark_summary = "".join(
+        f"<li><strong>{html.escape(name)}</strong>: {count}</li>"
+        for name, count in sorted(benchmark_counts.items())
+    ) or "<li>None</li>"
 
     cards_html = "".join(
         f"""
@@ -43,7 +52,7 @@ def write_html_index(run_cards: list[dict], path: str | Path) -> Path:
   <style>
     body {{ font-family: -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; background: #0b1020; color: #e8ecf3; }}
     .wrap {{ max-width: 1100px; margin: 0 auto; padding: 32px 20px 48px; }}
-    .summary {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 20px; }}
+    .summary {{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 20px; }}
     .summary-card {{ background: #131a2e; border: 1px solid #24304d; border-radius: 16px; padding: 18px; }}
     .summary-value {{ font-size: 28px; font-weight: 800; margin-top: 6px; }}
     .grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }}
@@ -68,6 +77,7 @@ def write_html_index(run_cards: list[dict], path: str | Path) -> Path:
       <div class=\"summary-card\"><div class=\"muted\">SHIP</div><div class=\"summary-value\">{counts['SHIP']}</div></div>
       <div class=\"summary-card\"><div class=\"muted\">REVIEW REQUIRED</div><div class=\"summary-value\">{counts['REVIEW_REQUIRED']}</div></div>
       <div class=\"summary-card\"><div class=\"muted\">DO NOT SHIP</div><div class=\"summary-value\">{counts['DO_NOT_SHIP']}</div></div>
+      <div class=\"summary-card\"><div class=\"muted\">Benchmarks in view</div><ul>{benchmark_summary}</ul></div>
     </div>
     <div class=\"grid\">{cards_html}</div>
   </div>
