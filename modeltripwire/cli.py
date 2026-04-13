@@ -214,6 +214,10 @@ def html_dashboard(
             matches = sorted(provider_compare_dir.glob(f"*{run['run_id']}*.md"))
             if matches:
                 artifact_links.append(f'<a href="{matches[0].relative_to(out_dir)}">Provider compare</a>')
+        rc_reports_dir = out_dir / "rc_reports"
+        rc_report = rc_reports_dir / f"rc_gate_{run['run_id']}.md"
+        if rc_report.exists():
+            artifact_links.append(f'<a href="{rc_report.relative_to(out_dir)}">RC gate</a>')
 
         cards.append(
             {

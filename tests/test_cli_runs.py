@@ -254,7 +254,9 @@ reporting:
 
     dashboard_out = tmp_path / "html_reports"
     (dashboard_out / "case_reviews").mkdir(parents=True, exist_ok=True)
+    (dashboard_out / "rc_reports").mkdir(parents=True, exist_ok=True)
     (dashboard_out / "case_reviews" / f"benchmark_case_review_{benchmark_result['run'].run_id}.md").write_text("placeholder", encoding="utf-8")
+    (dashboard_out / "rc_reports" / f"rc_gate_{benchmark_result['run'].run_id}.md").write_text("placeholder", encoding="utf-8")
     dashboard_result = runner.invoke(
         app,
         [
@@ -279,6 +281,7 @@ reporting:
     assert "Benchmark version:" in content
     assert "2026-04-beta-core-v1" in content
     assert "Case review" in content
+    assert "RC gate" in content
     assert "report_" in content
 
 
