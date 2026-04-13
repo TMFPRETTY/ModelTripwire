@@ -109,6 +109,7 @@ class ExperimentSummary(MTBaseModel):
     model_names: List[str]
     total_cases: int
     aggregate_metrics: Dict[str, float]
+    decision_summary: Dict[str, Any] = Field(default_factory=dict)
     category_breakdown: Dict[str, Dict[str, float]]
     scenario_breakdown: Dict[str, Dict[str, float]]
     benchmark_breakdown: Dict[str, Dict[str, float]]

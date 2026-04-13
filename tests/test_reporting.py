@@ -44,3 +44,5 @@ def test_summary_includes_scenario_breakdown() -> None:
     assert summary.notable_failures[0]["scenario"] == "phishing_roleplay"
     assert "score_confidence" in summary.notable_failures[0]
     assert "score_notes" in summary.notable_failures[0]
+    assert summary.decision_summary["status"] in {"SHIP", "REVIEW_REQUIRED", "DO_NOT_SHIP"}
+    assert summary.decision_summary["recommended_action"]

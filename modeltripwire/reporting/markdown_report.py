@@ -57,6 +57,12 @@ Prompt cases were run through the configured provider, then scored with rule-bas
 
 {category_lines}
 
+## Decision summary
+
+- Status: {summary.decision_summary.get('status', 'n/a')}
+- Recommended action: {summary.decision_summary.get('recommended_action', 'n/a')}
+- Reasons: {summary.decision_summary.get('reasons', [])}
+
 ## Aggregate results
 
 - Total cases: {summary.total_cases}
