@@ -15,16 +15,21 @@ def _render_kv_list(items: dict) -> str:
     )
 
 
-def _render_failure_list(failures: list[dict]) -> str:
+def _render_failure_list(failures: list[dict], case_links: dict[str, str] | None = None) -> str:
     if not failures:
         return "<li>No notable failures</li>"
+    case_links = case_links or {}
     return "".join(
         "<li>"
-        f"<strong>{html.escape(str(item.get('prompt_id', 'n/a')))}</strong> "
-        f"({html.escape(str(item.get('scenario', 'n/a')))} / {html.escape(str(item.get('category', 'n/a')))}), "
-        f"tripwires={html.escape(str(item.get('tripwire_count', 0)))}, "
-        f"severity={html.escape(str(item.get('max_severity', 0)))}"
-        "</li>"
+        + (
+            f"<a href=\"{html.escape(case_links[item.get('prompt_id', '')])}\"><strong>{html.escape(str(item.get('prompt_id', 'n/a')))}</strong></a>"
+            if item.get('prompt_id', '') in case_links
+            else f"<strong>{html.escape(str(item.get('prompt_id', 'n/a')))}</strong>"
+        )
+        + f" ({html.escape(str(item.get('scenario', 'n/a')))} / {html.escape(str(item.get('category', 'n/a')))}), "
+        + f"tripwires={html.escape(str(item.get('tripwire_count', 0)))}, "
+        + f"severity={html.escape(str(item.get('max_severity', 0)))}"
+        + "</li>"
         for item in failures
     )
 
@@ -55,6 +60,7 @@ def write_html_report(
     path: str | Path,
     benchmark_gate: dict | None = None,
     trend_gate: dict | None = None,
+    case_links: dict[str, str] | None = None,
 ) -> Path:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -147,7 +153,7 @@ def write_html_report(
       </div>
       <div class=\"card\">
         <h2>Notable failures</h2>
-        <ul>{_render_failure_list(summary.notable_failures)}</ul>
+        <ul>{_render_failure_list(summary.notable_failures, case_links=case_links)}</ul>
       </div>
       <div class=\"card\">
         <h2>Limitations</h2>

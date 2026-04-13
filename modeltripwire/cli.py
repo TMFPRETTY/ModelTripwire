@@ -18,6 +18,7 @@ from modeltripwire.regression_gates import evaluate_regression_gate, write_regre
 from modeltripwire.reporting.case_reviews import write_benchmark_case_review_report
 from modeltripwire.reporting.charts import generate_all_charts
 from modeltripwire.reporting.compare import write_provider_comparison_report, write_run_comparison_report
+from modeltripwire.reporting.html_case_pages import write_case_detail_page
 from modeltripwire.reporting.html_report import write_html_report
 from modeltripwire.reporting.markdown_report import write_markdown_report
 from modeltripwire.reporting.summaries import build_experiment_summary
@@ -164,7 +165,8 @@ def html_report(
     if run is None:
         raise typer.Exit(f"Run not found: {run_id}")
 
-    results = _load_results_as_models(store.get_results_for_run(run["run_id"]))
+    rows = store.get_results_for_run(run["run_id"])
+    results = _load_results_as_models(rows)
     summary = build_experiment_summary(
         title=run["title"],
         research_question=run["research_question"],
@@ -195,7 +197,20 @@ def html_report(
             trend_gate = evaluate_trend_gate(suite_name, summaries, run_results)
     out_dir = (project_root / output_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
-    report_path = write_html_report(summary, out_dir / f"report_{run['run_id']}.html", benchmark_gate=benchmark_gate, trend_gate=trend_gate)
+    cases_dir = out_dir / f"report_{run['run_id']}_cases"
+    case_links = {}
+    for row in rows:
+        if row["prompt_id"] in {item.get("prompt_id") for item in summary.notable_failures}:
+            case_path = cases_dir / f"{row['prompt_id']}.html"
+            write_case_detail_page(row, case_path)
+            case_links[row["prompt_id"]] = f"{cases_dir.name}/{case_path.name}"
+    report_path = write_html_report(
+        summary,
+        out_dir / f"report_{run['run_id']}.html",
+        benchmark_gate=benchmark_gate,
+        trend_gate=trend_gate,
+        case_links=case_links,
+    )
     typer.echo(f"HTML report written to {report_path}")
 
 
