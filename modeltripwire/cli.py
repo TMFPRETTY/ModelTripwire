@@ -19,6 +19,7 @@ from modeltripwire.reporting.case_reviews import write_benchmark_case_review_rep
 from modeltripwire.reporting.charts import generate_all_charts
 from modeltripwire.reporting.compare import write_provider_comparison_report, write_run_comparison_report
 from modeltripwire.reporting.html_case_pages import write_case_detail_page
+from modeltripwire.reporting.html_index import write_html_index
 from modeltripwire.reporting.html_report import write_html_report
 from modeltripwire.reporting.markdown_report import write_markdown_report
 from modeltripwire.reporting.summaries import build_experiment_summary
@@ -150,6 +151,55 @@ def generate_report(results_json: str, output_dir: str = typer.Option("outputs/r
     generate_all_charts(results, out_dir / "charts")
     logger.info("Regenerated markdown report", extra={"output_dir": str(out_dir)})
     typer.echo(f"Report generated in {out_dir}")
+
+
+@app.command("html-dashboard")
+def html_dashboard(
+    config: str = typer.Option("configs/default.yaml", help="Path to YAML config."),
+    output_dir: str = typer.Option("outputs/html_reports", help="Directory for HTML reports."),
+    limit: int = typer.Option(10, min=1, help="How many recent runs to include."),
+) -> None:
+    project_root = Path(__file__).resolve().parent.parent
+    cfg = load_config(project_root / config)
+    store = SQLiteStore(cfg.resolve_sqlite_path(project_root))
+    runs = store.list_runs()[:limit]
+    out_dir = (project_root / output_dir).resolve()
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    cards = []
+    for run in runs:
+        rows = store.get_results_for_run(run["run_id"])
+        results = _load_results_as_models(rows)
+        summary = build_experiment_summary(
+            title=run["title"],
+            research_question=run["research_question"],
+            results=results,
+            run_id=run["run_id"],
+            run_label=run["run_label"],
+        )
+        report_name = f"report_{run['run_id']}.html"
+        write_html_report(summary, out_dir / report_name)
+        status = summary.decision_summary.get("status", "n/a")
+        cards.append(
+            {
+                "href": report_name,
+                "title": run["title"],
+                "run_id": run["run_id"],
+                "benchmark_suite": run.get("metadata", {}).get("benchmark_suite", "n/a"),
+                "model_name": run["model_name"],
+                "total_cases": run["total_cases"],
+                "completed_at": run["completed_at"],
+                "status": status,
+                "status_class": {
+                    "SHIP": "status-ship",
+                    "REVIEW_REQUIRED": "status-review",
+                    "DO_NOT_SHIP": "status-block",
+                }.get(status, "status-neutral"),
+            }
+        )
+
+    index_path = write_html_index(cards, out_dir / "index.html")
+    typer.echo(f"HTML dashboard written to {index_path}")
 
 
 @app.command("html-report")
