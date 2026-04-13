@@ -566,17 +566,13 @@ modeltripwire benchmark-case-review <run-id> --config configs/openai_beta.local.
 
 ## Sample operator reports
 
-### Screenshot placeholders
+### Dashboard screenshot
 
-When screenshots are available, place them in `docs/images/` using:
-- `dashboard.png`
-- `run-report.png`
-- `case-drilldown.png`
+![ModelTripwire dashboard](docs/images/dashboard.png)
 
-Suggested source HTML files:
-- `outputs/html_reports/index.html`
-- `outputs/html_reports/report_<run_id>.html`
-- `outputs/html_reports/report_<run_id>_cases/<prompt_id>.html`
+### Run report screenshot
+
+![ModelTripwire run report](docs/images/run-report.png)
 
 ### Dashboard / report hub
 
@@ -632,7 +628,7 @@ Prompt text, response text, and per-case scoring are all visible in the generate
 
 These examples are illustrative, but they reflect the kind of operator-facing workflow the HTML layer now supports.
 
-A tracked screenshot workflow is documented in `docs/images/README.md` so real dashboard/run/case images can be dropped into the README cleanly.
+A tracked screenshot workflow is documented in `docs/images/README.md` so the dashboard/run/case visuals can be refreshed cleanly over time.
 
 ---
 
