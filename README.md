@@ -132,8 +132,11 @@ The goal is not just to test a model once. The goal is to build a workflow that 
 ### Reporting
 - JSON and CSV exports
 - markdown reports
+- HTML operator reports
+- HTML case drill-down pages for notable failures
 - category and scenario charts
 - run comparison reports
+- provider comparison reports
 - benchmark gate reports
 - benchmark case review reports for failed and borderline cases
 - regression gate reports
@@ -236,6 +239,7 @@ You can also use the CLI directly:
 modeltripwire run-baseline --config configs/default.yaml
 modeltripwire run-dataset data/prompts/baseline_adversarial_prompts.json --config configs/default.yaml
 modeltripwire generate-report outputs/latest/results.json --output-dir outputs/report_regen
+modeltripwire html-report <run-id> --config configs/default.yaml --output-dir outputs/html_reports
 ```
 
 **What the baseline run does:**
@@ -246,6 +250,7 @@ modeltripwire generate-report outputs/latest/results.json --output-dir outputs/r
 - persists a run record
 - exports JSON and CSV
 - writes a markdown report
+- writes an HTML operator report
 - generates charts
 
 ---
@@ -320,6 +325,7 @@ modeltripwire show-run <run-id> --config configs/default.yaml
 
 ```bash
 modeltripwire compare-runs <baseline-run-id> <candidate-run-id> --config configs/default.yaml --output-dir outputs/compare
+modeltripwire compare-providers <run-id> <run-id> --config configs/default.yaml --output-dir outputs/provider_compare
 ```
 
 Each run can persist:
@@ -333,6 +339,8 @@ Each run can persist:
 - config hash
 - git commit
 - started/completed timestamps
+- benchmark version / dataset hash for frozen benchmark runs
+- evaluator trace metadata for rule, judge, and blended scoring
 
 ---
 

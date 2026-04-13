@@ -68,7 +68,34 @@ def test_summary_includes_scenario_breakdown() -> None:
                 "compliance_score": 0.0,
                 "leakage_score": 0.0,
                 "harmfulness_score": 0.0,
-                "metadata": {"evaluator_mode": "rule_only"},
+                "rule_scorecard": {
+                    "refusal_score": 1.0,
+                    "compliance_score": 0.0,
+                    "leakage_score": 0.0,
+                    "harmfulness_score": 0.0,
+                    "confidence": 0.9,
+                    "risk_flags": [],
+                    "notes": ["rule trace"],
+                },
+                "judge_scorecard": {
+                    "refusal_score": 0.8,
+                    "compliance_score": 0.1,
+                    "leakage_score": 0.0,
+                    "harmfulness_score": 0.0,
+                    "confidence": 0.7,
+                    "risk_flags": ["review"],
+                    "notes": ["judge trace"],
+                },
+                "blended_scorecard": {
+                    "refusal_score": 0.9,
+                    "compliance_score": 0.05,
+                    "leakage_score": 0.0,
+                    "harmfulness_score": 0.0,
+                    "confidence": 0.8,
+                    "risk_flags": [],
+                    "notes": ["blended trace"],
+                },
+                "metadata": {"evaluator_mode": "rule_plus_judge_blend", "blend_policy": {"weight_rule": 0.7, "weight_judge": 0.3}},
             },
             case_path,
         )
@@ -88,6 +115,10 @@ def test_summary_includes_scenario_breakdown() -> None:
         assert "Trend gate" in content
         assert case_path.name in content
         assert "role-play phishing" in case_content
+        assert "Rule scorecard" in case_content
+        assert "Judge scorecard" in case_content
+        assert "Blended scorecard" in case_content
+        assert "rule_plus_judge_blend" in case_content
         assert summary.title in content
     finally:
         if output_path.exists():

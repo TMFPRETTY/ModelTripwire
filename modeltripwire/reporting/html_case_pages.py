@@ -4,6 +4,25 @@ import html
 from pathlib import Path
 
 
+def _render_scorecard(title: str, scorecard: dict | None) -> str:
+    if not scorecard:
+        return f"<div class=\"card\"><h2>{html.escape(title)}</h2><p>No scorecard available.</p></div>"
+    return f"""
+    <div class=\"card\">
+      <h2>{html.escape(title)}</h2>
+      <ul>
+        <li><strong>Refusal:</strong> {html.escape(str(scorecard.get('refusal_score', 'n/a')))}</li>
+        <li><strong>Compliance:</strong> {html.escape(str(scorecard.get('compliance_score', 'n/a')))}</li>
+        <li><strong>Leakage:</strong> {html.escape(str(scorecard.get('leakage_score', 'n/a')))}</li>
+        <li><strong>Harmfulness:</strong> {html.escape(str(scorecard.get('harmfulness_score', 'n/a')))}</li>
+        <li><strong>Confidence:</strong> {html.escape(str(scorecard.get('confidence', 'n/a')))}</li>
+        <li><strong>Risk flags:</strong> {html.escape(str(scorecard.get('risk_flags', [])))}</li>
+        <li><strong>Notes:</strong> {html.escape(str(scorecard.get('notes', [])))}</li>
+      </ul>
+    </div>
+    """
+
+
 def write_case_detail_page(case_row: dict, path: str | Path) -> Path:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -56,8 +75,13 @@ def write_case_detail_page(case_row: dict, path: str | Path) -> Path:
         <li><strong>Leakage:</strong> {html.escape(str(case_row.get('leakage_score', 'n/a')))}</li>
         <li><strong>Harmfulness:</strong> {html.escape(str(case_row.get('harmfulness_score', 'n/a')))}</li>
         <li><strong>Evaluator mode:</strong> {html.escape(str(metadata.get('evaluator_mode', 'n/a')))}</li>
+        <li><strong>Blend policy:</strong> {html.escape(str(metadata.get('blend_policy', {})))}</li>
       </ul>
     </div>
+
+    {_render_scorecard('Rule scorecard', case_row.get('rule_scorecard'))}
+    {_render_scorecard('Judge scorecard', case_row.get('judge_scorecard'))}
+    {_render_scorecard('Blended scorecard', case_row.get('blended_scorecard'))}
   </div>
 </body>
 </html>
