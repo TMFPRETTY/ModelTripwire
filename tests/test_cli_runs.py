@@ -213,7 +213,7 @@ def test_html_dashboard_cli(tmp_path: Path) -> None:
     config.output.directory = str(tmp_path / "outputs")
     config.output.sqlite_path = str(tmp_path / "outputs" / "modeltripwire.db")
 
-    run_baseline_experiment(config, project_root)
+    run_benchmark_suite(config, project_root, "beta_core")
     run_baseline_experiment(config, project_root)
 
     config_path = tmp_path / "dashboard-config.yaml"
@@ -271,6 +271,9 @@ reporting:
     assert index_path.exists()
     content = index_path.read_text(encoding="utf-8")
     assert "ModelTripwire Report Hub" in content
+    assert "REVIEW REQUIRED" in content or "SHIP" in content or "DO NOT SHIP" in content
+    assert "Benchmark version:" in content
+    assert "2026-04-beta-core-v1" in content
     assert "report_" in content
 
 

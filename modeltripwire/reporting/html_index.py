@@ -8,6 +8,12 @@ def write_html_index(run_cards: list[dict], path: str | Path) -> Path:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
+    counts = {
+        "SHIP": sum(1 for card in run_cards if card.get("status") == "SHIP"),
+        "REVIEW_REQUIRED": sum(1 for card in run_cards if card.get("status") == "REVIEW_REQUIRED"),
+        "DO_NOT_SHIP": sum(1 for card in run_cards if card.get("status") == "DO_NOT_SHIP"),
+    }
+
     cards_html = "".join(
         f"""
         <a class=\"card\" href=\"{html.escape(card['href'])}\">
@@ -19,6 +25,7 @@ def write_html_index(run_cards: list[dict], path: str | Path) -> Path:
           <p class=\"muted\">run_id={html.escape(card.get('run_id', 'n/a'))}</p>
           <ul>
             <li><strong>Benchmark:</strong> {html.escape(card.get('benchmark_suite', 'n/a'))}</li>
+            <li><strong>Benchmark version:</strong> {html.escape(card.get('benchmark_version', 'n/a'))}</li>
             <li><strong>Model:</strong> {html.escape(card.get('model_name', 'n/a'))}</li>
             <li><strong>Cases:</strong> {html.escape(str(card.get('total_cases', 'n/a')))}</li>
           </ul>
@@ -36,6 +43,9 @@ def write_html_index(run_cards: list[dict], path: str | Path) -> Path:
   <style>
     body {{ font-family: -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; background: #0b1020; color: #e8ecf3; }}
     .wrap {{ max-width: 1100px; margin: 0 auto; padding: 32px 20px 48px; }}
+    .summary {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 20px; }}
+    .summary-card {{ background: #131a2e; border: 1px solid #24304d; border-radius: 16px; padding: 18px; }}
+    .summary-value {{ font-size: 28px; font-weight: 800; margin-top: 6px; }}
     .grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }}
     .card {{ display: block; text-decoration: none; color: inherit; background: #131a2e; border: 1px solid #24304d; border-radius: 16px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.25); }}
     .top {{ display: flex; justify-content: space-between; align-items: center; gap: 12px; }}
@@ -47,13 +57,18 @@ def write_html_index(run_cards: list[dict], path: str | Path) -> Path:
     .muted {{ color: #9eb0d1; }}
     ul {{ margin: 10px 0 0 18px; }}
     li {{ margin: 6px 0; }}
-    @media (max-width: 800px) {{ .grid {{ grid-template-columns: 1fr; }} }}
+    @media (max-width: 800px) {{ .summary, .grid {{ grid-template-columns: 1fr; }} }}
   </style>
 </head>
 <body>
   <div class=\"wrap\">
     <h1>ModelTripwire Report Hub</h1>
     <p class=\"muted\">HTML index for recent runs and operator reports.</p>
+    <div class=\"summary\">
+      <div class=\"summary-card\"><div class=\"muted\">SHIP</div><div class=\"summary-value\">{counts['SHIP']}</div></div>
+      <div class=\"summary-card\"><div class=\"muted\">REVIEW REQUIRED</div><div class=\"summary-value\">{counts['REVIEW_REQUIRED']}</div></div>
+      <div class=\"summary-card\"><div class=\"muted\">DO NOT SHIP</div><div class=\"summary-value\">{counts['DO_NOT_SHIP']}</div></div>
+    </div>
     <div class=\"grid\">{cards_html}</div>
   </div>
 </body>

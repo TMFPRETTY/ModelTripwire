@@ -186,6 +186,7 @@ def html_dashboard(
                 "title": run["title"],
                 "run_id": run["run_id"],
                 "benchmark_suite": run.get("metadata", {}).get("benchmark_suite", "n/a"),
+                "benchmark_version": run.get("metadata", {}).get("benchmark_version", "n/a"),
                 "model_name": run["model_name"],
                 "total_cases": run["total_cases"],
                 "completed_at": run["completed_at"],
