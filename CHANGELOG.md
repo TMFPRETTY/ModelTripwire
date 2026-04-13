@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.2.0-beta.2
+
+Production-hardening checkpoint on top of Framework Beta.
+
+### Highlights
+- Persisted evaluator trace across benchmark runs, including separate rule, judge, and blended scorecards
+- Added frozen benchmark version/hash metadata to run records and surfaced that metadata in `show-run`
+- Added provider comparison reporting for side-by-side benchmark review across runs
+- Added operational decision summaries across reports, benchmark gates, trend gates, and comparison outputs
+- Added HTML operator reports with embedded benchmark/trend gate panels
+- Added HTML case drill-down pages with richer evaluator trace visibility for notable failures
+
+### Reporting and operator workflow improvements
+- Added `html-report <run_id>` CLI support for generating operator-facing HTML reports from stored runs
+- Added gate panels to HTML output so a single page can show benchmark/trend status, recommended action, and reasons
+- Added case drill-down HTML pages linked from the main HTML report for notable failures
+- Expanded README workflow coverage for HTML reports, provider comparison reports, benchmark freezing metadata, and evaluator traceability
+
+### Production-readiness improvements
+- Decision-oriented reporting is now more consistent across summaries, benchmark gates, trend gates, run inspection, and comparison surfaces
+- Benchmark runs now persist explicit benchmark version, dataset hash, and dataset path metadata for reproducibility
+- Evaluator trace persistence makes rule/judge/blended scoring auditable in stored runs and review flows
+
 ## 0.2.0-beta.1
 
 Framework Beta release.

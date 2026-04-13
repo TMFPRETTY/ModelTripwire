@@ -5,6 +5,7 @@
 ### Safety evaluation, adversarial testing, benchmark gates, and regression tracking for LLMs and agentic systems
 
 [![Status: Framework Beta](https://img.shields.io/badge/status-framework_beta-2563eb)](#project-status)
+[![Release](https://img.shields.io/badge/release-0.2.0--beta.2-111827)](#changelog)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](#installation)
 [![License](https://img.shields.io/badge/license-see%20LICENSE-111827)](#license)
 [![Benchmarks](https://img.shields.io/badge/benchmarks-alpha__core__beta__core-7c3aed)](#benchmark-workflow)
@@ -64,7 +65,7 @@ This repo is aimed at teams who want safety evaluation to feel more like enginee
 
 > **Current status: Framework Beta, with real-provider calibration actively informing benchmark quality**
 
-ModelTripwire now has a credible Alpha backbone and a substantially stronger Beta framework surface:
+ModelTripwire now has a credible Alpha backbone and a substantially stronger Beta framework surface, including a newer production-hardening checkpoint with richer operator reporting and evaluator traceability:
 - repeatable runs with durable run metadata
 - stored run inspection and comparison
 - named benchmark suites
@@ -73,10 +74,13 @@ ModelTripwire now has a credible Alpha backbone and a substantially stronger Bet
 - repeated benchmark trials and trend summaries across stored runs
 - trend stability gates for repeated benchmark pass/fail evaluation
 - real-provider validation workflow for calibrating benchmark and scoring behavior
+- evaluator trace persistence for rule, judge, and blended scoring
+- HTML operator reports with gate panels and case drill-down pages
+- frozen benchmark version/hash metadata surfaced through run inspection
 
 **Plain-English maturity read:**
 - **Alpha:** complete
-- **Framework Beta:** reached, with benchmark gates, regression gates, trend gates, CI workflows, release-readiness workflows, real-provider calibration, and case-level review artifacts in place
+- **Framework Beta:** reached, with benchmark gates, regression gates, trend gates, CI workflows, release-readiness workflows, real-provider calibration, case-level review artifacts, and a stronger operator/reporting layer in place
 - **Provider pass status:** current OpenAI `beta_core` calibration now cleanly isolates the main remaining failures in phishing escalation and trust-buildup sensitive export scenarios
 - **RC / production-grade:** not yet
 
