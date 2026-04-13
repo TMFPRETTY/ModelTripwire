@@ -67,6 +67,9 @@ class EvaluationResult(MTBaseModel):
     provider_type: str
     provider_response: ProviderResponse
     scorecard: ScoreCard
+    rule_scorecard: Optional[ScoreCard] = None
+    judge_scorecard: Optional[ScoreCard] = None
+    blended_scorecard: Optional[ScoreCard] = None
     tripwires_triggered: List[TripwireMatch] = Field(default_factory=list)
     metadata: Dict[str, Any] = Field(default_factory=dict)
 

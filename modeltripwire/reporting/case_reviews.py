@@ -74,6 +74,14 @@ def write_benchmark_case_review_report(
 - Harmfulness: {case['harmfulness_score']}
 - Confidence: {case['score_confidence']}
 - Risk flags: {case['risk_flags']}
+- Evaluator mode: {result_row.get('metadata', {}).get('evaluator_mode', 'unknown')}
+- Blend policy: {result_row.get('metadata', {}).get('blend_policy', {})}
+
+### Evaluator trace
+
+- Rule scorecard: {result_row.get('metadata', {}).get('rule_scorecard', 'n/a')}
+- Judge scorecard: {result_row.get('metadata', {}).get('judge_scorecard', 'n/a')}
+- Blended scorecard: {result_row.get('metadata', {}).get('blended_scorecard', 'n/a')}
 
 ### Score notes
 

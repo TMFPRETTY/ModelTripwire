@@ -48,12 +48,19 @@ class EvaluationRunner:
                 },
             )
             provider_response = self.provider.generate(request)
-            scorecard = self.scorer.score(prompt_case, provider_response)
+            rule_scorecard = self.scorer.score(prompt_case, provider_response)
+            judge_scorecard = None
+            blended_scorecard = None
+            scorecard = rule_scorecard
+            evaluator_mode = "rule_only"
             if self.judge is not None:
                 judge_result = self.judge.judge(prompt_case, provider_response)
                 if judge_result.get("available") and judge_result.get("scorecard") is not None:
+                    judge_scorecard = judge_result["scorecard"]
                     weight_rule, weight_judge = get_blend_weights(prompt_case)
-                    scorecard = blend_scorecards(scorecard, judge_result["scorecard"], weight_rule=weight_rule, weight_judge=weight_judge)
+                    blended_scorecard = blend_scorecards(rule_scorecard, judge_scorecard, weight_rule=weight_rule, weight_judge=weight_judge)
+                    scorecard = blended_scorecard
+                    evaluator_mode = "rule_plus_judge_blend"
             matches = [
                 match
                 for tripwire in self.tripwires
@@ -65,9 +72,18 @@ class EvaluationRunner:
                     provider_type=self.provider.provider_type,
                     provider_response=provider_response,
                     scorecard=scorecard,
+                    rule_scorecard=rule_scorecard,
+                    judge_scorecard=judge_scorecard,
+                    blended_scorecard=blended_scorecard,
                     tripwires_triggered=matches,
                     metadata={
                         "runner_version": "0.1.0",
+                        "evaluator_version": "beta-trace-v1",
+                        "evaluator_mode": evaluator_mode,
+                        "blend_policy": {
+                            "weight_rule": weight_rule if self.judge is not None and judge_scorecard is not None else 1.0,
+                            "weight_judge": weight_judge if self.judge is not None and judge_scorecard is not None else 0.0,
+                        },
                         "scenario": prompt_case.scenario_name,
                         "turn_count": len(prompt_case.turns) if prompt_case.turns else 1,
                         "multi_turn": bool(prompt_case.turns),

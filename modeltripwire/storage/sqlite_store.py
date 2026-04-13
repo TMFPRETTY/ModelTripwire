@@ -63,6 +63,9 @@ class SQLiteStore:
                     harmfulness_score REAL,
                     tripwire_count INTEGER,
                     max_severity INTEGER,
+                    rule_scorecard_json TEXT,
+                    judge_scorecard_json TEXT,
+                    blended_scorecard_json TEXT,
                     tripwires_json TEXT,
                     metadata_json TEXT,
                     timestamp TEXT
@@ -86,6 +89,12 @@ class SQLiteStore:
                 connection.execute("ALTER TABLE evaluation_results ADD COLUMN evaluation_focus_json TEXT")
             if "turns_json" not in columns:
                 connection.execute("ALTER TABLE evaluation_results ADD COLUMN turns_json TEXT")
+            if "rule_scorecard_json" not in columns:
+                connection.execute("ALTER TABLE evaluation_results ADD COLUMN rule_scorecard_json TEXT")
+            if "judge_scorecard_json" not in columns:
+                connection.execute("ALTER TABLE evaluation_results ADD COLUMN judge_scorecard_json TEXT")
+            if "blended_scorecard_json" not in columns:
+                connection.execute("ALTER TABLE evaluation_results ADD COLUMN blended_scorecard_json TEXT")
             connection.commit()
 
     def save_run(self, run: ExperimentRun) -> None:
@@ -179,7 +188,8 @@ class SQLiteStore:
                 SELECT run_id, prompt_id, prompt_name, category, scenario, benchmark_suite, difficulty,
                        expected_risk_type, evaluation_focus_json, turns_json, provider_type, model_name,
                        prompt_text, response_text, refusal_score, compliance_score, leakage_score,
-                       harmfulness_score, tripwire_count, max_severity, tripwires_json, metadata_json, timestamp
+                       harmfulness_score, tripwire_count, max_severity, rule_scorecard_json, judge_scorecard_json,
+                       blended_scorecard_json, tripwires_json, metadata_json, timestamp
                 FROM evaluation_results
                 WHERE run_id = ?
                 ORDER BY prompt_id ASC
@@ -208,9 +218,12 @@ class SQLiteStore:
                 "harmfulness_score": row[17],
                 "tripwire_count": row[18],
                 "max_severity": row[19],
-                "tripwires_triggered": json.loads(row[20]) if row[20] else [],
-                "metadata": json.loads(row[21]) if row[21] else {},
-                "timestamp": row[22],
+                "rule_scorecard": json.loads(row[20]) if row[20] else None,
+                "judge_scorecard": json.loads(row[21]) if row[21] else None,
+                "blended_scorecard": json.loads(row[22]) if row[22] else None,
+                "tripwires_triggered": json.loads(row[23]) if row[23] else [],
+                "metadata": json.loads(row[24]) if row[24] else {},
+                "timestamp": row[25],
             }
             for row in rows
         ]
@@ -244,8 +257,16 @@ class SQLiteStore:
                     result.scorecard.harmfulness_score,
                     result.tripwire_count,
                     result.max_severity,
+                    json.dumps(result.rule_scorecard.model_dump()) if result.rule_scorecard else None,
+                    json.dumps(result.judge_scorecard.model_dump()) if result.judge_scorecard else None,
+                    json.dumps(result.blended_scorecard.model_dump()) if result.blended_scorecard else None,
                     json.dumps([match.model_dump() for match in result.tripwires_triggered]),
-                    json.dumps(result.metadata),
+                    json.dumps({
+                        **result.metadata,
+                        "rule_scorecard": result.rule_scorecard.model_dump() if result.rule_scorecard else None,
+                        "judge_scorecard": result.judge_scorecard.model_dump() if result.judge_scorecard else None,
+                        "blended_scorecard": result.blended_scorecard.model_dump() if result.blended_scorecard else None,
+                    }),
                     result.provider_response.timestamp.isoformat(),
                 )
             )
@@ -273,10 +294,13 @@ class SQLiteStore:
                     harmfulness_score,
                     tripwire_count,
                     max_severity,
+                    rule_scorecard_json,
+                    judge_scorecard_json,
+                    blended_scorecard_json,
                     tripwires_json,
                     metadata_json,
                     timestamp
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 rows,
             )

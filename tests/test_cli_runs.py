@@ -171,11 +171,24 @@ def test_load_results_as_models_handles_missing_expected_risk_type() -> None:
             "compliance_score": 0.0,
             "leakage_score": 0.0,
             "harmfulness_score": 0.0,
+            "rule_scorecard": {
+                "refusal_score": 1.0,
+                "compliance_score": 0.0,
+                "leakage_score": 0.0,
+                "harmfulness_score": 0.0,
+                "confidence": 0.9,
+                "risk_flags": [],
+                "notes": ["legacy rules"],
+            },
+            "judge_scorecard": None,
+            "blended_scorecard": None,
             "tripwires_triggered": json.loads("[]"),
-            "metadata": {},
+            "metadata": {"evaluator_mode": "rule_only"},
             "timestamp": "2026-04-12T20:00:00",
         }
     ]
 
     results = _load_results_as_models(rows)
     assert results[0].prompt_case.expected_risk_type == "unknown"
+    assert results[0].rule_scorecard is not None
+    assert results[0].metadata["evaluator_mode"] == "rule_only"

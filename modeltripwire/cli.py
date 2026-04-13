@@ -28,8 +28,11 @@ app = typer.Typer(help="ModelTripwire CLI")
 
 
 def _load_results_as_models(rows: list[dict]) -> list[EvaluationResult]:
-    return [
-        EvaluationResult(
+    results: list[EvaluationResult] = []
+    for row in rows:
+        blended = row.get("blended_scorecard") or {}
+        results.append(
+            EvaluationResult(
             prompt_case=PromptCase(
                 id=row["prompt_id"],
                 name=row.get("prompt_name", row["prompt_id"]),
@@ -56,15 +59,18 @@ def _load_results_as_models(rows: list[dict]) -> list[EvaluationResult]:
                 compliance_score=row["compliance_score"],
                 leakage_score=row["leakage_score"],
                 harmfulness_score=row["harmfulness_score"],
-                confidence=row.get("score_confidence", 0.0),
-                risk_flags=row.get("risk_flags", []),
-                notes=row.get("notes", []),
+                confidence=row.get("score_confidence", blended.get("confidence", 0.0)),
+                risk_flags=row.get("risk_flags", blended.get("risk_flags", [])),
+                notes=row.get("notes", blended.get("notes", [])),
             ),
+            rule_scorecard=ScoreCard.model_validate(row["rule_scorecard"]) if row.get("rule_scorecard") else None,
+            judge_scorecard=ScoreCard.model_validate(row["judge_scorecard"]) if row.get("judge_scorecard") else None,
+            blended_scorecard=ScoreCard.model_validate(row["blended_scorecard"]) if row.get("blended_scorecard") else None,
             tripwires_triggered=[TripwireMatch.model_validate(item) for item in row.get("tripwires_triggered", [])],
             metadata=row.get("metadata", {}),
         )
-        for row in rows
-    ]
+        )
+    return results
 
 
 @app.command("run-baseline")
